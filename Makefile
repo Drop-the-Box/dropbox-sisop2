@@ -17,7 +17,7 @@ init:  ### Install dependencies and start application
 	" -> MacOS: https://docs.docker.com/docker-for-mac/install/ \n"\
 	" -> Ubuntu: https://docs.docker.com/install/linux/docker-ce/ubuntu/ \n"\
 	" -> Fedora: https://docs.docker.com/install/linux/docker-ce/fedora/ "; exit 1;)
-	@ make run
+	@ make build
 
 .PHONY: build
 build-image:  ### builds the base image 
