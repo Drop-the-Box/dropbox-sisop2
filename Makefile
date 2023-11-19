@@ -3,6 +3,9 @@ $(eval $(ARGS):;@:)
 MAKEFLAGS += --silent
 $(eval TEST_TYPE := $(shell [[ -z "$(ARGS)" ]] && echo "null" || echo "$(ARGS)"))
 
+SERVER_CMD = 'g++ -g src/server/**/*.cpp src/server/main.cpp -o ./server && ./server'
+CLIENT_CMD = 'g++ -g src/client/**/*.cpp src/client/main.cpp -o ./client && ./client'
+
 # HELP COMMANDS
 .PHONY: help
 help: ### show this help
@@ -25,8 +28,17 @@ build-image:  ### builds the base image
 
 .PHONY: run-server 
 run-server: build-image ### build and run the server app
-	@ docker run -it --rm dropthebox sh -c "g++ src/server/main.cpp -o ./dropthebox-server && ./dropthebox-server"
+	@ docker run --name dtb-server -it -p 6999:6999 --rm dropthebox bash -c ${SERVER_CMD}
+
+
+.PHONY: debug-server
+debug-server: build-image ### build and run the server app
+	@ docker run --name dtb-server -it -p 6999:6999 --rm dropthebox bash -c "++ -g src/server/**/*.cpp src/server/main.cpp -o ./server && gdb ./server"
 
 .PHONY: run-client
 run-client: build-image   ### build and run the client app
-	@ docker run -it --rm dropthebox sh -c "g++ src/client/main.cpp -o ./dropthebox-client && ./dropthebox-client"
+	@ docker run -it --rm dropthebox bash -c "g++ -g ${CLIENT_SRC_FILES} -o ./client && ./client"
+
+.PHONY: kill-server
+kill-server:
+	@ docker kill dtb-server
