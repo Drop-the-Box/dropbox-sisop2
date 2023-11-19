@@ -33,7 +33,6 @@ void SessionManager::start() {
 
 void SessionManager::create_session(int channel) {
     std::cout << "Spawning new connection on channel " << channel << std::endl;
-    thread_args *args = (thread_args *) malloc(sizeof *args);
     Session *session = new Session(socket, channel, &thread_pool[num_threads]);
     pthread_create(&thread_pool[num_threads], NULL, this->handle_session, session);
 }

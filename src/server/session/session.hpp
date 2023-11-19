@@ -5,11 +5,6 @@
 
 #define MAX_REQUESTS 10
 
-typedef struct {
-    Socket *socket;
-    int channel;
-} thread_args;
-
 
 class SessionManager {
     int num_threads;
