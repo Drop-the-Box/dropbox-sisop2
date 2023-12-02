@@ -3,14 +3,17 @@
 #include <unistd.h>
 #include <fcntl.h> // for open
 #include <arpa/inet.h>
+#include <netinet/in.h>
 #include <pthread.h>
 #include <string.h>
+#include <memory>
 
 // Project-level imports
 #include "socket.hpp"
+using namespace std;
 
 
-Socket::Socket(char *address, int port, int buffer_size = 1024, int max_requests = 10) {
+Socket::Socket(string address, int port, int buffer_size = 1024, int max_requests = 10) {
     this->server_socket = socket(PF_INET, SOCK_STREAM, 0);
 
     // Set flags for non-blocking
@@ -21,8 +24,7 @@ Socket::Socket(char *address, int port, int buffer_size = 1024, int max_requests
     this->socket_flags = flags;
     this->server_address.sin_family = AF_INET;
     this->server_address.sin_port = htons(port);
-    this->server_address.sin_addr.s_addr = inet_addr(address);
-    this->addr_size = strlen(address);
+    this->server_address.sin_addr.s_addr = inet_addr(address.c_str());
     this->buffer_size = buffer_size;
 
     memset(this->server_address.sin_zero, '\0', sizeof this->server_address.sin_zero);
@@ -47,9 +49,15 @@ int Socket::listen(int max_requests) {
 };
 
 
-int Socket::accept() {
-    struct sockaddr* server_storage = (struct sockaddr *) &this->server_storage;
-    return ::accept(this->server_socket, server_storage, &this->addr_size);
+int Socket::accept(char* client_addr, int *client_port) {
+    shared_ptr<struct sockaddr_in> client((struct sockaddr_in *)malloc(sizeof(struct sockaddr_in)));
+    socklen_t client_addr_len = sizeof(struct sockaddr_in);
+    int is_accepted = ::accept(this->server_socket, (sockaddr *)client.get(), &client_addr_len);
+    if (is_accepted != -1) {
+        inet_ntop(AF_INET, &client->sin_addr.s_addr, client_addr, INET_ADDRSTRLEN);
+        *client_port = htons(client->sin_port);
+    }
+    return is_accepted;
 };
 
 
@@ -72,7 +80,7 @@ bool Socket::has_event(int channel) {
 }
 
 
-int Socket::receive(char *buffer, int channel) {
+int Socket::receive(uint8_t *buffer, int channel) {
     if (!this->has_event(channel)) return -1;
     // std::cout << "Receiving data on channel " << channel << "..." << std::endl;
     int error_code = 0;
@@ -100,41 +108,36 @@ bool Socket::has_error(int channel) {
     if (status != 0) {
         std::cout << "Error getting socket status: " << strerror(error) << "\n\n";
     }
+    std::cout << "Error? " << status << std::endl;
     return status != 0;
 }
 
 
 bool Socket::is_connected(int channel) {
-    int is_connected = get_client_info(channel, NULL, NULL);
-    if (is_connected != 0) {
-        // std::cout << "Channel " << channel << " not connected." << std::endl;
+    return get_client_info(channel, NULL, NULL);
+}
+
+
+bool Socket::get_client_info(int channel, char **client_addr, int *client_port) {
+    struct sockaddr_in client;
+    socklen_t client_len;
+    int is_connected = getpeername(channel, (struct sockaddr *)&client, &client_len);
+    char* addr = inet_ntoa(client.sin_addr);
+    int port = ntohs(client.sin_port);
+    if (client_addr != NULL) {
+        *client_port = port;
+        memcpy(*client_addr, addr, client_len);
     }
+    // std::cout <<  "Conn info: " << addr << ":" << port << is_connected << " status: "<<  is_connected << std::endl;
     return is_connected == 0;
 }
 
 
-bool Socket::get_client_info(int channel, char *client_addr, int *addr_len) {
-    sockaddr *client = (sockaddr *)calloc(sizeof(sockaddr_in), 0);
-    socklen_t *client_len = (socklen_t *)calloc(sizeof(int), 0);
-    if (client_addr != NULL) {
-        client = (sockaddr *)client_addr;
-        client_len = (socklen_t *)addr_len;
-    }
-    int is_connected = getpeername(channel, client, client_len);
-    if (client_addr == NULL) {
-        free(client);
-        free(client_len);
-    }
-    return is_connected;
-}
-
-
-int Socket::send(char *message, int channel) {
-    char *buffer =  (char*)(malloc(sizeof(this->buffer_size))); 
-    std::cout << "Sending message: " << buffer << std::endl;
-    strcpy(buffer, message);
-    free(buffer);
-    ::send(channel, message, sizeof(message), 0);
+int Socket::send(uint8_t *bytes, size_t size, int channel) {
+    unique_ptr<uint8_t> buffer((uint8_t*)malloc(size * sizeof(uint8_t))); 
+    copy(bytes, bytes+size, buffer.get());
+    std::cout << "Sending message: " << buffer.get() << std::endl;
+    ::send(channel, buffer.get(), size * sizeof(uint8_t), 0);
     return 0;
 };
 
@@ -150,4 +153,85 @@ int Socket::close(int channel) {
         std::cout << "Error closing channel " << channel << ": " << strerror(errno) << std::endl;
     }
     return result;
+}
+
+
+int Socket::get_message_async(uint8_t *buffer, int channel) {
+    ::memset(buffer, 0, this->buffer_size);
+    int payload_size = this->receive(buffer, channel);
+    if (payload_size == 0) {
+        std::cout << "Client on channel " << channel << " has been disconnected." << std::endl;
+    }
+    return payload_size;
+}
+
+int Socket::get_message_sync(uint8_t *buffer, int channel) {
+    ::memset(buffer, 0, this->buffer_size);
+    int payload_size = this->get_message_async(buffer, channel);
+    while(this->is_connected(channel) && !this->has_error(channel) && payload_size == -1) {
+        payload_size = this->get_message_async(buffer, channel);
+    }
+    if (!this->is_connected(channel) && this->has_error(channel) && payload_size == 0) {
+        return 0;
+    }
+    return payload_size;
+}
+
+Packet::Packet(uint8_t *bytes) {
+    uint8_t *cursor = bytes;
+    size_t uint16_s = sizeof(uint16_t);
+    uint16_t prop;
+    memcpy(&prop, cursor, uint16_s);
+    this->type = (PacketType)ntohs(prop);
+    cursor += uint16_s;
+    memcpy(&prop, cursor, uint16_s);
+    this->seq_index = ntohs(prop);
+    cursor += uint16_s;
+    memcpy(&prop, cursor, uint16_s);
+    this->total_size = ntohs(prop);
+    cursor += uint16_s;
+    memcpy(&prop, cursor, uint16_s);
+    this->payload_size = ntohs(prop);
+    cursor += uint16_s;
+    this->payload = (uint8_t *)malloc(this->payload_size);
+    memcpy(this->payload, cursor, this->payload_size);
+};
+
+
+Packet::Packet(
+    PacketType type, uint16_t seq_index, uint16_t total_size,
+    uint16_t payload_size, uint8_t *payload
+) {
+    this->type = type;
+    this->seq_index = seq_index;
+    this->total_size = total_size;
+    this->payload_size = payload_size;
+    this->payload = (uint8_t *)malloc(payload_size * sizeof(uint8_t));
+    memcpy(this->payload, payload, payload_size * sizeof(uint8_t));
+};
+
+size_t Packet::to_bytes(uint8_t** bytes_ptr) {
+    size_t packet_size = sizeof(this->type);
+    packet_size += sizeof(this->seq_index);
+    packet_size += sizeof(this->total_size);
+    packet_size += sizeof(this->payload_size);
+    packet_size += this->payload_size * sizeof(uint8_t);
+    *bytes_ptr = (uint8_t *)malloc(packet_size);
+
+    uint8_t *cursor = *bytes_ptr;
+    size_t uint16_s = sizeof(uint16_t);
+    uint16_t prop = htons(this->type);
+    memcpy(cursor, &prop, uint16_s);
+    cursor += uint16_s;
+    prop = htons(this->seq_index);
+    memcpy(cursor, &prop, uint16_s);
+    cursor += uint16_s;
+    prop = htons(this->total_size);
+    memcpy(cursor, &prop, uint16_s);
+    cursor += uint16_s;
+    prop = htons(this->payload_size);
+    memcpy(cursor, &prop, uint16_s);
+    cursor += uint16_s;
+    memcpy(cursor, this->payload, this->payload_size * sizeof(uint8_t));
+    return packet_size;
 }
