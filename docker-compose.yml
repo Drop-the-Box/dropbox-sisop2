@@ -1,0 +1,42 @@
+version: "3"
+services:
+  server:
+    image: dtb-server
+    build:
+      context: ./
+      dockerfile: dropthebox.dockerfile
+    container_name: dtb-server
+    command: bash -c "g++ -g src/server/**/*.cpp src/server/main.cpp -o ./bin/server && gdb ./bin/server"
+      # command: bash -c "g++ -g src/server/**/*.cpp src/server/main.cpp -o ./bin/server && valgrind --leak-check=yes ./bin/server"
+      # command: bash -c "g++ -g src/server/**/*.cpp src/server/main.cpp -o ./bin/server && ./bin/server"
+    networks:
+      - dtb
+    volumes:
+      - ./:/code
+      - /code/.git
+      - /code/bin
+    stdin_open: true
+    tty: true
+  client:
+    image: dtb-server
+    build:
+      context: ./
+      dockerfile: dropthebox.dockerfile
+    command: bash -c "g++ src/server/**/*.cpp src/client/main.cpp -o ./bin/client && ./bin/client claudinoac dtb-server 6999"
+    # command: bash -c "g++ -g src/server/**/*.cpp src/client/main.cpp -o ./bin/client && gdb ./bin/client"
+    # command: bash -c "g++ -g src/server/**/*.cpp src/client/main.cpp -o ./bin/client && valgrind --leak-check=yes ./bin/client claudinoac dtb-server 6999"
+    networks:
+      - dtb
+    volumes:
+      - ./:/code
+      - /code/.git
+      - /code/bin
+    stdin_open: true
+    tty: true
+    deploy:
+      replicas: 2
+    depends_on:
+      - server
+networks:
+  dtb:
+    external: true
