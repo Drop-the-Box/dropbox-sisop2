@@ -29,10 +29,10 @@ $(eval $(ARGS):;@:)
 MAKEFLAGS += --silent
 $(eval TEST_TYPE := $(shell [[ -z "$(ARGS)" ]] && echo "null" || echo "$(ARGS)"))
 
-SERVER_CMD = 'g++ src/server/**/*.cpp src/server/main.cpp -o ./server && ./server'
-CLIENT_CMD = 'g++ src/client/**/*.cpp src/client/main.cpp -o ./client && ./client'
-SERVER_DEBUG_CMD = 'g++ -g src/server/**/*.cpp src/server/main.cpp -o ./server && gdb ./server'
-CLIENT_DEBUG_CMD = 'g++ -g src/client/**/*.cpp src/client/main.cpp -o ./client && gdb ./client'
+SERVER_CMD = 'g++ src/server/**/*.cpp src/server/main.cpp -o ./bin/server && ./bin/server'
+CLIENT_CMD = 'g++ src/server/**/*.cpp src/client/main.cpp -o ./bin/client && ./bin/client'
+SERVER_DEBUG_CMD = 'g++ -g src/server/**/*.cpp src/server/main.cpp -o ./bin/server && gdb ./bin/server'
+CLIENT_DEBUG_CMD = 'g++ -g src/server/**/*.cpp src/client/main.cpp -o ./bin/client && gdb ./bin/client'
 
 # HELP COMMANDS
 .PHONY: help
@@ -55,32 +55,40 @@ init:  ### Install dependencies and start application
 
 .PHONY: build
 build-image:  ### builds the base image 
-	@ docker build -t dropthebox -f dropthebox.dockerfile .
+	@ docker-compose build
 
 ############ SERVER COMMANDS #############
 
-.PHONY: run-server 
-run-server: build-image ### build and run the server app
-	@ docker run --name dtb-server -it -p 6999:6999 --rm dropthebox bash -c ${SERVER_CMD}
+.PHONY: run-server
+run-server: ### build and run the server app
+	@ docker-compose up -d server && docker attach dtb-server
 
-.PHONY: debug-server
-debug-server: build-image ### build and run the server app
-	@ docker run --name dtb-server -it -p 6999:6999 --rm dropthebox bash -c ${SERVER_DEBUG_CMD}
+.PHONY: run-server-native
+run-server-native:  ### build and run the server app on host machine
+	@ bash -c ${SERVER_CMD}
+
+.PHONY: debug-server-native
+debug-server-native:  ### build and debug the server app on host machine using gdb
+	@ bash -c ${SERVER_DEBUG_CMD}
 
 .PHONY: kill-server
 kill-server:  ### kills the server service
-	@ docker kill dtb-server
+	@ docker-compose kill server
 
 ############ CLIENT COMMANDS #############
 
 .PHONY: run-client
-run-client: build-image   ### build and run the client app
-	@ docker run --name dtb-client -it --rm dropthebox bash -c ${CLIENT_CMD} 
+run-client:   ### build and run the client app
+	@ docker-compose up -d client && docker attach drop-the-box-client-1
 
-.PHONY: debug-client
-debug-client: build-image ### build and run the client app
-	@ docker run --name dtb-client -it --rm dropthebox bash -c ${CLIENT_DEBUG_CMD}
+.PHONY: run-client-native
+run-client-native:  ### build and run the client app on host machine
+	@ bash -c ${CLIENT_CMD}
+
+.PHONY: debug-client-native
+debug-client-native:  ### build and debug the client app on host machine using gdb
+	@ bash -c ${CLIENT_DEBUG_CMD}
 
 .PHONY: kill-client
 kill-client:  ### kills the client service
-	@ docker kill dtb-client
+	@ docker-compose kill client
