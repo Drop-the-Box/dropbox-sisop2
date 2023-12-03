@@ -5,13 +5,13 @@ Inotify::Inotify(const char *folder_path){
     this->folder_path = folder_path;
     this->file_descriptor = inotify_init();
     if (this->file_descriptor == -1) {
-        std::cerr << "Failed to initialize inotify" << std::endl;
+        cerr << "Failed to initialize inotify" << endl;
         return;
     }
     
     this->watch_descriptor = inotify_add_watch(this->file_descriptor, this->folder_path, IN_MODIFY | IN_CREATE | IN_DELETE);
     if (this->watch_descriptor == -1) {
-        std::cerr << "Failed to add watch" << std::endl;
+        cerr << "Failed to add watch" << endl;
         return;
     }
 }
@@ -29,17 +29,17 @@ void Inotify::read_event(){
 
     int length = read(this->file_descriptor, buffer, BUFFER_LEN);
     if (length < 0) {
-        std::cerr << "Failed to read" << std::endl;
+        cerr << "Failed to read" << endl;
     }
 
     struct inotify_event* event = (struct inotify_event*) &(buffer)[0];
     if (event->len) {
         if (event->mask & IN_CREATE) {
-            std::cout << "The file " << event->name << " was created." << std::endl;
+            cout << "The file " << event->name << " was created." << endl;
         } else if (event->mask & IN_MODIFY) {
-            std::cout << "The file " << event->name << " was modified." << std::endl;
+            cout << "The file " << event->name << " was modified." << endl;
         } else if (event->mask & IN_DELETE) {
-            std::cout << "The file " << event->name << " was deleted." << std::endl;
+            cout << "The file " << event->name << " was deleted." << endl;
         }
     }
 }
