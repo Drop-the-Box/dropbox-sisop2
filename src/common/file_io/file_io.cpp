@@ -173,6 +173,9 @@ bool FileHandler::send(shared_ptr<Socket> socket, int channel) {
             unique_ptr<Packet> packet(
                 new Packet(FileChunk, seq_index, file_size, file_bytes_read, file_buf.get())
             );
+            if (this->filename == "Arq_II___Pack.pdf") {
+                cout << "Sending pack... " << endl;
+            }
             cout << "Total file size: " << packet->total_size << endl; 
             int generated_bytes = packet->send(socket, channel);
             cout << "Result: " << generated_bytes << endl;

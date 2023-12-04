@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "file_sync.hpp"
+#include "../../common/vars.hpp"
 
 using namespace std;
 
@@ -25,15 +26,22 @@ void FileSync::sync_all() {
         oss << sync_dir << "/" << *filename;
         string filepath = oss.str();
         cout << "File: " << filepath << endl;
-        unique_ptr<FileHandler> file(new FileHandler(filepath));
+        FileHandler *file = new FileHandler(filepath);
         file->send(context->socket, context->connection->channel);
+        file->close();
+        free(file);
     }
 }
 
 
 void FileSync::loop() {
     this->sync_all();
-    while(1) {
+    shared_ptr<Socket> socket = this->context->socket;
+    int channel = this->context->connection->channel;
+    shared_ptr<uint8_t> buffer((uint8_t *)malloc(BUFFER_SIZE));
+
+        while(context->socket->get_message_async(buffer.get(), context->connection->channel) != 0) {
+        cout << "Filesync waiting on channel " << channel << "..." << endl;
         sleep(1);
     }
 }

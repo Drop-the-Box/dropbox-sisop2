@@ -1,0 +1,22 @@
+<map id="src/client/session/session.hpp" name="src/client/session/session.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="264,5,387,46"/>
+<area shape="rect" id="Node000002" href="$file__exchange_8hpp.html" title=" " alt="" coords="55,94,186,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="266,55,168,96,166,91,264,50"/>
+<area shape="rect" id="Node000004" href="$client_2session_2session_8cpp.html" title=" " alt="" coords="161,183,285,223"/>
+<area shape="poly" id="edge11_Node000001_Node000004" title=" " alt="" coords="285,58,266,75,251,95,240,117,233,140,227,182,221,182,228,139,235,115,246,93,262,72,281,54"/>
+<area shape="rect" id="Node000005" href="$client_2eventhub_2publisher_8hpp.html" title=" " alt="" coords="260,94,391,135"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="328,62,328,94,323,94,323,62"/>
+<area shape="rect" id="Node000007" href="$client_2eventhub_2subscriber_8hpp.html" title=" " alt="" coords="416,94,547,135"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="376,51,448,91,445,96,373,56"/>
+<area shape="rect" id="Node000009" href="$client_2main_8cpp.html" title=" " alt="" coords="572,102,703,127"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="403,46,595,98,593,103,401,51"/>
+<area shape="rect" id="Node000003" href="$file__exchange_8cpp.html" title=" " alt="" coords="5,183,137,223"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,150,84,184,80,181,99,147"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="157,143,202,180,198,184,154,147"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="292,147,248,184,244,180,289,143"/>
+<area shape="rect" id="Node000006" href="$client_2eventhub_2publisher_8cpp.html" title=" " alt="" coords="309,183,441,223"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="347,147,366,181,362,184,342,150"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="409,142,283,185,281,180,408,137"/>
+<area shape="rect" id="Node000008" href="$client_2eventhub_2subscriber_8cpp.html" title=" " alt="" coords="465,183,597,223"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="503,147,522,181,518,184,498,150"/>
+</map>

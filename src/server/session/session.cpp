@@ -41,9 +41,9 @@ void SessionManager::start() {
         usleep(10000);
     }
     for(int thread_id = 0; thread_id < num_threads; thread_id++) {
-        pthread_join(this->thread_pool[thread_id], NULL);
         int channel = channels[thread_id];
         socket->close(channel);
+        pthread_join(this->thread_pool[thread_id], NULL);
     }
 }
 

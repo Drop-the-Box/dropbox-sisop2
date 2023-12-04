@@ -34,11 +34,11 @@ services:
       - /code/srv_sync_dir
     # environment:
     #   DEBUG: true
-    #  DEBUG_MEM: true
+        # DEBUG_MEM: true
     stdin_open: true
     tty: true
     deploy:
-      replicas: 1
+      replicas: 3
     depends_on:
       - server
 networks:

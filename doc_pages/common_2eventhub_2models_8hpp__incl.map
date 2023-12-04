@@ -1,0 +1,9 @@
+<map id="src/common/eventhub/models.hpp" name="src/common/eventhub/models.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="30,5,181,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,59,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,48,55,84,52,81,85,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="82,94,129,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="108,46,108,78,103,78,103,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="152,94,237,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="129,44,171,82,168,86,126,48"/>
+</map>
