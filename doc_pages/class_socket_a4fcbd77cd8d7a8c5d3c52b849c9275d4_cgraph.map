@@ -1,9 +1,0 @@
-<map id="Socket::close" name="Socket::close">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,107,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="27,30,21,21,25,11,37,5,56,3,77,5,88,12,85,16,75,10,56,8,38,10,29,15,26,20,31,28"/>
-<area shape="rect" id="Node000002" href="$class_socket.html#ac285e227cb6c9bd82c1b1419364e26e9" title=" " alt="" coords="155,29,302,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="107,40,139,40,139,45,107,45"/>
-<area shape="rect" id="Node000003" href="$class_socket.html#acd394821a6f2743e7e22dcf3b89cbad1" title=" " alt="" coords="350,29,504,55"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="302,48,335,48,334,54,302,54"/>
-<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="350,36,317,36,317,31,350,31"/>
-</map>
