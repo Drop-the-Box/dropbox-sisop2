@@ -31,7 +31,6 @@ UserStore::~UserStore() {
 
 
 bool UserStore::add_user(string username) {
-    sem_wait(&this->devices_lock);
     bool user_added = false;
     if(this->users_devices.find(username) == this->users_devices.end()) {
         map<string, shared_ptr<Device> > device_map;
@@ -41,7 +40,6 @@ bool UserStore::add_user(string username) {
     } else {
         cout << "User " << username << " already registered." << endl;
     }
-    sem_post(&this->devices_lock);
     return user_added;
 }
 
