@@ -1,0 +1,11 @@
+<map id="src/common/session/models.hpp" name="src/common/session/models.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="134,5,276,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,88,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,49,85,89,83,84,164,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="112,94,197,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,48,173,82,168,79,190,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="222,94,293,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="220,45,243,79,238,82,216,48"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="317,94,363,120"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="240,44,307,83,305,88,237,49"/>
+</map>

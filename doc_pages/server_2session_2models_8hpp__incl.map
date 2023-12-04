@@ -1,0 +1,19 @@
+<map id="src/server/session/models.hpp" name="src/server/session/models.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="125,5,254,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,102,59,127"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,49,69,96,66,91,152,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="83,102,152,127"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,48,139,91,135,88,171,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="123,183,205,208"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="189,47,171,168,165,167,184,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="229,183,315,208"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="201,45,262,168,257,170,196,47"/>
+<area shape="rect" id="Node000006" href="$common_2session_2models_8hpp.html" title=" " alt="" coords="277,94,422,135"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="227,44,301,84,299,89,224,49"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="304,138,207,179,205,174,302,133"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="332,137,297,173,293,169,328,133"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="339,183,410,208"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="358,134,369,167,364,168,353,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="434,183,481,208"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="378,133,430,171,427,175,374,137"/>
+</map>
