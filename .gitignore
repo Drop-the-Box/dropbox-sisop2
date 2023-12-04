@@ -2,3 +2,4 @@
 /sync_dir
 /srv_sync_dir
 *.o
+.vscode/

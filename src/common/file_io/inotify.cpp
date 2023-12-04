@@ -1,5 +1,4 @@
 #include "inotify.hpp"
-using namespace std;
 
 Inotify::Inotify(const char *folder_path){
     this->folder_path = folder_path;
@@ -48,4 +47,3 @@ void Inotify::closeInotify(){
     inotify_rm_watch(this->file_descriptor, this->watch_descriptor);
     close(this->file_descriptor);
 }
-
