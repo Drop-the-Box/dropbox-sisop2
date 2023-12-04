@@ -4,20 +4,30 @@
 #include<sys/socket.h>
 #include<netinet/in.h>
 #include <iostream>
+#include <memory>
+#include "../eventhub/models.hpp"
 
 using namespace std;
 
+enum SocketMode {
+    Server, Client
+};
+
 class Socket {
-    int server_socket;
     struct sockaddr_in server_address;
+    SocketMode mode;
     // socklen_t addr_size;
+    void init(string address, int port, SocketMode mode, int buffer_size, int max_requests);
 
     public:
         int buffer_size;
         int socket_flags;
+        int socket_fd;
 
-        Socket(string address, int port, int buffer_size, int max_requests);
+        Socket(string address, int port, SocketMode mode, int buffer_size);
+        Socket(string address, int port, SocketMode mode, int buffer_size, int max_requests);
         int listen(int max_requests);
+        void connect(string address, int port);
         void bind();
         int accept(char *client_addr, int *client_port);
         int send(uint8_t* bytes, size_t size, int channel);
@@ -32,7 +42,7 @@ class Socket {
 };
 
 enum PacketType {
-    Command, ClientSession, FileChunk, FileInfo, Error, Event
+    SessionInit, FileChunk, FileMetadataMsg, ErrorMsg, EventMsg, CommandMsg, 
 };
 
 class Packet {
@@ -40,14 +50,15 @@ class Packet {
     public:
         PacketType type;
         uint16_t seq_index;
-        uint16_t total_size;
+        uint32_t total_size;
         uint16_t payload_size;
         uint8_t *payload;
 
         Packet(uint8_t *bytes);
-        Packet(PacketType type, uint16_t seq_index, uint16_t total_size, uint16_t payload_size, uint8_t *payload);
+        Packet(shared_ptr<Event> event);
+        Packet(PacketType type, uint16_t seq_index, uint32_t total_size, uint16_t payload_size, uint8_t *payload);
         size_t to_bytes(uint8_t** bytes_ptr);
-
+        int send(shared_ptr<Socket> socket, int channel);
 };
 
 

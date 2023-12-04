@@ -1,12 +1,17 @@
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "subscriber.hpp"
 
-EventSubscriber::EventSubscriber(shared_ptr<Socket> socket, Connection *connection, UserStore *storage) {
 
+ServerEventSubscriber::ServerEventSubscriber(shared_ptr<ServerContext> context) {
+    this->context = context;
 }
 
 
-void EventSubscriber::loop() {
-
+void ServerEventSubscriber::loop() {
+    cout << "------------- Connected to event subscriber" << endl;
+    while(1) {
+        sleep(1);
+    }
 }

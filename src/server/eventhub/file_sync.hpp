@@ -1,21 +1,23 @@
-#ifndef SUBSCRIBER_H
-#define SUBSCRIBER_H
+#ifndef FILE_SYNC_H
+#define FILE_SYNC_H
 
 #include "../session/models.hpp"
 #include "../../common/socket_io/socket.hpp"
+#include "../../common/file_io/file_io.hpp"
 #include "../userland/models.hpp"
 
 #include <memory>
 
 using namespace std;
 
-class ServerEventSubscriber {
+class FileSync {
     shared_ptr<ServerContext> context;
 
     public:
-        ServerEventSubscriber(shared_ptr<ServerContext> context);
+        FileSync(shared_ptr<ServerContext> context);
         void loop();
+        void sync_all();
         void get_event();
-};
 
+};
 #endif

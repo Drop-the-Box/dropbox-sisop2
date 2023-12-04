@@ -1,31 +1,55 @@
-#ifndef MODELS_H
-#define MODELS_H
+#ifndef ULAND_MODELS_H
+#define ULAND_MODELS_H
 
-#include "../session/session.hpp"
+#include <semaphore.h> 
+#include <vector>
 
+#include "../session/models.hpp"
+#include "../../common/socket_io/socket.hpp"
+
+using namespace std;
+
+class Session;
 
 class Device {
     public:
         char *address;
         string username;
-        map<int, Connection *> connections;
+        map<int, shared_ptr<Connection> > connections;
 
-        Device(char *username, Connection *connection);
+        Device(string username, shared_ptr<Connection> connection);
 };
 
+
+class ServerContext {
+    public:
+        shared_ptr<Device> device;
+        shared_ptr<Connection> connection;
+        shared_ptr<UserStore> storage;
+        shared_ptr<Socket> socket;
+
+        ServerContext(shared_ptr<Socket> socket, shared_ptr<Connection> connection, shared_ptr<UserStore>);
+        void set_device(shared_ptr<Device> device);
+};
+
+
 class UserStore {
-    map<string, vector<Session *> > users_sessions;
-    map<string, map<string, Device * > > users_devices;
+    map<string, vector<shared_ptr<Session> > > users_sessions;
+    map<string, map<string, shared_ptr<Device> > > users_devices;
+    sem_t devices_lock;
+    sem_t files_lock;
 
     public:
-        vector<Device *> get_user_devices(char *username);
+        UserStore();
+        ~UserStore();
+        map<string, shared_ptr<Device> > get_user_devices(string username);
         vector<string> get_connected_users();
         void get_user_devices();
-        bool add_user(char *username);
-        bool register_device(char *username, Connection *connection);
-        bool register_connection(char *username, Connection *connection);
-        bool unregister_connection(Connection *connection);
-        Device * get_device(char *username, string address);
+        bool add_user(string username);
+        bool register_device(string username, shared_ptr<ServerContext> context);
+        bool register_connection(string username, shared_ptr<ServerContext> context);
+        bool unregister_connection(shared_ptr<ServerContext> context);
+        shared_ptr<Device> get_device(string username, string address);
 };
 
 #endif

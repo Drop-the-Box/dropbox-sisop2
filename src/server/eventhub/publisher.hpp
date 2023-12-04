@@ -4,18 +4,17 @@
 #include <memory>
 
 #include "../session/models.hpp"
-#include "../socket_io/socket.hpp"
+#include "../userland/models.hpp"
+#include "../../common/socket_io/socket.hpp"
 
 using namespace std;
 
-class EventPublisher {
-    Connection *connection;
-    shared_ptr<Socket> socket;
-    UserStore *storage;
+class ServerEventPublisher {
     uint8_t *buffer;
+    shared_ptr<ServerContext> context;
 
     public:
-        EventPublisher(shared_ptr<Socket> socket, Connection *connection, UserStore *storage);
+        ServerEventPublisher(shared_ptr<ServerContext> context);
         void loop();
         void send_event();
 };

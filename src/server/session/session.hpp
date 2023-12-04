@@ -7,7 +7,9 @@
 #include <string.h>
 #include <memory>
 
-#include "../socket_io/socket.hpp"
+#include "../../common/socket_io/socket.hpp"
+#include "../../common/session/models.hpp"
+#include "../userland/models.hpp"
 #include "models.hpp"
 
 using namespace std;
@@ -21,7 +23,7 @@ class SessionManager {
     pthread_t thread_pool[MAX_REQUESTS];
 
     static void *handle_session(void *args);
-    void create_session(int channel, Connection *connection, UserStore *storage);
+    void create_session(int channel, shared_ptr<ServerContext> context);
 
     public:
         bool *interrupt;
@@ -33,17 +35,13 @@ class SessionManager {
 
 class Session {
     uint8_t *buffer;
-    UserStore *storage;
-
 
     public:
+        shared_ptr<ServerContext> context;
         int channel;
-        shared_ptr<Socket> socket;
-        Device *device;
         SessionType type;
-        Connection *connection;
 
-        Session(shared_ptr<Socket> socket, int channel, Connection *connection, UserStore *storage);
+        Session(shared_ptr<ServerContext>);
         int get_message_sync(uint8_t *buffer);
         int get_message_async(uint8_t *buffer);
         int loop();
