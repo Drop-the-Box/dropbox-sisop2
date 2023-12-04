@@ -58,7 +58,7 @@ void Socket::init(
         this->bind();
         this->listen(max_requests);
     } else {
-        shared_ptr<struct hostent> server_addr(gethostbyname(address.c_str()));
+        struct hostent* server_addr = gethostbyname(address.c_str());
         if (server_addr == NULL) {
             cerr << "Error: cannot find address " << address << endl;
         }
