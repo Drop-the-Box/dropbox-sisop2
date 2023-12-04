@@ -1,0 +1,15 @@
+<map id="src/common/file_io/inotify.hpp" name="src/common/file_io/inotify.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="227,5,359,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,74,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,49,89,93,88,88,229,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="98,94,189,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,49,181,89,178,84,254,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="213,94,280,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="284,48,263,82,259,79,279,45"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="304,94,375,120"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="307,45,327,79,322,82,302,48"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="399,94,488,120"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="332,44,408,84,406,89,329,49"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="512,94,572,120"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="356,44,498,89,497,94,354,49"/>
+</map>

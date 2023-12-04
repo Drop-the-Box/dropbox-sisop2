@@ -13,6 +13,7 @@ var annotated_dup =
     [ "FileHandler", "class_file_handler.html", "class_file_handler" ],
     [ "FileMetadata", "class_file_metadata.html", "class_file_metadata" ],
     [ "FileSync", "class_file_sync.html", "class_file_sync" ],
+    [ "Inotify", "class_inotify.html", "class_inotify" ],
     [ "Packet", "class_packet.html", "class_packet" ],
     [ "ServerContext", "class_server_context.html", "class_server_context" ],
     [ "ServerEventPublisher", "class_server_event_publisher.html", "class_server_event_publisher" ],
