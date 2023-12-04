@@ -50,9 +50,10 @@ void *ClientSessionManager::handle_session(void *context_ptr) {
     shared_ptr<Socket> socket(new Socket(context->server_addr, context->server_port, Client, BUFFER_SIZE));
 
     unique_ptr<ClientSession> session(new ClientSession(context, socket));
-    session->setup();
-    session->run();
-
+    if (session->setup()) {
+        session->run();
+    }
+    socket->close(socket->socket_fd);
     pthread_exit(NULL);
 }
 
@@ -83,6 +84,7 @@ bool ClientSession::setup() {
         unique_ptr<Event> evt(new Event(resp_packet->payload));
         if (evt->type == SessionAccepted) {
             cout << "Session accepted from server..." << endl;
+            return true;
         }
         cout << "Event detail: " << evt->message << endl;
     }

@@ -178,7 +178,11 @@ int Socket::send(uint8_t *bytes, size_t size, int channel) {
     unique_ptr<uint8_t> buffer((uint8_t*)malloc(size * sizeof(uint8_t))); 
     copy(bytes, bytes+size, buffer.get());
     std::cout << "Sending message: " << buffer.get() << std::endl;
-    return ::send(channel, buffer.get(), size * sizeof(uint8_t), 0);
+    int result = -1;
+    if (this->is_connected(channel) && !this->has_error(channel)) {
+        result = ::send(channel, buffer.get(), size * sizeof(uint8_t), 0);
+    }
+    return result;
 };
 
 
