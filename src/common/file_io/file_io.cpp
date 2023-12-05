@@ -18,28 +18,28 @@ using namespace std;
 
 FileMetadata::FileMetadata(uint8_t *bytes) {
     uint8_t *cursor = bytes;
-    size_t uint16_s = sizeof(uint16_t);
-    uint16_t prop;
-    long t_prop;
-    size_t time_s = sizeof(long);
 
     off_t size_prop;
     memcpy(&size_prop, cursor, sizeof(off_t));
     this->size = (off_t)ntohl(size_prop);
     cursor += sizeof(off_t);
 
-    // memcpy(&t_prop, cursor, time_s);
-    // this->accessed_at = (long)ntohs(t_prop);
-    // cursor += time_s;
+    time_t t_prop;
+    size_t time_s = sizeof(time_t);
+    memcpy(&t_prop, cursor, time_s);
+    this->accessed_at = (time_t)ntohs(t_prop);
+    cursor += time_s;
 
-    // memcpy(&t_prop, cursor, time_s);
-    // this->modified_at = (long)ntohs(t_prop);
-    // cursor += time_s;
+    memcpy(&t_prop, cursor, time_s);
+    this->modified_at = (time_t)ntohs(t_prop);
+    cursor += time_s;
 
-    // memcpy(&t_prop, cursor, time_s);
-    // this->stat_changed_at = (long)ntohs(t_prop);
-    // cursor += time_s;
+    memcpy(&t_prop, cursor, time_s);
+    this->stat_changed_at = (time_t)ntohs(t_prop);
+    cursor += time_s;
 
+    uint16_t prop;
+    size_t uint16_s = sizeof(uint16_t);
     memcpy(&prop, cursor, uint16_s);
     uint16_t name_size = ntohs(prop);
     cursor += uint16_s;
@@ -70,14 +70,14 @@ FileMetadata::FileMetadata(string full_path) {
 }
 
 size_t FileMetadata::to_bytes(uint8_t **bytes_ptr) {
-    size_t time_s = sizeof(long);
+    size_t time_s = sizeof(time_t);
     size_t uint16_s = sizeof(uint16_t);
-    uint16_t name_size = this->name.length() * sizeof(char);
+    uint16_t name_size = this->name.length();
 
     size_t packet_size = sizeof(off_t);
-    // packet_size += time_s; 
-    // packet_size += time_s; 
-    // packet_size += time_s; 
+    packet_size += time_s; 
+    packet_size += time_s; 
+    packet_size += time_s; 
     packet_size += uint16_s;
     packet_size += name_size;
 
@@ -88,17 +88,17 @@ size_t FileMetadata::to_bytes(uint8_t **bytes_ptr) {
     memcpy(cursor, &enc_size, sizeof(off_t));
     cursor += sizeof(off_t);
 
-    // long prop_t = htonl(this->accessed_at);
-    // memcpy(cursor, &prop_t, time_s);
-    // cursor += time_s;
+    time_t prop_t = htonl(this->accessed_at);
+    memcpy(cursor, &prop_t, time_s);
+    cursor += time_s;
 
-    // prop_t = htonl(this->modified_at);
-    // memcpy(cursor, &prop_t, time_s);
-    // cursor += time_s;
+    prop_t = htonl(this->modified_at);
+    memcpy(cursor, &prop_t, time_s);
+    cursor += time_s;
 
-    // prop_t = htonl(this->stat_changed_at);
-    // memcpy(cursor, &prop_t, time_s);
-    // cursor += time_s;
+    prop_t = htonl(this->stat_changed_at);
+    memcpy(cursor, &prop_t, time_s);
+    cursor += time_s;
 
     uint16_t name_size_enc = htons(name_size);
     memcpy(cursor, &name_size_enc, uint16_s);
@@ -161,7 +161,7 @@ bool FileHandler::send(shared_ptr<Socket> socket, int channel) {
     off_t file_size = this->metadata->size;
     cout << "File size: " << file_size << endl;
     int seq_index = 1;
-    int file_buf_size = BUFFER_SIZE - 12;
+    int file_buf_size = Packet::get_max_payload_size();   
     int file_bytes_read = 0;
 
     shared_ptr<uint8_t> file_buf((uint8_t *)malloc(file_buf_size * sizeof(uint8_t)));
@@ -173,9 +173,6 @@ bool FileHandler::send(shared_ptr<Socket> socket, int channel) {
             unique_ptr<Packet> packet(
                 new Packet(FileChunk, seq_index, file_size, file_bytes_read, file_buf.get())
             );
-            if (this->filename == "Arq_II___Pack.pdf") {
-                cout << "Sending pack... " << endl;
-            }
             cout << "Total file size: " << packet->total_size << endl; 
             int generated_bytes = packet->send(socket, channel);
             cout << "Result: " << generated_bytes << endl;

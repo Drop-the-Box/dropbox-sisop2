@@ -58,11 +58,12 @@ void Socket::init(
         this->bind();
         this->listen(max_requests);
     } else {
-        struct hostent* server_addr = gethostbyname(address.c_str());
+        struct hostent *server_addr = gethostbyname(address.c_str());
         if (server_addr == NULL) {
             cerr << "Error: cannot find address " << address << endl;
         }
-        this->server_address.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)server_addr->h_addr));
+        struct in_addr server_host = *(in_addr *)server_addr->h_addr; 
+        this->server_address.sin_addr.s_addr = inet_addr(inet_ntoa(server_host));
         this->connect(address, port);
     }
 };
@@ -91,9 +92,9 @@ int Socket::listen(int max_requests) {
 
 
 int Socket::accept(char* client_addr, int *client_port) {
-    shared_ptr<struct sockaddr_in> client((struct sockaddr_in *)malloc(sizeof(struct sockaddr_in)));
+    struct sockaddr_in *client = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
     socklen_t client_addr_len = sizeof(struct sockaddr_in);
-    int is_accepted = ::accept(this->socket_fd, (sockaddr *)client.get(), &client_addr_len);
+    int is_accepted = ::accept(this->socket_fd, (sockaddr *)client, &client_addr_len);
     if (is_accepted != -1) {
         inet_ntop(AF_INET, &client->sin_addr.s_addr, client_addr, INET_ADDRSTRLEN);
         *client_port = htons(client->sin_port);
@@ -221,6 +222,10 @@ int Socket::get_message_sync(uint8_t *buffer, int channel) {
     return payload_size;
 }
 
+int Packet::get_max_payload_size() {
+    return BUFFER_SIZE - 3 * sizeof(uint16_t) - sizeof(uint32_t);
+}
+
 Packet::Packet(uint8_t *bytes) {
     uint8_t *cursor = bytes;
     size_t uint16_s = sizeof(uint16_t);
@@ -244,6 +249,10 @@ Packet::Packet(uint8_t *bytes) {
     cursor += uint16_s;
 
     this->payload = (uint8_t *)malloc(this->payload_size);
+    if (this->payload_size > BUFFER_SIZE) {
+        cerr << "Buffer overflow: " << this->payload_size - BUFFER_SIZE << " bigger than the buffer";
+        this->payload_size = BUFFER_SIZE;
+    }
     memcpy(this->payload, cursor, this->payload_size);
 };
 
@@ -256,8 +265,8 @@ Packet::Packet(
     this->seq_index = seq_index;
     this->total_size = total_size;
     this->payload_size = payload_size;
-    this->payload = (uint8_t *)malloc(payload_size * sizeof(uint8_t));
-    memcpy(this->payload, payload, payload_size * sizeof(uint8_t));
+    this->payload = (uint8_t *)malloc(payload_size);
+    memcpy(this->payload, payload, payload_size);
 };
         
 Packet::Packet(shared_ptr<Event> event) {
@@ -268,15 +277,18 @@ Packet::Packet(shared_ptr<Event> event) {
 };
 
 size_t Packet::to_bytes(uint8_t** bytes_ptr) {
-    size_t packet_size = sizeof(this->type);
-    packet_size += sizeof(this->seq_index);
-    packet_size += sizeof(uint32_t);
-    packet_size += sizeof(this->payload_size);
-    packet_size += this->payload_size * sizeof(uint8_t);
-    *bytes_ptr = (uint8_t *)malloc(packet_size);
-
-    uint8_t *cursor = *bytes_ptr;
     size_t uint16_s = sizeof(uint16_t);
+
+    size_t packet_size = uint16_s;
+    packet_size += uint16_s;
+    packet_size += sizeof(uint32_t);
+    packet_size += uint16_s;
+    packet_size += this->payload_size;
+
+    *bytes_ptr = (uint8_t *)malloc(packet_size);
+    uint8_t *cursor = *bytes_ptr;
+
+
     uint16_t prop = htons(this->type);
     memcpy(cursor, &prop, uint16_s);
     cursor += uint16_s;
@@ -293,7 +305,7 @@ size_t Packet::to_bytes(uint8_t** bytes_ptr) {
     memcpy(cursor, &prop, uint16_s);
     cursor += uint16_s;
 
-    memcpy(cursor, this->payload, this->payload_size * sizeof(uint8_t));
+    memcpy(cursor, this->payload, this->payload_size);
     return packet_size;
 }
 

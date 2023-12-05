@@ -57,6 +57,7 @@ class Packet {
         Packet(uint8_t *bytes);
         Packet(shared_ptr<Event> event);
         Packet(PacketType type, uint16_t seq_index, uint32_t total_size, uint16_t payload_size, uint8_t *payload);
+        static int get_max_payload_size();
         size_t to_bytes(uint8_t** bytes_ptr);
         int send(shared_ptr<Socket> socket, int channel);
 };
