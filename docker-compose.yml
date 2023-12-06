@@ -2,6 +2,7 @@ version: "3"
 services:
   server:
     image: dtb-server
+    platform: linux/amd64
     build:
       context: ./
       dockerfile: dropthebox.dockerfile
@@ -21,6 +22,7 @@ services:
     tty: true
   client:
     image: dtb-server
+    platform: linux/amd64
     build:
       context: ./
       dockerfile: dropthebox.dockerfile
@@ -32,13 +34,13 @@ services:
       - /code/.git
       - /code/bin
       - /code/srv_sync_dir
-    # environment:
-    #   DEBUG: true
-        # DEBUG_MEM: true
+        #environment:
+        #  #DEBUG: true
+        #  DEBUG_MEM: true
     stdin_open: true
     tty: true
     deploy:
-      replicas: 3
+      replicas: 1
     depends_on:
       - server
 networks:

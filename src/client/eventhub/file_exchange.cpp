@@ -29,7 +29,7 @@ void ClientFileSync::loop() {
         chars_read = 0;
         if (chars_read < 0)
             printf("ERROR reading from socket\n");
-        unique_ptr<Packet> packet(new Packet((uint8_t *)buffer));
+        Packet *packet = new Packet((uint8_t *)buffer);
         if (packet->type != FileMetadataMsg) {
             cerr << "Invalid packet type. Expected file metadata, received: " << packet->type << endl;
         }
@@ -57,7 +57,12 @@ void ClientFileSync::loop() {
             unique_ptr<Packet> packet(new Packet((uint8_t *)buffer));
             if (packet->type != FileChunk) {
                 cerr << "Invalid file chunk: " << endl;
-                throw;
+                cout << "Packet type: " << packet->type << endl;
+                cout << "Packet seq idx: " << packet->seq_index << endl;
+                cout << "Packet total size: " << packet->total_size << endl;
+                cout << "Packet payload size: " << packet->payload_size << endl;
+                cout << "Packet payload: " << packet->payload << endl;
+                return;
             }
             fwrite(packet->payload, 1, packet->payload_size * sizeof(uint8_t), file_output);
             printf("Received packet type %d\n", packet->type);

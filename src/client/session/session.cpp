@@ -51,7 +51,11 @@ void *ClientSessionManager::handle_session(void *context_ptr) {
 
     unique_ptr<ClientSession> session(new ClientSession(context, socket));
     if (session->setup()) {
-        session->run();
+        try {
+            session->run();
+        } catch (const std::exception& exc) {
+            cerr << "Terminated with error: " << exc.what() << endl;
+        }
     }
     socket->close(socket->socket_fd);
     pthread_exit(NULL);
