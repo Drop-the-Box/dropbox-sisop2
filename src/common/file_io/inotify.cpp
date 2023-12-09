@@ -4,13 +4,13 @@ Inotify::Inotify(const char *folder_path){
     this->folder_path = folder_path;
     this->file_descriptor = inotify_init();
     if (this->file_descriptor == -1) {
-        cerr << "Failed to initialize inotify" << endl;
+        PLOGE << "Failed to initialize inotify" << endl;
         return;
     }
     
     this->watch_descriptor = inotify_add_watch(this->file_descriptor, this->folder_path, IN_MODIFY | IN_CREATE | IN_DELETE);
     if (this->watch_descriptor == -1) {
-        cerr << "Failed to add watch" << endl;
+        PLOGE << "Failed to add watch" << endl;
         return;
     }
 }
@@ -28,7 +28,7 @@ void Inotify::read_event(){
 
     int length = read(this->file_descriptor, buffer, BUFFER_LEN);
     if (length < 0) {
-        cerr << "Failed to read" << endl;
+        PLOGE << "Failed to read" << endl;
     }
 
     struct inotify_event* event = (struct inotify_event*) &(buffer)[0];

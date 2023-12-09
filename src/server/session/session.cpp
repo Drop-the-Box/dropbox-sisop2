@@ -6,6 +6,8 @@
 #include <cstring>
 #include <regex>
 #include <pthread.h>
+#include <set>
+#include <plog/Log.h>
 
 #include "session.hpp"
 #include "../userland/models.hpp"
@@ -13,6 +15,7 @@
 #include "../eventhub/subscriber.hpp"
 #include "../eventhub/file_sync.hpp"
 #include "../../common/eventhub/models.hpp"
+#include "../../common/vars.hpp"
 
 using namespace std;
 
@@ -24,35 +27,39 @@ SessionManager::SessionManager(shared_ptr<Socket> socket) {
 }
 
 void SessionManager::start() {
-    cout << "Waiting for connections...\n\n";
-    shared_ptr<char> client_addr((char *)malloc(sizeof(char) * INET_ADDRSTRLEN));
-    shared_ptr<int> client_port((int *)malloc(sizeof(int)));
+    PLOGI << "Waiting for connections...\n\n";
+    char *client_addr = (char *)calloc(INET_ADDRSTRLEN, sizeof(uint8_t));
+    int *client_port = (int *)calloc(1, sizeof(int));
     shared_ptr<UserStore> storage(new UserStore());
-    while(!*this->interrupt) {
-        int channel = this->socket->accept(client_addr.get(), client_port.get());
+    set<int> channels;
+    while(true) {
+        int channel = this->socket->accept(client_addr, client_port);
         if (channel != -1) {
-            cout << "Connected to " << client_addr.get() << ":" << *client_port.get() << " on channel " << channel << endl;
-            this->channels[this->num_threads] = channel;
+            PLOGD << "Connected to " << client_addr << ":" << *client_port << " on channel " << channel << endl;
+            channels.insert(channel);
             this->num_threads += 1;
-            shared_ptr<Connection> connection(new Connection(client_addr.get(), *client_port, channel));
+            shared_ptr<Connection> connection(new Connection(client_addr, *client_port, channel));
             shared_ptr<ServerContext> context(new ServerContext(socket, connection, storage));
             this->create_session(channel, context);
         }
         usleep(10000);
     }
-    for(int thread_id = 0; thread_id < num_threads; thread_id++) {
-        int channel = channels[thread_id];
-        socket->close(channel);
-        pthread_join(this->thread_pool[thread_id], NULL);
+    for(set<int>::iterator channel = channels.begin(); channel != channels.end(); channel++) {
+        socket->close(*channel);
+        pthread_join(this->thread_pool.at(*channel), NULL);
     }
+    free(client_addr);
 }
 
 void SessionManager::create_session(int channel, shared_ptr<ServerContext> context) {
-    cout << "Spawning new connection on channel " << channel << endl;
+    PLOGD << "Spawning new connection on channel " << channel << endl;
     shared_ptr<Connection> connection = context->connection;
     connection->set_thread_id(&thread_pool[num_threads]);
     Session *session = new Session(context);
     pthread_create(&thread_pool[num_threads], NULL, this->handle_session, session);
+}
+
+void log_thread(string message) {
 }
 
 
@@ -60,22 +67,25 @@ void* SessionManager::handle_session(void *session_ptr) {
     shared_ptr<Session> session((Session *)session_ptr);
     int channel = session->context->connection->channel;
 
-    cout << "Running new thread for channel " << channel << endl;
+    PLOGD << "Running new thread for channel " << channel << endl;
     string client_addr = session->context->connection->get_full_address();
-    cout << "Connected to " << client_addr  << " on channel " << channel << endl;
+    PLOGI << "Connected to " << client_addr  << " on channel " << channel << endl;
 
     if (channel == -1) {
-        cout << "Error: Invalid channel: " << channel << endl;
+        PLOGE << "Error: Invalid channel: " << channel << endl;
         ::pthread_exit(NULL);
     }
-    cout << "Listening on channel " << channel << endl;
+    PLOGD << "Listening on channel " << channel << endl;
 
-    if (session->setup()) {
-        session->run();
-        // session->loop();
+    try {
+        if (session->setup()) {
+            session->run();
+        }
+    } catch (const std::exception& exc) {
+        PLOGE << "Terminated with error: " << exc.what() << endl;
     }
 
-    cout << "Closing channel " << channel << "..." << endl;
+    PLOGI << "Closing channel " << channel << "..." << endl;
     session->teardown();
     ::pthread_exit(NULL);
     return NULL;
@@ -83,7 +93,7 @@ void* SessionManager::handle_session(void *session_ptr) {
 
 
 bool Session::setup() {
-    shared_ptr<uint8_t> buffer((uint8_t *)malloc(sizeof(uint8_t) * context->socket->buffer_size));
+    unique_ptr<uint8_t> buffer((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
     int channel = context->connection->channel;
     int payload_size = context->socket->get_message_sync(buffer.get(), channel);
     if (payload_size == 0) {
@@ -93,25 +103,24 @@ bool Session::setup() {
     unique_ptr<Packet> packet(new Packet(buffer.get()));
 
     if (packet->type != SessionInit) {
-         cout << "Invalid session packet: " << packet->type << endl;
+         PLOGW << "Invalid session packet: " << packet->type << endl;
         return false;
     }
 
     shared_ptr<SessionRequest> request(new SessionRequest(packet->payload));
-    if (!regex_match(string(request->username), regex("[A-Za-z0-9_-]+"))) {
-        cout << "Invalid username: " << request->username << endl;
-        return false;
-    }
+    // if (!regex_match(string(request->username), regex("[A-Za-z0-9_-]+"))) {
+    //     PLOGI << "Invalid username: " << request->username << endl;
+    //     return false;
+    // }
     shared_ptr<Connection> connection = this->context->connection;
     if (request->type == Unknown) {
-        cout << "Invalid session from device " << connection->get_full_address() << " and user " << request->username << endl;
+        PLOGW << "Invalid session from device " << connection->get_full_address() << " and user " << request->username << endl;
         return false;
     }
-    cout << "Established session with user " << request->username << endl;
+    PLOGI << "Established session with user " << request->username << endl;
     shared_ptr<UserStore> storage = this->context->storage;
-    storage->add_user(request->username);
     if (!storage->register_connection(request->username, context)) {
-        cout << "Cannot establish connection for user " << request->username
+        PLOGW << "Cannot establish connection for user " << request->username
             << " on device " << connection->get_full_address() << endl;
         return false;
     }
@@ -120,69 +129,51 @@ bool Session::setup() {
     ostringstream oss;
     oss << "Session of type " << session_type << " established." << endl;
     shared_ptr<Event> accept_evt(new Event(SessionAccepted, oss.str()));
-    unique_ptr<Packet> evt_packet(new Packet(accept_evt));
-    evt_packet->send(context->socket, channel);
+    accept_evt->send(context->socket, channel);
     return true;
 }
 
 
 Session::Session(shared_ptr<ServerContext> context) {
     this->context = context;
-    this->buffer = new uint8_t[context->socket->buffer_size];
 }
 
 
 void Session::run() {
    switch(type) {
        case FileExchange: {
-            FileSync *file_sync = new FileSync(this->context);
+            unique_ptr<FileSync> file_sync(new FileSync(this->context));
             file_sync->loop();
            break;
         }
         case CommandPublisher: {
-            ServerEventPublisher *publisher = new ServerEventPublisher(this->context);
+            unique_ptr<ServerEventPublisher> publisher(new ServerEventPublisher(this->context));
             publisher->loop();
             break;
         }
         case CommandSubscriber: {
-            ServerEventSubscriber *subscriber = new ServerEventSubscriber(this->context);
+            unique_ptr<ServerEventSubscriber> subscriber(new ServerEventSubscriber(this->context));
             subscriber->loop();
             break;
         }
         default: {
-            cout << "Invalid session type: " << this->type << endl;
+            PLOGI << "Invalid session type: " << this->type << endl;
             return;
         }
    }
 };
 
 
-int Session::loop() {
-    int channel = context->connection->channel;
-    int payload_size = context->socket->get_message_sync(this->buffer, channel);
-    while (payload_size != -1 && payload_size != 0) {
-        uint8_t * buf = (uint8_t *)this->buffer;
-        Packet *packet = new Packet(buf);
-        switch(packet->type) {
-            case CommandMsg: {
-                cout << "Received message on channel " << channel << ": " << packet->payload
-                    << "with size " << packet->total_size << endl;
-                cout << "User still is " << context->device->username << endl;
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-        payload_size = context->socket->get_message_sync(this->buffer, channel);
-    }
-    return 0;
-}
-
 void Session::teardown() {
     int channel = context->connection->channel;
     string full_address = context->connection->get_full_address();
-    // cout << "Unregistering connection from device " << full_address << " from user " << context->connection->device->username << endl;
-    context->storage->unregister_connection(context);
+    if (context->device != NULL) {
+        string username = context->device->username;
+        PLOGI << "Unregistering connection from device " << full_address << " from user " << username << endl;
+        context->storage->unregister_connection(context);
+    } else  {
+        PLOGI << "Unregistering unauthenticated connection from device " << full_address << endl;
+    }
     context->socket->close(channel);
+
 }

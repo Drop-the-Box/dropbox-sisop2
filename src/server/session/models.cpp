@@ -3,7 +3,9 @@
 #include <fstream>
 #include <sstream>
 #include <unistd.h>
+#include <stdlib.h>
 #include <cstring>
+#include <string>
 #include <regex>
 #include <memory>
 
@@ -12,14 +14,9 @@
 
 
 Connection::Connection(char *address, int port, int channel) {
-    this->address = (char *)malloc(strlen(address) * sizeof(char));
-    strcpy(this->address, address);
+    this->address = string(address);
     this->port = port;
     this->channel = channel;
-}
-
-Connection::~Connection(void) {
-    free(this->address);
 }
 
 void Connection::set_thread_id(pthread_t *thread_id) {

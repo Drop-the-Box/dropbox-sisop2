@@ -66,11 +66,7 @@ run-server: ### build and run the server app
 
 .PHONY: run-server-native
 run-server-native:  ### build and run the server app on host machine
-	@ bash -c ${SERVER_CMD}
-
-.PHONY: debug-server-native
-debug-server-native:  ### build and debug the server app on host machine using gdb
-	@ bash -c ${SERVER_DEBUG_CMD}
+	@ bash -c ${SERVER_CMD} ${ARGS}
 
 .PHONY: kill-server
 kill-server:  ### kills the server service
@@ -84,11 +80,7 @@ run-client:   ### build and run the client app
 
 .PHONY: run-client-native
 run-client-native:  ### build and run the client app on host machine
-	@ bash -c ${CLIENT_CMD}
-
-.PHONY: debug-client-native
-debug-client-native:  ### build and debug the client app on host machine using gdb
-	@ bash -c ${CLIENT_DEBUG_CMD}
+	@ bash -c ${CLIENT_CMD} ${ARGS}
 
 .PHONY: kill-client
 kill-client:  ### kills the client service

@@ -8,7 +8,7 @@ ClientSubscriber::ClientSubscriber(shared_ptr<ClientContext> context, shared_ptr
 
 
 void ClientSubscriber::loop() {
-    while(1);
+    while(!*socket->interrupt);
 };
 
 
