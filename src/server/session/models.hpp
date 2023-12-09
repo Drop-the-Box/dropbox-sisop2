@@ -16,13 +16,12 @@ class UserStore;
 class Connection {
     public:
         SessionType session_type;
-        char* address;
+        string address;
         int port;
         pthread_t *thread_id;
         int channel;
 
         Connection(char *address, int port, int channel);
-        ~Connection(void);
         void set_thread_id(pthread_t *thread_id);
         string get_full_address();
         void set_session_type(SessionType session_type);

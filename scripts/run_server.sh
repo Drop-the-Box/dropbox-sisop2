@@ -1,13 +1,13 @@
 #!/bin/bash
 
 if [ "$DEBUG" == "true" ]; then
-    g++ -g src/server/**/*.cpp src/common/**/*.cpp src/server/main.cpp -o ./bin/server;
+    g++ -I src/include -g -O0 src/server/**/*.cpp src/common/**/*.cpp src/server/main.cpp -o ./bin/server;
     gdb ./bin/server;
 
 elif [ "$DEBUG_MEM" == "true" ]; then
-    g++ -g src/server/**/*.cpp src/common/**/*.cpp src/server/main.cpp -o ./bin/server;
-    valgrind --leak-check=yes ./bin/server;
+    g++ -I src/include -g -O0 src/server/**/*.cpp src/common/**/*.cpp src/server/main.cpp -o ./bin/server;
+    valgrind --leak-check=full --track-origins=yes --log-file="./server-vgrind.log" ./bin/server;
 else
-    g++ src/server/**/*.cpp src/common/**/*.cpp src/server/main.cpp -o ./bin/server;
+    g++ -I src/include src/server/**/*.cpp src/common/**/*.cpp src/server/main.cpp -o ./bin/server;
     ./bin/server;
 fi

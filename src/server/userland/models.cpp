@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <cstring>
 #include <regex>
+#include <plog/Log.h>
 
 
 #include "models.hpp"
@@ -16,8 +17,9 @@ using namespace std;
 #define USER_MAX_DEVICES 2
 
 
-Device::Device(string username, shared_ptr<Connection> connection) {
+Device::Device(const string username, shared_ptr<Connection> connection) {
     this->username = username;
+    this->address = connection->address;
     this->connections[connection->port] = connection;
 }
 
@@ -30,103 +32,113 @@ UserStore::~UserStore() {
 }
 
 
-bool UserStore::add_user(string username) {
+bool UserStore::add_user(const string username) {
     bool user_added = false;
     if(this->users_devices.find(username) == this->users_devices.end()) {
-        map<string, shared_ptr<Device> > device_map;
+        map<string, Device * > device_map;
         this->users_devices[username] = device_map;
-        sem_post(&this->devices_lock);
         user_added = true;
     } else {
-        cout << "User " << username << " already registered." << endl;
+        PLOGW << "User " << username << " already registered." << endl;
     }
     return user_added;
 }
 
-bool UserStore::register_device(string username, shared_ptr<ServerContext> context) {
-    sem_wait(&this->devices_lock);
-    map<string, shared_ptr<Device> > device_map;
+bool UserStore::register_device(const string username, shared_ptr<ServerContext> context) {
+    map<string, Device * > device_map;
 
     shared_ptr<Connection> connection = context->connection;
     try {
         device_map = this->users_devices.at(username);
     } catch (out_of_range) {
-        cout << "User " << username << " is not registered" << endl;
-        sem_post(&this->devices_lock);
+        PLOGW << "User " << username << " is not registered" << endl;
         return false;
     }
 
     //  This is where we limit max devices online
     if (device_map.size() == USER_MAX_DEVICES) {
-        cout << "User " << username << " reached maximum of simultaneously connected devices: " << USER_MAX_DEVICES << endl;
-        cout << "Connection from device with address " << connection->address << " rejected." << endl;
-        sem_post(&this->devices_lock);
+        PLOGW << "User " << username << " reached maximum of simultaneously connected devices: " << USER_MAX_DEVICES << endl;
+        PLOGW << "Connection from device with address " << connection->address << " rejected." << endl;
         return false;
     }
-
+    Device *device;
     if(device_map.find(connection->address) == device_map.end()) {
-        shared_ptr<Device>device(new Device(username, connection));
+        device = new Device(username, connection);
         this->users_devices[username][connection->address] = device;
-        context->set_device(device);
     } else {
-        cout << "Device with address " << connection->address << " already registered" << endl;
+        PLOGW << "Device with address " << connection->address << " already registered" << endl;
+        device = this->users_devices.at(username).at(connection->address);
     }
+    context->set_device(device);
 
-    sem_post(&this->devices_lock);
     return true;
 }
 
 
-bool UserStore::register_connection(string username, shared_ptr<ServerContext> context) {
+bool UserStore::register_connection(const string username, shared_ptr<ServerContext> context) {
     sem_wait(&this->devices_lock);
-    map<string, shared_ptr<Device> > device_map = this->users_devices.at(username);
 
-    shared_ptr<Device> device = context->device;
+    map<string, Device * > device_map = this->users_devices.at(username);
     shared_ptr<Connection> connection = context->connection;
+    bool result = true;
 
     if(device_map.find(connection->address) == device_map.end()) {
         sem_post(&this->devices_lock);
-        return this->register_device(username, context);
+        result =  this->register_device(username, context);
     } else {
-        shared_ptr<Device>device = device_map[connection->address];
+        Device *device = device_map[connection->address];
         device->connections[connection->port] = connection;
-        context->device = device;
+        context->set_device(device);
     }
+
     sem_post(&this->devices_lock);
-    return true;
+    return result;
 }
 
 
 bool UserStore::unregister_connection(shared_ptr<ServerContext> context) {
-    if (context->device.get() != NULL) {
-        shared_ptr<Device> device = context->device;
-        shared_ptr<Connection> connection = context->connection;
+    if (context->device != NULL) {
         sem_wait(&this->devices_lock);  // acquiring lock
+                                        //
+        shared_ptr<Connection> connection = context->connection;
         map<int, shared_ptr<Connection> >::iterator iter = context->device->connections.find(context->connection->port);
         if (iter != context->device->connections.end()) {
             context->device->connections.erase(iter);
         }
+        if (context->device->connections.size() == 0) {
+            string username = context->device->username;
+            map<string, Device * >::iterator device_key = this->users_devices[username].find(context->device->address);
+            if (device_key != this->users_devices[username].end()) {
+                PLOGI << "Unregistering device " << context->device->address << " from user " << username << endl;
+                this->users_devices[username].erase(device_key);
+            }
+            if (this->users_devices[username].size() == 0) {
+                map<string, map<string, Device *> >::iterator user_key = this->users_devices.find(username);
+                this->users_devices.erase(user_key);
+            }
+        }
+
         sem_post(&this->devices_lock);
     }
     return true;
 }
 
 
-map<string, shared_ptr<Device> > UserStore::get_user_devices(string username) {
+map<string, Device * > UserStore::get_user_devices(const string username) {
     try {
         return this->users_devices.at(username);
     } catch (out_of_range) {
-        cerr << "Error! Cannot find username " << username << endl;
+        PLOGE << "Error! Cannot find username " << username << endl;
         throw;
     }
 }
 
 
-shared_ptr<Device> UserStore::get_device(string username, string address) {
+Device * UserStore::get_device(const string username, const string address) {
     try {
         return this->users_devices.at(username).at(address);
     } catch (out_of_range) {
-        cout << "Cannot find device at address " << address << " from user " << username << endl;
+        PLOGE << "Cannot find device at address " << address << " from user " << username << endl;
     }
     return NULL;
 }
@@ -154,9 +166,10 @@ ServerContext::ServerContext(
     this->socket = socket;
     this->connection = connection;
     this->storage = storage;
+    this->device = NULL;
 }
 
 
-void ServerContext::set_device(shared_ptr<Device> device) {
+void ServerContext::set_device(Device * device) {
     this->device = device;
 }

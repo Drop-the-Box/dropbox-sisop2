@@ -4,12 +4,15 @@
 #include <sstream>
 #include <iostream>
 #include <sys/stat.h>
+#include <signal.h>
+#include <plog/Log.h>
 
 
 #include "session.hpp"
 #include "../../common/session/models.hpp"
 #include "../../common/socket_io/socket.hpp"
 #include "../../common/file_io/file_io.hpp"
+#include "../../common/eventhub/models.hpp"
 #include "../../common/vars.hpp"
 #include "../eventhub/publisher.hpp"
 #include "../eventhub/subscriber.hpp"
@@ -17,6 +20,12 @@
 
 using namespace std;
 
+bool interrupt = false;
+
+void stop_execution(int signal) {
+    PLOGD << "Caught signal: " << strsignal(signal) << "\n\n";
+    interrupt = true;
+}
 
 ClientContext::ClientContext(
     string server_addr, int server_port, string username, string sync_dir, SessionType session_type
@@ -30,6 +39,7 @@ ClientContext::ClientContext(
 
 
 ClientSessionManager::ClientSessionManager(string address, int port, string username) {
+    ::signal(SIGINT, stop_execution);
     string sync_dir = FileHandler::get_sync_dir(username);
     ClientContext *publisher_context = new ClientContext(address, port, username, sync_dir, CommandPublisher);
     ClientContext *subscriber_context = new ClientContext(address, port, username, sync_dir, CommandSubscriber);
@@ -47,16 +57,17 @@ ClientSessionManager::ClientSessionManager(string address, int port, string user
 
 void *ClientSessionManager::handle_session(void *context_ptr) {
     shared_ptr<ClientContext> context((ClientContext *)context_ptr);
-    shared_ptr<Socket> socket(new Socket(context->server_addr, context->server_port, Client, BUFFER_SIZE));
+    shared_ptr<Socket> socket(new Socket(context->server_addr, context->server_port, &interrupt, Client, BUFFER_SIZE));
 
     unique_ptr<ClientSession> session(new ClientSession(context, socket));
-    if (session->setup()) {
-        try {
+    try {
+        if (session->setup()) {
             session->run();
-        } catch (const std::exception& exc) {
-            cerr << "Terminated with error: " << exc.what() << endl;
         }
+    } catch (const std::exception& exc) {
+        PLOGE << "Terminated with error: " << exc.what() << endl;
     }
+    PLOGI << "Closing socket " << socket->socket_fd << endl;
     socket->close(socket->socket_fd);
     pthread_exit(NULL);
 }
@@ -81,16 +92,16 @@ bool ClientSession::setup() {
         return false;
     }
 
-    uint8_t msg[socket->buffer_size];
-    socket->get_message_sync(msg, socket->socket_fd);
-    unique_ptr<Packet> resp_packet(new Packet(msg));
+    shared_ptr<uint8_t> msg((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
+    socket->get_message_sync(msg.get(), socket->socket_fd);
+    unique_ptr<Packet> resp_packet(new Packet(msg.get()));
     if (resp_packet->type == EventMsg) {
         unique_ptr<Event> evt(new Event(resp_packet->payload));
         if (evt->type == SessionAccepted) {
-            cout << "Session accepted from server..." << endl;
+            PLOGI << "Session accepted from server..." << endl;
             return true;
         }
-        cout << "Event detail: " << evt->message << endl;
+        PLOGD << "Event detail: " << evt->message << endl;
     }
     free(bytes);
     return false;
@@ -114,7 +125,7 @@ void ClientSession::run() {
             break;
         }
         default: {
-            cerr << "Invalid session type " << session_type_map.at(context->session_type) << endl;
+            PLOGE << "Invalid session type " << session_type_map.at(context->session_type) << endl;
             break;
         }
     }

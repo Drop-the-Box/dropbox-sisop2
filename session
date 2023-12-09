@@ -1,0 +1,60 @@
+doc_pages/class_client_context.html:<a href="class_client_context-members.html">List of all members</a>  </div>
+doc_pages/class_server_context.html:<a href="class_server_context-members.html">List of all members</a>  </div>
+doc_pages/client_2session_2session_8cpp_source.html:<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    shared_ptr&lt;Socket&gt; socket(<span class="keyword">new</span> <a class="code hl_class" href="class_socket.html">Socket</a>(context-&gt;server_addr, context-&gt;server_port, <a class="code hl_enumvalue" href="socket_8hpp.html#a27327a3338b74bd9c2ceec2e6a6af6e9ae5d09f815b2438dc14af448d00837cc8">Client</a>, <a class="code hl_define" href="vars_8hpp.html#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>));</div>
+doc_pages/server_2session_2session_8cpp_source.html:<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    shared_ptr&lt;Connection&gt; connection = context-&gt;connection;</div>
+doc_pages/server_2session_2session_8cpp_source.html:<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">int</span> channel = session-&gt;context-&gt;connection-&gt;channel;</div>
+doc_pages/server_2session_2session_8cpp_source.html:<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordtype">string</span> client_addr = session-&gt;context-&gt;connection-&gt;get_full_address();</div>
+doc_pages/server_2session_2session_8cpp_source.html:<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="comment">// cout &lt;&lt; &quot;Unregistering connection from device &quot; &lt;&lt; full_address &lt;&lt; &quot; from user &quot; &lt;&lt; context-&gt;connection-&gt;device-&gt;username &lt;&lt; endl;</span></div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    shared_ptr&lt;Connection&gt; connection = context-&gt;connection;</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        context-&gt;set_device(device);</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    shared_ptr&lt;Device&gt; device = context-&gt;device;</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    shared_ptr&lt;Connection&gt; connection = context-&gt;connection;</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        context-&gt;device = device;</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordflow">if</span> (context-&gt;device.get() != NULL) {</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        shared_ptr&lt;Device&gt; device = context-&gt;device;</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        shared_ptr&lt;Connection&gt; connection = context-&gt;connection;</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        map&lt;int, shared_ptr&lt;Connection&gt; &gt;::iterator iter = context-&gt;device-&gt;connections.find(context-&gt;connection-&gt;port);</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">if</span> (iter != context-&gt;device-&gt;connections.end()) {</div>
+doc_pages/server_2userland_2models_8cpp_source.html:<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            context-&gt;device-&gt;connections.erase(iter);</div>
+src/client/eventhub/file_exchange.cpp:        oss << this->context->sync_dir << "/" << metadata->name;
+src/client/session/session.cpp:    shared_ptr<Socket> socket(new Socket(context->server_addr, context->server_port, &interrupt, Client, BUFFER_SIZE));
+src/client/session/session.cpp:    shared_ptr<SessionRequest> request(new SessionRequest(context->session_type, context->username));
+src/client/session/session.cpp:    switch (context->session_type) {
+src/client/session/session.cpp:            cerr << "Invalid session type " << session_type_map.at(context->session_type) << endl;
+src/server/eventhub/file_sync.cpp:    const string username = context->device->username;
+src/server/eventhub/file_sync.cpp:        file->send(context->socket, context->connection->channel);
+src/server/eventhub/file_sync.cpp:    shared_ptr<Socket> socket = this->context->socket;
+src/server/eventhub/file_sync.cpp:    int channel = this->context->connection->channel;
+src/server/eventhub/file_sync.cpp:    while(context->socket->get_message_sync(buffer.get(), context->connection->channel) != 0) {
+src/server/eventhub/publisher.cpp:    shared_ptr<Socket> socket = this->context->socket;
+src/server/eventhub/publisher.cpp:    int channel = this->context->connection->channel;
+src/server/eventhub/publisher.cpp:    while(context->socket->get_message_sync(buffer.get(), context->connection->channel) != 0) {
+src/server/eventhub/subscriber.cpp:    shared_ptr<Socket> socket = this->context->socket;
+src/server/eventhub/subscriber.cpp:    int channel = this->context->connection->channel;
+src/server/eventhub/subscriber.cpp:    while(context->socket->get_message_sync(buffer.get(), context->connection->channel) != 0) {
+src/server/session/session.cpp:    shared_ptr<Connection> connection = context->connection;
+src/server/session/session.cpp:    int channel = session->context->connection->channel;
+src/server/session/session.cpp:    string client_addr = session->context->connection->get_full_address();
+src/server/session/session.cpp:    shared_ptr<uint8_t> buffer((uint8_t *)calloc(context->socket->buffer_size, sizeof(uint8_t)));
+src/server/session/session.cpp:    int channel = context->connection->channel;
+src/server/session/session.cpp:    int payload_size = context->socket->get_message_sync(buffer.get(), channel);
+src/server/session/session.cpp:    shared_ptr<Connection> connection = this->context->connection;
+src/server/session/session.cpp:    shared_ptr<UserStore> storage = this->context->storage;
+src/server/session/session.cpp:    accept_evt->send(context->socket, channel);
+src/server/session/session.cpp:    int channel = context->connection->channel;
+src/server/session/session.cpp:    string full_address = context->connection->get_full_address();
+src/server/session/session.cpp:    if (context->device != NULL) {
+src/server/session/session.cpp:        string username = context->device->username;
+src/server/session/session.cpp:    context->storage->unregister_connection(context);
+src/server/session/session.cpp:    context->socket->close(channel);
+src/server/userland/models.cpp:    shared_ptr<Connection> connection = context->connection;
+src/server/userland/models.cpp:    context->set_device(device);
+src/server/userland/models.cpp:    shared_ptr<Connection> connection = context->connection;
+src/server/userland/models.cpp:        context->set_device(device);
+src/server/userland/models.cpp:    if (context->device != NULL) {
+src/server/userland/models.cpp:        shared_ptr<Connection> connection = context->connection;
+src/server/userland/models.cpp:        map<int, shared_ptr<Connection> >::iterator iter = context->device->connections.find(context->connection->port);
+src/server/userland/models.cpp:        if (iter != context->device->connections.end()) {
+src/server/userland/models.cpp:            context->device->connections.erase(iter);
+src/server/userland/models.cpp:        if (context->device->connections.size() == 0) {
+src/server/userland/models.cpp:            map<string, map<string, Device * > >::iterator device_key = this->users_devices.find(context->device->username);

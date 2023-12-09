@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include<netinet/in.h>
+#include "../socket_io/socket.hpp"
 
 using namespace std;
 
@@ -36,6 +37,6 @@ class Event {
 
         Event(uint8_t *bytes);
         Event(EventType type, string message);
-        size_t to_bytes(uint8_t** bytes_ptr);
+        bool send(shared_ptr<Socket>, int channel);
 };
 #endif

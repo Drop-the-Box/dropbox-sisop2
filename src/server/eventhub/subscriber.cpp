@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include <plog/Log.h>
 
 #include "subscriber.hpp"
 #include "../../common/vars.hpp"
@@ -11,13 +12,13 @@ ServerEventSubscriber::ServerEventSubscriber(shared_ptr<ServerContext> context) 
 
 
 void ServerEventSubscriber::loop() {
-    cout << "------------- Connected to event subscriber" << endl;
+    PLOGI << "------------- Connected to event subscriber" << endl;
     shared_ptr<Socket> socket = this->context->socket;
     int channel = this->context->connection->channel;
-    shared_ptr<uint8_t> buffer((uint8_t *)malloc(BUFFER_SIZE));
+    uint8_t buffer[BUFFER_SIZE];
 
-    while(context->socket->get_message_async(buffer.get(), context->connection->channel) != 0) {
-        cout << "Subscriber waiting on channel " << channel << "..." << endl;
+    while(!context->socket->has_event(channel)) {
+        PLOGI << "Subscriber waiting on channel " << channel << "..." << endl;
         sleep(1);
     }
 }

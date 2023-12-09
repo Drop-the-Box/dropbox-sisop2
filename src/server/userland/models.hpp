@@ -13,43 +13,43 @@ class Session;
 
 class Device {
     public:
-        char *address;
+        string address;
         string username;
         map<int, shared_ptr<Connection> > connections;
 
-        Device(string username, shared_ptr<Connection> connection);
+        Device(const string username, shared_ptr<Connection> connection);
 };
 
 
 class ServerContext {
     public:
-        shared_ptr<Device> device;
+        Device * device;
         shared_ptr<Connection> connection;
         shared_ptr<UserStore> storage;
         shared_ptr<Socket> socket;
 
         ServerContext(shared_ptr<Socket> socket, shared_ptr<Connection> connection, shared_ptr<UserStore>);
-        void set_device(shared_ptr<Device> device);
+        void set_device(Device * device);
 };
 
 
 class UserStore {
     map<string, vector<shared_ptr<Session> > > users_sessions;
-    map<string, map<string, shared_ptr<Device> > > users_devices;
+    map<string, map<string, Device * > > users_devices;
     sem_t devices_lock;
     sem_t files_lock;
 
     public:
         UserStore();
         ~UserStore();
-        map<string, shared_ptr<Device> > get_user_devices(string username);
+        map<string, Device * > get_user_devices(const string username);
         vector<string> get_connected_users();
         void get_user_devices();
-        bool add_user(string username);
-        bool register_device(string username, shared_ptr<ServerContext> context);
-        bool register_connection(string username, shared_ptr<ServerContext> context);
+        bool add_user(const string username);
+        bool register_device(const string username, shared_ptr<ServerContext> context);
+        bool register_connection(const string username, shared_ptr<ServerContext> context);
         bool unregister_connection(shared_ptr<ServerContext> context);
-        shared_ptr<Device> get_device(string username, string address);
+        Device * get_device(const string username, const string address);
 };
 
 #endif

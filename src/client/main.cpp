@@ -9,6 +9,10 @@
 #include <sstream>
 #include <iostream>
 #include <string>
+#include <plog/Log.h>
+#include <plog/Init.h>
+#include <plog/Formatters/TxtFormatter.h>
+#include <plog/Appenders/ColorConsoleAppender.h>
 
 #include "../common/socket_io/socket.hpp"
 #include "../server/session/session.hpp"
@@ -21,20 +25,24 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+
     char* username_ptr = argv[1];
     char* address_ptr = argv[2];
     char* port_ptr = argv[3];
 
+    static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
+    plog::init(plog::verbose, &consoleAppender);
+
     if (username_ptr == NULL) {
-        cerr << "Error! No username provided. Exiting..." << endl;
+        PLOGE << "Error! No username provided. Exiting..." << endl;
         exit(1);
     }
     if (address_ptr == NULL) {
-        cerr << "Error! No server address provided. Exiting..." << endl;
+        PLOGE << "Error! No server address provided. Exiting..." << endl;
         exit(1);
     }
     if (port_ptr == NULL) {
-        cerr << "Error! No server port provided. Exiting..." << endl;
+        PLOGE << "Error! No server port provided. Exiting..." << endl;
         exit(1);
     }
     int server_port = (int)atoi(argv[3]);

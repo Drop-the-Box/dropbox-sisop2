@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <memory>
 #include <cstring>
+#include <plog/Log.h>
+
 using namespace std;
 
 #define EVENT_SIZE (sizeof(struct inotify_event))

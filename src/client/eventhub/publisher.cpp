@@ -8,7 +8,7 @@ ClientPublisher::ClientPublisher(shared_ptr<ClientContext> context, shared_ptr<S
 
 
 void ClientPublisher::loop() {
-    while(1);
+    while(!*socket->interrupt);
 };
 
 

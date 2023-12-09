@@ -20,7 +20,7 @@ class SessionManager {
     int num_threads;
     int channels[MAX_REQUESTS];
     shared_ptr<Socket> socket;
-    pthread_t thread_pool[MAX_REQUESTS];
+    map<int, pthread_t> thread_pool;
 
     static void *handle_session(void *args);
     void create_session(int channel, shared_ptr<ServerContext> context);
@@ -34,17 +34,12 @@ class SessionManager {
 };
 
 class Session {
-    uint8_t *buffer;
-
     public:
         shared_ptr<ServerContext> context;
         int channel;
         SessionType type;
 
         Session(shared_ptr<ServerContext>);
-        int get_message_sync(uint8_t *buffer);
-        int get_message_async(uint8_t *buffer);
-        int loop();
         bool setup();
         void run();
         void teardown();
