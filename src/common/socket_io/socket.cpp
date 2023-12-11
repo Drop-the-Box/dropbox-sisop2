@@ -226,13 +226,11 @@ int Socket::close(int channel) {
 
 int Socket::get_message_sync(uint8_t *buffer, int channel) {
     ::memset(buffer, 0, BUFFER_SIZE);
-   int payload_size = -1;
-
+    int payload_size = -1;
     while(payload_size == -1){
-       payload_size = this->receive(buffer, channel);
-   }
-   return payload_size;
-//    return this->receive(buffer, channel);
+        payload_size = this->receive(buffer, channel);
+    }
+    return payload_size;
 }
 
 int Packet::get_max_payload_size() {
@@ -327,7 +325,7 @@ int Packet::send(shared_ptr<Socket> socket, int channel) {
     free(bytes);
     if (bytes_sent < 0) {
         PLOGE << "Cannot write to socket. Reason: " << strerror(errno) << endl;
-      //  throw;
+        throw;
     }
     PLOGD << "Sent packet with " << packet_size << " bytes" << endl;
     return bytes_sent;
