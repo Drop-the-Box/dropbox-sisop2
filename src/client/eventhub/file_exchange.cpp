@@ -15,12 +15,13 @@ ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, shared_ptr<Soc
 
 void ClientFileSync::loop() {
     char buffer[BUFFER_SIZE];
-    int  total_bytes = 0;
-    int  collected_bytes;
-    int  iteration;
-    int  chars_read;
+    int total_bytes = 0;
+    int collected_bytes;
+    int iteration;
 
-    while ((chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd)) != 0) {
+    int chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
+
+    while(chars_read != 0) {
         collected_bytes = 0;
         iteration       = 1;
         chars_read      = 0;
@@ -29,6 +30,7 @@ void ClientFileSync::loop() {
         Packet *packet = new Packet((uint8_t *)buffer);
         if (packet->type != FileMetadataMsg) {
             PLOGE << "Invalid packet type. Expected file metadata, received: " << packet->type << endl;
+            break;
         }
         unique_ptr<FileMetadata> metadata(new FileMetadata(packet->payload));
         PLOGI << "Received file " << metadata->name << endl;
@@ -73,5 +75,6 @@ void ClientFileSync::loop() {
         if (file_output != NULL) {
             fclose(file_output);
         }
+        chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
     }
 };

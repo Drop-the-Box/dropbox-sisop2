@@ -18,6 +18,9 @@ public:
     ClientContext(
         string server_addr, int server_port, string username,
         string sync_dir, SessionType session_type);
+
+    inline string get_folder_path() { return this->sync_dir; }
+    //  inline int    get_channel() { return this->channel; }
 };
 
 class ClientSessionManager {
