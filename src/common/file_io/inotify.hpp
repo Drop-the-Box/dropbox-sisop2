@@ -1,7 +1,6 @@
 #ifndef INOTIFY_H
 #define INOTIFY_H
-
-#include "../../client/session/session.hpp"
+// usar sempre snake case para nomear as variaveis
 #include "../../common/file_io/file_io.hpp"
 #include "../../common/socket_io/socket.hpp"
 #include <cstring>
@@ -18,17 +17,16 @@ using namespace std;
 #define BUFFER_LEN (1024 * (EVENT_SIZE + 16))
 
 class Inotify {
-    const char    *folder_path;
-    int            file_descriptor;
-    int            watch_descriptor;
-    ClientContext *context;
-    Socket        *socket;
+    const char        *folder_path;
+    int                file_descriptor;
+    int                watch_descriptor;
+    shared_ptr<Socket> socket;
 
 public:
-    Inotify(ClientContext *context, Socket *socket);
+    Inotify(shared_ptr<Socket> socket, const char *folder_path);
     int  get_file_descriptor();
     int  get_watch_descriptor();
     void read_event();
-    void close_inotify();
+    void closeInotify();
 };
 #endif

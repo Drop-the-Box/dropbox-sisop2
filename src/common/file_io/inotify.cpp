@@ -1,21 +1,8 @@
 #include "inotify.hpp"
-#include "../../client/session/session.hpp"
-#include "../../common/file_io/file_io.hpp"
-#include "../../common/socket_io/socket.hpp"
-#include <cstring>
-#include <iostream>
-#include <memory>
-#include <plog/Log.h>
-#include <sys/inotify.h>
-#include <sys/types.h>
-#include <unistd.h>
 
-using namespace std;
-
-Inotify::Inotify(ClientContext *context, Socket *socket) {
-    this->folder_path     = context->get_folder_path().c_str();
+Inotify::Inotify(shared_ptr<Socket> socket, const char *folder_path) {
+    this->folder_path     = folder_path;
     this->file_descriptor = inotify_init();
-    this->context         = context;
     this->socket          = socket;
     if (this->file_descriptor == -1) {
         PLOGE << "Failed to initialize inotify" << endl;
@@ -38,39 +25,39 @@ int Inotify::get_watch_descriptor() {
 }
 
 void Inotify::read_event() {
-    char buffer[BUFFER_LEN];
+    PLOG_INFO << "Inotify read event" << endl;
 
-    int length = read(this->file_descriptor, buffer, BUFFER_LEN);
+    char   buffer[BUFFER_LEN];
+    string full_file_path;
+    int    length = read(this->file_descriptor, buffer, BUFFER_LEN);
     if (length < 0) {
         PLOGE << "Failed to read" << endl;
     }
 
     struct inotify_event *event = (struct inotify_event *)&(buffer)[0];
-
-    string full_file_path;
-
     if (event->len) {
-
         if (event->mask & IN_CREATE) {
-            PLOGE << "The file " << event->name << " was created." << endl;
-            full_file_path = this->folder_path + string(event->name);
-            FileHandler fileHandler(full_file_path);
-            fileHandler.send(this->socket, this->socket->socket_fd);
+            full_file_path = string(this->folder_path) + "/" + string(event->name);
+
+            PLOGE << "The file " << full_file_path << " was created." << endl;
+            // FileHandler fileHandler(full_file_path);
+            // fileHandler.send(this->socket, this->socket->socket_fd);
         } else if (event->mask & IN_MODIFY) {
-            PLOGE << "The file " << event->name << " was modified." << endl;
-            full_file_path = this->folder_path + string(event->name);
-            FileHandler fileHandler(full_file_path);
-            fileHandler.send(this->socket, this->socket->socket_fd);
+            full_file_path = string(this->folder_path) + "/" + string(event->name);
+            PLOGE << "The file " << full_file_path << " was modified." << endl;
+            // FileHandler fileHandler(full_file_path);
+            // fileHandler.send(this->socket, this->socket->socket_fd);
         } else if (event->mask & IN_DELETE) {
-            PLOGE << "The file " << event->name << " was deleted." << endl;
-            full_file_path = this->folder_path + string(event->name);
-            FileHandler fileHandler(full_file_path);
+            full_file_path = string(this->folder_path) + "/" + string(event->name);
+            PLOGE << "The file " << full_file_path << " was deleted." << endl;
+            // FileHandler fileHandler(full_file_path);
             // ver função de deletar arquivo no servidor
         }
     }
+    PLOG_INFO << "Inotify read event end" << endl;
 }
 
-void Inotify::close_inotify() {
+void Inotify::closeInotify() {
     inotify_rm_watch(this->file_descriptor, this->watch_descriptor);
     close(this->file_descriptor);
 }
