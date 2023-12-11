@@ -42,10 +42,12 @@ void Socket::init(
         PLOGE << "Error: cannot open socket on " << address << ":" << port << endl;
     }
 
+    // Options for non-blocking socket that didn't work
     // Set flags for non-blocking
     // int flags = fcntl(this->socket_fd, F_GETFL);
     // flags = flags == -1 ? O_NONBLOCK : flags | O_NONBLOCK;
     // ::fcntl(this->socket_fd, F_SETFL, flags);
+    // this->socket_flags = flags;
 
     struct timeval timeout;      
     timeout.tv_sec = 10;
@@ -59,7 +61,6 @@ void Socket::init(
         PLOGE << "Cannot set socket send timeout. Reason: " << strerror(errno) << endl;
     }
 
-    this->socket_flags = flags;
     this->server_address.sin_family = AF_INET;
     this->server_address.sin_port = htons(port);
     this->server_address.sin_addr.s_addr = inet_addr(address.c_str());
@@ -108,13 +109,14 @@ int Socket::listen(int max_requests) {
 int Socket::accept(char* client_addr, int *client_port) {
     socklen_t client_addr_len = sizeof(struct sockaddr_in);
     struct sockaddr_in *client = (struct sockaddr_in *)calloc(1, client_addr_len);
-    int is_accepted = ::accept(this->socket_fd, (sockaddr *)client, &client_addr_len);
-    if (is_accepted != -1) {
+    int accepted_fd = ::accept(this->socket_fd, (sockaddr *)client, &client_addr_len);
+    if (accepted_fd != -1) {
         inet_ntop(AF_INET, &client->sin_addr.s_addr, client_addr, INET_ADDRSTRLEN);
         *client_port = htons(client->sin_port);
+        // fcntl(accepted_fd, F_SETFL, this->socket_flags);
     }
     free(client);
-    return is_accepted;
+    return accepted_fd;
 };
 
 
