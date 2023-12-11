@@ -96,6 +96,7 @@ bool Session::setup() {
     int channel = context->connection->channel;
     int payload_size = context->socket->get_message_sync(buffer.get(), channel);
     if (payload_size == 0) {
+        PLOGW << "Client " << context->connection->get_full_address() << " has disconnected before setup.." << endl;
         return false;
     }
 

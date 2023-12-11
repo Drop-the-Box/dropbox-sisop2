@@ -47,6 +47,18 @@ void Socket::init(
     flags = flags == -1 ? O_NONBLOCK : flags | O_NONBLOCK;
     ::fcntl(this->socket_fd, F_SETFL, flags);
 
+    struct timeval timeout;      
+    timeout.tv_sec = 10;
+    timeout.tv_usec = 0;
+
+    if (setsockopt (this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof timeout) < 0) {
+        PLOGE << "Cannot set socket recv timeout. Reason: " << strerror(errno) << endl;
+    }
+
+    if (setsockopt (this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof timeout) < 0) {
+        PLOGE << "Cannot set socket send timeout. Reason: " << strerror(errno) << endl;
+    }
+
     this->socket_flags = flags;
     this->server_address.sin_family = AF_INET;
     this->server_address.sin_port = htons(port);
@@ -126,7 +138,7 @@ bool Socket::has_event(int channel) {
 
 
 int Socket::receive(uint8_t *buffer, int channel) {
-    if (!this->has_event(channel)) return -1;
+    // if (!this->has_event(channel)) return -1;
     // std::cout << "Receiving data on channel " << channel << "..." << std::endl;
     int error_code = 0;
     int bytes_received = 0;
