@@ -5,7 +5,7 @@ ClientPublisher::ClientPublisher(shared_ptr<ClientContext> context, shared_ptr<S
     this->context = context;
     this->socket  = socket;
 }
-// aaaa
+
 void ClientPublisher::loop() {
     const char *folder_path = this->context->sync_dir.c_str();
     PLOG_INFO << "Publisher folder path: " << folder_path << endl;
