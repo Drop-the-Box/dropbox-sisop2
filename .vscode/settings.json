@@ -42,5 +42,16 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "cstring": "cpp"
-    }
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.renderWhitespace": "all",
+        "editor.formatOnSave": true
+    },
+    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 0, AccessModifierOffset: -4, AlignConsecutiveDeclarations: true, AlignConsecutiveAssignments: true, IndentCaseLabels: false }",
+    "C_Cpp.default.compilerPath": "/usr/local/bin/g++-11"
+    
 }
