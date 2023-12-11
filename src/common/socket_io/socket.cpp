@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <string.h>
 #include <memory>
+#include <sys/ioctl.h>
 #include <plog/Log.h>
 
 // Project-level imports
@@ -166,7 +167,7 @@ int Socket::receive(uint8_t *buffer, int channel) {
 
 
 bool Socket::has_error(int channel) {
-    return false;  // to be debugged
+    // return false;  // to be debugged
     if (*this->interrupt) {
         PLOGW << "Service interrupted by command line!" << endl;
         return true;
@@ -177,7 +178,6 @@ bool Socket::has_error(int channel) {
     if (status != 0) {
         PLOGE << "Error getting socket status: " << strerror(error) << "\n\n";
     }
-    PLOGE << "Error? " << status << std::endl;
     return status != 0;
 }
 
@@ -202,7 +202,7 @@ bool Socket::is_connected(int channel) {
 
 
 int Socket::send(uint8_t *bytes, size_t size, int channel) {
-    if(this->has_error(channel)) return -1;
+    if(this->has_error(channel)) return 0;
     int result = -1;
     if (this->is_connected(channel)) {
         result = ::send(channel, bytes, BUFFER_SIZE, 0);
@@ -225,11 +225,17 @@ int Socket::close(int channel) {
 }
 
 int Socket::get_message_sync(uint8_t *buffer, int channel) {
+    if(this->has_error(channel)) return 0;
     ::memset(buffer, 0, BUFFER_SIZE);
-    int payload_size = -1;
-    while(payload_size == -1){
-        payload_size = this->receive(buffer, channel);
+    int payload_size = 0;
+    while(!payload_size && ioctl(channel, FIONREAD, &payload_size) >= 0) {
+        // PLOGI << "Waiting for data to arrive..." << endl;
+        if (*this->interrupt) return 0;
+        usleep(1000);
     }
+    // while(payload_size == -1){
+        payload_size = this->receive(buffer, channel);
+    // }
     return payload_size;
 }
 
