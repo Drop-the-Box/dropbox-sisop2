@@ -1,8 +1,10 @@
 #include "inotify.hpp"
 
-Inotify::Inotify(const char *folder_path){
-    this->folder_path = folder_path;
+Inotify::Inotify((ClientContext *context, Socket *socket);){
+    this->folder_path = context->get_folder_path();
     this->file_descriptor = inotify_init();
+    this->context = context;
+    this->socket = socket;
     if (this->file_descriptor == -1) {
         PLOGE << "Failed to initialize inotify" << endl;
         return;
@@ -34,11 +36,20 @@ void Inotify::read_event(){
     struct inotify_event* event = (struct inotify_event*) &(buffer)[0];
     if (event->len) {
         if (event->mask & IN_CREATE) {
-            cout << "The file " << event->name << " was created." << endl;
+            PLOGE << "The file " << event->name << " was created." << endl;
+            full_file_path = this->folder_path + event->name;
+            FileHandler fileHandler(full_file_path);
+            fileHandler.send(this->socket, this->context->get_channel());
         } else if (event->mask & IN_MODIFY) {
-            cout << "The file " << event->name << " was modified." << endl;
+            PLOGE << "The file " << event->name << " was modified." << endl;
+            full_file_path = this->folder_path + event->name;
+            FileHandler fileHandler(full_file_path);
+            fileHandler.send(this->socket, this->context->get_channel());
         } else if (event->mask & IN_DELETE) {
-            cout << "The file " << event->name << " was deleted." << endl;
+            PLOGE << "The file " << event->name << " was deleted." << endl;
+            full_file_path = this->folder_path + event->name;
+            FileHandler fileHandler(full_file_path);
+            // ver função de deletar arquivo no servidor
         }
     }
 }

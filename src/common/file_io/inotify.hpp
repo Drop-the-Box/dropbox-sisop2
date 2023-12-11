@@ -8,7 +8,12 @@
 #include <sys/types.h>
 #include <memory>
 #include <cstring>
+#include "../session/session.hpp"
+#include "../../common/socket_io/socket.hpp"
+#include "../../common/file_io/file_io.hpp"
 #include <plog/Log.h>
+
+
 
 using namespace std;
 
@@ -19,8 +24,10 @@ class Inotify{
     const char *folder_path;
     int file_descriptor;
     int watch_descriptor;
+    ClientContext *context;
+    Socket *socket;
     public:
-        Inotify(const char *folder_path);
+        Inotify(ClientContext *context, Socket *socket);
         int get_file_descriptor();
         int get_watch_descriptor();
         void read_event();
