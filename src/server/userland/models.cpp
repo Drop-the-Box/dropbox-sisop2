@@ -51,8 +51,11 @@ bool UserStore::register_device(const string username, shared_ptr<ServerContext>
     try {
         device_map = this->users_devices.at(username);
     } catch (out_of_range) {
-        PLOGW << "User " << username << " is not registered" << endl;
-        return false;
+        PLOGW << "User " << username << " is not registered. Registering..." << endl;
+        if (!this->add_user(username)) {
+            return false;
+        }
+        device_map = this->users_devices.at(username);
     }
 
     //  This is where we limit max devices online
@@ -78,9 +81,16 @@ bool UserStore::register_device(const string username, shared_ptr<ServerContext>
 bool UserStore::register_connection(const string username, shared_ptr<ServerContext> context) {
     sem_wait(&this->devices_lock);
 
-    map<string, Device * > device_map = this->users_devices.at(username);
-    shared_ptr<Connection> connection = context->connection;
+    map<string, Device * > device_map;
     bool result = true;
+
+    try {
+        device_map = this->users_devices.at(username);
+    } catch (out_of_range) {
+        if(!this->add_user(username)) return false;
+        device_map = this->users_devices.at(username);
+    }
+    shared_ptr<Connection> connection = context->connection;
 
     if(device_map.find(connection->address) == device_map.end()) {
         sem_post(&this->devices_lock);

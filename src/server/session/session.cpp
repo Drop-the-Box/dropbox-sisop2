@@ -45,8 +45,11 @@ void SessionManager::start() {
         usleep(10000);
     }
     for(set<int>::iterator channel = channels.begin(); channel != channels.end(); channel++) {
+        PLOGI << "Closing socket on channel " << *channel << "..." << endl;
         socket->close(*channel);
-        pthread_join(this->thread_pool.at(*channel), NULL);
+        pthread_t thread_id = this->thread_pool.at(*channel);
+        PLOGI << "Waiting for thread " << thread_id << " from channel " << *channel << " to teardown..." << endl;
+        pthread_join(thread_id, NULL);
     }
     free(client_addr);
 }
@@ -77,13 +80,9 @@ void* SessionManager::handle_session(void *session_ptr) {
     }
     PLOGD << "Listening on channel " << channel << endl;
 
-    try {
         if (session->setup()) {
             session->run();
         }
-    } catch (const std::exception& exc) {
-        PLOGE << "Terminated with error: " << exc.what() << endl;
-    }
 
     PLOGI << "Closing channel " << channel << "..." << endl;
     session->teardown();
@@ -125,7 +124,13 @@ bool Session::setup() {
         return false;
     }
     this->type = request->type;
-    string session_type = session_type_map.at(request->type);
+    string session_type;
+    try {
+        session_type = session_type_map.at(request->type);
+    } catch (const std::exception& exc) {
+        PLOGE << "Cannot create session of type: " << request->type << endl;
+        return false;
+    }
     ostringstream oss;
     oss << "Session of type " << session_type << " established." << endl;
     shared_ptr<Event> accept_evt(new Event(SessionAccepted, oss.str()));
