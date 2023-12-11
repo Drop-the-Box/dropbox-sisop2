@@ -43,9 +43,9 @@ void Socket::init(
     }
 
     // Set flags for non-blocking
-    int flags = fcntl(this->socket_fd, F_GETFL);
-    flags = flags == -1 ? O_NONBLOCK : flags | O_NONBLOCK;
-    ::fcntl(this->socket_fd, F_SETFL, flags);
+    // int flags = fcntl(this->socket_fd, F_GETFL);
+    // flags = flags == -1 ? O_NONBLOCK : flags | O_NONBLOCK;
+    // ::fcntl(this->socket_fd, F_SETFL, flags);
 
     struct timeval timeout;      
     timeout.tv_sec = 10;
