@@ -8,7 +8,10 @@ ClientPublisher::ClientPublisher(shared_ptr<ClientContext> context, shared_ptr<S
 
 
 void ClientPublisher::loop() {
-    while(!*socket->interrupt);
+    shared_ptr<Inotify> inotify = make_shared<Inotify>(this->context, this->socket);
+    while(!*socket->interrupt) {
+        inotify->read_event();
+    }
 };
 
 

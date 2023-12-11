@@ -4,6 +4,7 @@
 #include <memory>
 #include "../session/session.hpp"
 #include "../../common/socket_io/socket.hpp"
+#include "../../common/file_io/inotify.hpp"
 
 using namespace std;
 
