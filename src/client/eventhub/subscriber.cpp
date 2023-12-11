@@ -1,17 +1,15 @@
 #include "subscriber.hpp"
 
-
 ClientSubscriber::ClientSubscriber(shared_ptr<ClientContext> context, shared_ptr<Socket> socket) {
     this->context = context;
-    this->socket = socket;
+    this->socket  = socket;
 }
 
-
 void ClientSubscriber::loop() {
-    while(!*socket->interrupt);
+    while (!*socket->interrupt)
+        ;
 };
 
-
-void get_event() {
+void get_event(){
 
 };

@@ -1,5 +1,5 @@
-#include <sstream>
 #include <plog/Log.h>
+#include <sstream>
 
 #include "../../common/file_io/file_io.hpp"
 #include "../../common/vars.hpp"
@@ -8,25 +8,22 @@
 
 using namespace std;
 
-
-
 ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, shared_ptr<Socket> socket) {
     this->context = context;
-    this->socket = socket;
+    this->socket  = socket;
 }
-
 
 void ClientFileSync::loop() {
     char buffer[BUFFER_SIZE];
-    int total_bytes = 0;
-    int collected_bytes;
-    int iteration;
-    int chars_read;
+    int  total_bytes = 0;
+    int  collected_bytes;
+    int  iteration;
+    int  chars_read;
 
-    while((chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd)) != 0) {
+    while ((chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd)) != 0) {
         collected_bytes = 0;
-        iteration = 1;
-        chars_read = 0;
+        iteration       = 1;
+        chars_read      = 0;
         if (chars_read < 0)
             printf("ERROR reading from socket\n");
         Packet *packet = new Packet((uint8_t *)buffer);
@@ -43,8 +40,8 @@ void ClientFileSync::loop() {
         string filepath = oss.str();
         PLOGI << "Storing file in " << filepath.c_str() << endl;
         FILE *file_output = fopen(filepath.c_str(), "wb");
-        
-        while(collected_bytes < total_bytes) {
+
+        while (collected_bytes < total_bytes) {
             chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
             PLOGD << "Chars read: " << chars_read << endl;
             if (chars_read < 0) {
@@ -64,8 +61,8 @@ void ClientFileSync::loop() {
                 return;
             }
             fwrite(packet->payload, 1, packet->payload_size * sizeof(uint8_t), file_output);
-            PLOGD << "Received packet type "  << packet->type << endl;
-            PLOGD << "File size: " <<  (long)packet->total_size << endl;
+            PLOGD << "Received packet type " << packet->type << endl;
+            PLOGD << "File size: " << (long)packet->total_size << endl;
             PLOGD << "Chunk size: " << packet->payload_size << endl;
             PLOGD << "Chunk index: " << packet->seq_index << endl;
             collected_bytes += packet->payload_size;

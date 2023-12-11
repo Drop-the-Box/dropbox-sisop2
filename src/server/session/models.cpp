@@ -1,21 +1,19 @@
-#include <stdlib.h>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <unistd.h>
-#include <stdlib.h>
 #include <cstring>
-#include <string>
-#include <regex>
+#include <fstream>
+#include <iostream>
 #include <memory>
+#include <regex>
+#include <sstream>
+#include <stdlib.h>
+#include <string>
+#include <unistd.h>
 
-#include "models.hpp"
 #include "../../common/session/models.hpp"
-
+#include "models.hpp"
 
 Connection::Connection(char *address, int port, int channel) {
     this->address = string(address);
-    this->port = port;
+    this->port    = port;
     this->channel = channel;
 }
 

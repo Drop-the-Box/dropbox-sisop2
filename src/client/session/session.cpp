@@ -1,22 +1,21 @@
-#include <pthread.h>
 #include <cstdlib>
-#include <unistd.h>
-#include <sstream>
 #include <iostream>
-#include <sys/stat.h>
-#include <signal.h>
 #include <plog/Log.h>
+#include <pthread.h>
+#include <signal.h>
+#include <sstream>
+#include <sys/stat.h>
+#include <unistd.h>
 
-
-#include "session.hpp"
+#include "../../common/eventhub/models.hpp"
+#include "../../common/file_io/file_io.hpp"
 #include "../../common/session/models.hpp"
 #include "../../common/socket_io/socket.hpp"
-#include "../../common/file_io/file_io.hpp"
-#include "../../common/eventhub/models.hpp"
 #include "../../common/vars.hpp"
+#include "../eventhub/file_exchange.hpp"
 #include "../eventhub/publisher.hpp"
 #include "../eventhub/subscriber.hpp"
-#include "../eventhub/file_exchange.hpp"
+#include "session.hpp"
 
 using namespace std;
 
@@ -28,21 +27,19 @@ void stop_execution(int signal) {
 }
 
 ClientContext::ClientContext(
-    string server_addr, int server_port, string username, string sync_dir, SessionType session_type
-) {
-    this->server_addr = server_addr;
-    this->server_port = server_port;
-    this->username = username;
+    string server_addr, int server_port, string username, string sync_dir, SessionType session_type) {
+    this->server_addr  = server_addr;
+    this->server_port  = server_port;
+    this->username     = username;
     this->session_type = session_type;
-    this->sync_dir = sync_dir;
+    this->sync_dir     = sync_dir;
 };
-
 
 ClientSessionManager::ClientSessionManager(string address, int port, string username) {
     ::signal(SIGINT, stop_execution);
-    string sync_dir = FileHandler::get_sync_dir(username);
-    ClientContext *publisher_context = new ClientContext(address, port, username, sync_dir, CommandPublisher);
-    ClientContext *subscriber_context = new ClientContext(address, port, username, sync_dir, CommandSubscriber);
+    string         sync_dir              = FileHandler::get_sync_dir(username);
+    ClientContext *publisher_context     = new ClientContext(address, port, username, sync_dir, CommandPublisher);
+    ClientContext *subscriber_context    = new ClientContext(address, port, username, sync_dir, CommandSubscriber);
     ClientContext *file_exchange_context = new ClientContext(address, port, username, sync_dir, FileExchange);
 
     pthread_t thread_pool[3];
@@ -54,17 +51,16 @@ ClientSessionManager::ClientSessionManager(string address, int port, string user
     pthread_exit(NULL);
 };
 
-
 void *ClientSessionManager::handle_session(void *context_ptr) {
     shared_ptr<ClientContext> context((ClientContext *)context_ptr);
-    shared_ptr<Socket> socket(new Socket(context->server_addr, context->server_port, &interrupt, Client, BUFFER_SIZE));
+    shared_ptr<Socket>        socket(new Socket(context->server_addr, context->server_port, &interrupt, Client, BUFFER_SIZE));
 
     unique_ptr<ClientSession> session(new ClientSession(context, socket));
     try {
         if (session->setup()) {
             session->run();
         }
-    } catch (const std::exception& exc) {
+    } catch (const std::exception &exc) {
         PLOGE << "Terminated with error: " << exc.what() << endl;
     }
     PLOGI << "Closing socket " << socket->socket_fd << endl;
@@ -72,22 +68,20 @@ void *ClientSessionManager::handle_session(void *context_ptr) {
     pthread_exit(NULL);
 }
 
-
 ClientSession::ClientSession(shared_ptr<ClientContext> context, shared_ptr<Socket> socket) {
     shared_ptr<SessionRequest> request(new SessionRequest(context->session_type, context->username));
 
-    this->socket = socket;
+    this->socket  = socket;
     this->request = request;
     this->context = context;
 };
 
-
 bool ClientSession::setup() {
-    uint8_t *bytes;
-    uint8_t **bytes_ptr = &bytes;
-    size_t sreq_size = request->to_bytes(bytes_ptr);
+    uint8_t           *bytes;
+    uint8_t          **bytes_ptr = &bytes;
+    size_t             sreq_size = request->to_bytes(bytes_ptr);
     unique_ptr<Packet> packet(new Packet(SessionInit, 1, sreq_size, sreq_size, bytes));
-    int bytes_sent = packet->send(socket, socket->socket_fd);
+    int                bytes_sent = packet->send(socket, socket->socket_fd);
     if (bytes_sent < 0) {
         return false;
     }
@@ -109,24 +103,24 @@ bool ClientSession::setup() {
 
 void ClientSession::run() {
     switch (context->session_type) {
-        case CommandPublisher: {
-            unique_ptr<ClientPublisher> publisher(new ClientPublisher(context, socket));
-            publisher->loop();
-            break;
-        }
-        case CommandSubscriber: {
-            unique_ptr<ClientSubscriber> subscriber(new ClientSubscriber(context, socket));
-            subscriber->loop();
-            break;
-        }
-        case FileExchange: {
-            unique_ptr<ClientFileSync> file_sync(new ClientFileSync(context, socket));
-            file_sync->loop();
-            break;
-        }
-        default: {
-            PLOGE << "Invalid session type " << session_type_map.at(context->session_type) << endl;
-            break;
-        }
+    case CommandPublisher: {
+        unique_ptr<ClientPublisher> publisher(new ClientPublisher(context, socket));
+        publisher->loop();
+        break;
+    }
+    case CommandSubscriber: {
+        unique_ptr<ClientSubscriber> subscriber(new ClientSubscriber(context, socket));
+        subscriber->loop();
+        break;
+    }
+    case FileExchange: {
+        unique_ptr<ClientFileSync> file_sync(new ClientFileSync(context, socket));
+        file_sync->loop();
+        break;
+    }
+    default: {
+        PLOGE << "Invalid session type " << session_type_map.at(context->session_type) << endl;
+        break;
+    }
     }
 }

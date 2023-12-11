@@ -1,6 +1,6 @@
 #include "models.hpp"
-#include <iostream>
 #include <cstring>
+#include <iostream>
 #include <memory>
 #include <plog/Log.h>
 
@@ -9,8 +9,8 @@
 using namespace std;
 
 Event::Event(uint8_t *bytes) {
-    uint8_t *cursor = bytes;
-    size_t uint16_s = sizeof(uint16_t);
+    uint8_t *cursor   = bytes;
+    size_t   uint16_s = sizeof(uint16_t);
 
     uint16_t prop;
     memmove(&prop, cursor, uint16_s);
@@ -32,16 +32,13 @@ Event::Event(uint8_t *bytes) {
     this->message = string((char *)payload.get());
 }
 
-
 Event::Event(EventType type, string message) {
-    this->type = type;
+    this->type    = type;
     this->message = message;
-
 }
 
-
 bool Event::send(shared_ptr<Socket> socket, int channel) {
-    uint16_t message_size = this->message.size() + 1;
+    uint16_t            message_size = this->message.size() + 1;
     unique_ptr<uint8_t> message_buf((uint8_t *)calloc(message_size, sizeof(uint8_t)));
     memmove(message_buf.get(), this->message.c_str(), message_size);
     /// PLOGD << "Encoding msg:  " << message_buf.get() << endl;
@@ -49,10 +46,10 @@ bool Event::send(shared_ptr<Socket> socket, int channel) {
     packet_size += sizeof(uint16_t);
     packet_size += message_size * sizeof(uint8_t);
 
-    unique_ptr<uint8_t>buffer((uint8_t *)calloc(packet_size, sizeof(uint8_t)));
+    unique_ptr<uint8_t> buffer((uint8_t *)calloc(packet_size, sizeof(uint8_t)));
 
-    uint8_t *cursor = buffer.get();
-    size_t uint16_s = sizeof(uint16_t);
+    uint8_t *cursor   = buffer.get();
+    size_t   uint16_s = sizeof(uint16_t);
 
     uint16_t prop = htons(this->type);
     memmove(cursor, &prop, uint16_s);

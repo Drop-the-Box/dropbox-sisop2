@@ -1,43 +1,39 @@
-#include <stdlib.h>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <unistd.h>
 #include <cstring>
-#include <regex>
+#include <fstream>
+#include <iostream>
 #include <plog/Log.h>
+#include <regex>
+#include <sstream>
+#include <stdlib.h>
+#include <unistd.h>
 
-
-#include "models.hpp"
 #include "../session/session.hpp"
+#include "models.hpp"
 
 using namespace std;
 
-
 #define USER_MAX_DEVICES 2
 
-
 Device::Device(const string username, shared_ptr<Connection> connection) {
-    this->username = username;
-    this->address = connection->address;
+    this->username                      = username;
+    this->address                       = connection->address;
     this->connections[connection->port] = connection;
 }
 
 UserStore::UserStore() {
-    sem_init(&this->devices_lock, 0, 1); 
+    sem_init(&this->devices_lock, 0, 1);
 };
 
 UserStore::~UserStore() {
     sem_destroy(&this->devices_lock);
 }
 
-
 bool UserStore::add_user(const string username) {
     bool user_added = false;
-    if(this->users_devices.find(username) == this->users_devices.end()) {
-        map<string, Device * > device_map;
+    if (this->users_devices.find(username) == this->users_devices.end()) {
+        map<string, Device *> device_map;
         this->users_devices[username] = device_map;
-        user_added = true;
+        user_added                    = true;
     } else {
         PLOGW << "User " << username << " already registered." << endl;
     }
@@ -45,7 +41,7 @@ bool UserStore::add_user(const string username) {
 }
 
 bool UserStore::register_device(const string username, shared_ptr<ServerContext> context) {
-    map<string, Device * > device_map;
+    map<string, Device *> device_map;
 
     shared_ptr<Connection> connection = context->connection;
     try {
@@ -65,8 +61,8 @@ bool UserStore::register_device(const string username, shared_ptr<ServerContext>
         return false;
     }
     Device *device;
-    if(device_map.find(connection->address) == device_map.end()) {
-        device = new Device(username, connection);
+    if (device_map.find(connection->address) == device_map.end()) {
+        device                                             = new Device(username, connection);
         this->users_devices[username][connection->address] = device;
     } else {
         PLOGW << "Device with address " << connection->address << " already registered" << endl;
@@ -77,26 +73,26 @@ bool UserStore::register_device(const string username, shared_ptr<ServerContext>
     return true;
 }
 
-
 bool UserStore::register_connection(const string username, shared_ptr<ServerContext> context) {
     sem_wait(&this->devices_lock);
 
-    map<string, Device * > device_map;
-    bool result = true;
+    map<string, Device *> device_map;
+    bool                  result = true;
 
     try {
         device_map = this->users_devices.at(username);
     } catch (out_of_range) {
-        if(!this->add_user(username)) return false;
+        if (!this->add_user(username))
+            return false;
         device_map = this->users_devices.at(username);
     }
     shared_ptr<Connection> connection = context->connection;
 
-    if(device_map.find(connection->address) == device_map.end()) {
+    if (device_map.find(connection->address) == device_map.end()) {
         sem_post(&this->devices_lock);
-        result =  this->register_device(username, context);
+        result = this->register_device(username, context);
     } else {
-        Device *device = device_map[connection->address];
+        Device *device                        = device_map[connection->address];
         device->connections[connection->port] = connection;
         context->set_device(device);
     }
@@ -105,25 +101,24 @@ bool UserStore::register_connection(const string username, shared_ptr<ServerCont
     return result;
 }
 
-
 bool UserStore::unregister_connection(shared_ptr<ServerContext> context) {
     if (context->device != NULL) {
-        sem_wait(&this->devices_lock);  // acquiring lock
-                                        //
-        shared_ptr<Connection> connection = context->connection;
-        map<int, shared_ptr<Connection> >::iterator iter = context->device->connections.find(context->connection->port);
+        sem_wait(&this->devices_lock); // acquiring lock
+                                       //
+        shared_ptr<Connection>                     connection = context->connection;
+        map<int, shared_ptr<Connection>>::iterator iter       = context->device->connections.find(context->connection->port);
         if (iter != context->device->connections.end()) {
             context->device->connections.erase(iter);
         }
         if (context->device->connections.size() == 0) {
-            string username = context->device->username;
-            map<string, Device * >::iterator device_key = this->users_devices[username].find(context->device->address);
+            string                          username   = context->device->username;
+            map<string, Device *>::iterator device_key = this->users_devices[username].find(context->device->address);
             if (device_key != this->users_devices[username].end()) {
                 PLOGI << "Unregistering device " << context->device->address << " from user " << username << endl;
                 this->users_devices[username].erase(device_key);
             }
             if (this->users_devices[username].size() == 0) {
-                map<string, map<string, Device *> >::iterator user_key = this->users_devices.find(username);
+                map<string, map<string, Device *>>::iterator user_key = this->users_devices.find(username);
                 this->users_devices.erase(user_key);
             }
         }
@@ -133,8 +128,7 @@ bool UserStore::unregister_connection(shared_ptr<ServerContext> context) {
     return true;
 }
 
-
-map<string, Device * > UserStore::get_user_devices(const string username) {
+map<string, Device *> UserStore::get_user_devices(const string username) {
     try {
         return this->users_devices.at(username);
     } catch (out_of_range) {
@@ -143,8 +137,7 @@ map<string, Device * > UserStore::get_user_devices(const string username) {
     }
 }
 
-
-Device * UserStore::get_device(const string username, const string address) {
+Device *UserStore::get_device(const string username, const string address) {
     try {
         return this->users_devices.at(username).at(address);
     } catch (out_of_range) {
@@ -153,33 +146,27 @@ Device * UserStore::get_device(const string username, const string address) {
     return NULL;
 }
 
-
 vector<string> UserStore::get_connected_users() {
-    vector<string> users;
-    map<string, vector<shared_ptr<Session> > > sessions = this->users_sessions;
+    vector<string>                           users;
+    map<string, vector<shared_ptr<Session>>> sessions = this->users_sessions;
     transform(
         sessions.begin(), sessions.end(), back_inserter(users),
-        [](pair<string, vector<shared_ptr<Session>> > p) { return p.first; }  // NOLINT
+        [](pair<string, vector<shared_ptr<Session>>> p) { return p.first; } // NOLINT
     );
     return users;
 }
 
-
 void UserStore::get_user_devices() {
-
 }
-
 
 ServerContext::ServerContext(
-    shared_ptr<Socket> socket, shared_ptr<Connection> connection, shared_ptr<UserStore> storage
-) {
-    this->socket = socket;
+    shared_ptr<Socket> socket, shared_ptr<Connection> connection, shared_ptr<UserStore> storage) {
+    this->socket     = socket;
     this->connection = connection;
-    this->storage = storage;
-    this->device = NULL;
+    this->storage    = storage;
+    this->device     = NULL;
 }
 
-
-void ServerContext::set_device(Device * device) {
+void ServerContext::set_device(Device *device) {
     this->device = device;
 }

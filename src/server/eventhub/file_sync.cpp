@@ -1,12 +1,12 @@
+#include <plog/Log.h>
+#include <sstream>
 #include <stdlib.h>
+#include <string>
 #include <unistd.h>
 #include <vector>
-#include <string>
-#include <sstream>
-#include <plog/Log.h>
 
-#include "file_sync.hpp"
 #include "../../common/vars.hpp"
+#include "file_sync.hpp"
 
 using namespace std;
 
@@ -18,11 +18,11 @@ void FileSync::sync_all() {
     PLOGI << "-------------------- Connected to filesync" << endl;
     const string username = context->device->username;
 
-    string sync_dir = FileHandler::get_sync_dir(username, DIR_SERVER);
-    vector<string> files = FileHandler::list_files(sync_dir);
+    string         sync_dir = FileHandler::get_sync_dir(username, DIR_SERVER);
+    vector<string> files    = FileHandler::list_files(sync_dir);
 
     vector<string>::iterator filename;
-    for (filename=files.begin(); filename != files.end(); filename++) {
+    for (filename = files.begin(); filename != files.end(); filename++) {
         ostringstream oss;
         oss << sync_dir << "/" << *filename;
         string filepath = oss.str();
@@ -32,13 +32,12 @@ void FileSync::sync_all() {
     }
 }
 
-
 void FileSync::loop() {
     this->sync_all();
-    shared_ptr<Socket> socket = this->context->socket;
-    int channel = this->context->connection->channel;
+    shared_ptr<Socket>  socket  = this->context->socket;
+    int                 channel = this->context->connection->channel;
     shared_ptr<uint8_t> buffer((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
-    while(context->socket->get_message_sync(buffer.get(), context->connection->channel) != 0) {
+    while (context->socket->get_message_sync(buffer.get(), context->connection->channel) != 0) {
         PLOGI << "Filesync waiting on channel " << channel << "..." << endl;
         sleep(1);
     }
