@@ -32,7 +32,6 @@ void SessionManager::start() {
     int *client_port = (int *)calloc(1, sizeof(int));
     shared_ptr<UserStore> storage(new UserStore());
     set<int> channels;
-
     while(true) {
         int channel = this->socket->accept(client_addr, client_port);
         if (channel != -1) {
@@ -97,8 +96,7 @@ bool Session::setup() {
     unique_ptr<uint8_t> buffer((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
     int channel = context->connection->channel;
     int payload_size = context->socket->get_message_sync(buffer.get(), channel);
-    // if (payload_size == 0) {
-    if (payload_size < 0) {
+    if (payload_size == 0) {
         return false;
     }
 
@@ -131,9 +129,7 @@ bool Session::setup() {
     ostringstream oss;
     oss << "Session of type " << session_type << " established." << endl;
     shared_ptr<Event> accept_evt(new Event(SessionAccepted, oss.str()));
-    cout << "send sync all";
     accept_evt->send(context->socket, channel);
-    cout << "send sync all complete";
     return true;
 }
 
@@ -170,23 +166,12 @@ void Session::run() {
 
 void Session::teardown() {
     int channel = context->connection->channel;
-    // cout << channel << endl;
-
     string full_address = context->connection->get_full_address();
-    // cout << "full_address" << full_address << endl;
-
     if (context->device != NULL) {
-        cout << "context->device" << context->device << endl;
-
         string username = context->device->username;
-        cout << "username???" << username << endl;
-
-
         PLOGI << "Unregistering connection from device " << full_address << " from user " << username << endl;
         context->storage->unregister_connection(context);
     } else  {
-        cout << "context->device" << endl;
-
         PLOGI << "Unregistering unauthenticated connection from device " << full_address << endl;
     }
     context->socket->close(channel);
