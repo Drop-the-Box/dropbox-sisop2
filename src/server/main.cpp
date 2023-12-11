@@ -1,18 +1,18 @@
-#include <iostream>
-#include <fstream>
 #include <cstring>
-#include <signal.h>
-#include <pthread.h>
-#include <unistd.h>
+#include <fstream>
+#include <iostream>
 #include <memory>
-#include <plog/Log.h>
-#include <plog/Init.h>
-#include <plog/Formatters/TxtFormatter.h>
 #include <plog/Appenders/ColorConsoleAppender.h>
+#include <plog/Formatters/TxtFormatter.h>
+#include <plog/Init.h>
+#include <plog/Log.h>
+#include <pthread.h>
+#include <signal.h>
+#include <unistd.h>
 
 // User-defined modules
-#include "../common/vars.hpp"
 #include "../common/socket_io/socket.hpp"
+#include "../common/vars.hpp"
 #include "session/session.hpp"
 
 using namespace std;
@@ -29,9 +29,9 @@ int main(int argc, char *argv[]) {
     plog::init(plog::debug, &consoleAppender);
 
     ::signal(SIGINT, stop_execution);
-    int port = SERVER_PORT;
+    int port         = SERVER_PORT;
     int max_requests = MAX_REQUESTS;
-    int buffer_size = BUFFER_SIZE;
+    int buffer_size  = BUFFER_SIZE;
 
     // char* socket_address = (char *)"0.0.0.0";
     string socket_address = "0.0.0.0";

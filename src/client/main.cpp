@@ -1,18 +1,18 @@
+#include <iostream>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <plog/Appenders/ColorConsoleAppender.h>
+#include <plog/Formatters/TxtFormatter.h>
+#include <plog/Init.h>
+#include <plog/Log.h>
+#include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include <sstream>
-#include <iostream>
 #include <string>
-#include <plog/Log.h>
-#include <plog/Init.h>
-#include <plog/Formatters/TxtFormatter.h>
-#include <plog/Appenders/ColorConsoleAppender.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "../common/socket_io/socket.hpp"
 #include "../server/session/session.hpp"
@@ -23,12 +23,11 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 
-    char* username_ptr = argv[1];
-    char* address_ptr = argv[2];
-    char* port_ptr = argv[3];
+    char *username_ptr = argv[1];
+    char *address_ptr  = argv[2];
+    char *port_ptr     = argv[3];
 
     static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
     plog::init(plog::verbose, &consoleAppender);
@@ -45,10 +44,10 @@ int main(int argc, char *argv[])
         PLOGE << "Error! No server port provided. Exiting..." << endl;
         exit(1);
     }
-    int server_port = (int)atoi(argv[3]);
-    string server_addr(address_ptr);
-    string username(username_ptr);
-    unique_ptr<ClientSessionManager> manager(new ClientSessionManager(server_addr, server_port, username)); 
+    int                              server_port = (int)atoi(argv[3]);
+    string                           server_addr(address_ptr);
+    string                           username(username_ptr);
+    unique_ptr<ClientSessionManager> manager(new ClientSessionManager(server_addr, server_port, username));
     // shared_ptr<Socket> socket(new Socket(server_addr_name, (int)server_port, Client, 1024));
 
     // SessionRequest *session = new SessionRequest(CommandPublisher, username);
