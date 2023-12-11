@@ -45,6 +45,8 @@ class FileHandler {
         void listen_file();
         long get_size(); 
         static string get_sync_dir(string username, SYNC_DIR_TYPE mode = DIR_CLIENT);
+        static bool get_path_metadata(const string path, struct stat *metadata);
+        static bool path_exists(const string path);
 
     private:
         string filename;

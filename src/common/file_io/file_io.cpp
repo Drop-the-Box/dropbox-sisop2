@@ -227,6 +227,16 @@ long FileHandler::get_size() {
     return file_status.st_size;
 }
 
+bool FileHandler::get_path_metadata(const string path, struct stat *metadata) {
+    return stat(path.c_str(), metadata) == 0;
+}
+
+
+bool FileHandler::path_exists(const string path) {
+    struct stat metadata;
+    return FileHandler::get_path_metadata(path, &metadata);
+}
+
 
 string FileHandler::get_digest() {
     PLOGE << "Error: Hash calculation not implemented.\n";
@@ -246,12 +256,18 @@ string FileHandler::get_sync_dir(string username, SYNC_DIR_TYPE mode) {
     } else {
         sync_dir << "./sync_dir/";
     }
+    if (!FileHandler::path_exists(sync_dir.str())) {
+        int main_dir_result = mkdir(sync_dir.str().c_str(), 0755);
+        PLOGI << "Creating main sync dir " << sync_dir.str() << endl;
+    }
     sync_dir << username;
-    PLOGI << "Creating sync dir " << sync_dir.str() << endl;
-    int dir_result = mkdir(sync_dir.str().c_str(), 0755);
-    if(dir_result != 0 && errno != EEXIST){
-        PLOGE << "Cannot create directory: " << sync_dir.str() << endl;
-        throw;
+    if (!FileHandler::path_exists(sync_dir.str())) {
+        PLOGI << "Creating sync dir " << sync_dir.str() << endl;
+        int dir_result = mkdir(sync_dir.str().c_str(), 0755);
+        if(dir_result != 0 && errno != EEXIST){
+            PLOGE << "Cannot create directory: " << sync_dir.str() << endl;
+            throw;
+        }
     }
     return sync_dir.str();
 };

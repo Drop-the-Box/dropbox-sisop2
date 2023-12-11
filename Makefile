@@ -29,10 +29,6 @@ $(eval $(ARGS):;@:)
 MAKEFLAGS += --silent
 $(eval TEST_TYPE := $(shell [[ -z "$(ARGS)" ]] && echo "null" || echo "$(ARGS)"))
 
-SERVER_CMD = 'g++ src/server/**/*.cpp src/server/main.cpp -o ./bin/server && ./bin/server'
-CLIENT_CMD = 'g++ src/server/**/*.cpp src/client/main.cpp -o ./bin/client && ./bin/client'
-SERVER_DEBUG_CMD = 'g++ -g src/server/**/*.cpp src/server/main.cpp -o ./bin/server && gdb ./bin/server'
-CLIENT_DEBUG_CMD = 'g++ -g src/server/**/*.cpp src/client/main.cpp -o ./bin/client && gdb ./bin/client'
 
 # HELP COMMANDS
 .PHONY: help
@@ -66,7 +62,8 @@ run-server: ### build and run the server app
 
 .PHONY: run-server-native
 run-server-native:  ### build and run the server app on host machine
-	@ bash -c ${SERVER_CMD} ${ARGS}
+	@ mkdir -p ./bin
+	@ bash -c ./scripts/run_server.sh
 
 .PHONY: kill-server
 kill-server:  ### kills the server service
@@ -78,9 +75,10 @@ kill-server:  ### kills the server service
 run-client:   ### build and run the client app
 	@ docker-compose up -d client && docker attach drop-the-box-client-1
 
-.PHONY: run-client-native
+.PHONY: run-client-native $(ARGS)
 run-client-native:  ### build and run the client app on host machine
-	@ bash -c ${CLIENT_CMD} ${ARGS}
+	@ mkdir -p ./bin
+	@ bash -c ./scripts/run_client.sh $(ARGS)
 
 .PHONY: kill-client
 kill-client:  ### kills the client service
