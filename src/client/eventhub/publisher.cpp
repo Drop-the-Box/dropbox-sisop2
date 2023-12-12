@@ -65,6 +65,7 @@ vector<std::string> commands = {
 // for(const auto &[key, _]: command_map) { commands.push_back(key); };
 
 void ClientPublisher::loop() {
+<<<<<<< Updated upstream
     shared_ptr<alx::Inquirer> inquirer(new alx::Inquirer(alx::Inquirer("Drop the Box")));
 
     while (!*socket->interrupt) {
@@ -91,7 +92,22 @@ void ClientPublisher::loop() {
         } else {
             PLOGE << "Command not found: " << command << endl;
         }
+=======
+    const char *folder_path = this->context->sync_dir.c_str();
+    PLOGI << "Publisher folder path: " << folder_path << endl;
+    shared_ptr<Inotify> inotify = make_shared<Inotify>(this->socket, folder_path);
+    PLOGI << "Publisher inotify: " << inotify << endl;
+    int channel = this->socket->socket_fd;
+    while (!*socket->interrupt) {
+        PLOGI << "Publisher channel: " << channel << endl;
+        inotify->read_event();
+        PLOGI << "Saiu do read_event()" << endl;
+        // colocar um sleep aqui
+        std::this_thread::sleep_for(std::chrono::seconds(10));
+>>>>>>> Stashed changes
     }
+    PLOGW << "SOCKET INTERRUPTED : " << *socket->interrupt << endl;
+    PLOGW << "Publisher loop finished" << endl;
 };
 
 void ClientPublisher::send_event() {

@@ -6,6 +6,7 @@
 #include "../../common/socket_io/socket.hpp"
 #include "../session/models.hpp"
 #include "../userland/models.hpp"
+#include "file_exchange.hpp"
 
 using namespace std;
 
