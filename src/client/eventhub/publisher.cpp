@@ -72,20 +72,20 @@ void ClientPublisher::loop() {
         const string command = inquirer->answer("cmd");
         if (std::find(commands.begin(), commands.end(), command) != commands.end()) {
             PLOGW << "Command result: " << command << endl;
-            if (command.compare("upload")) {
-                handle_upload(inquirer);
-            } else if (command.compare("download")) {
-                handle_download(inquirer);
-            } else if (command.compare("delete")) {
-                handle_delete(inquirer);
-            } else if (command.compare("list_server")) {
-                handle_list_server(inquirer);
-            } else if (command.compare("list_client")) {
-                handle_list_client(inquirer);
-            } else {
-                inotify->read_event();
-                return;
-            }
+            inotify->read_event();
+            // if (command.compare("upload")) {
+            //     handle_upload(inquirer);
+            // } else if (command.compare("download")) {
+            //     handle_download(inquirer);
+            // } else if (command.compare("delete")) {
+            //     handle_delete(inquirer);
+            // } else if (command.compare("list_server")) {
+            //     handle_list_server(inquirer);
+            // } else if (command.compare("list_client")) {
+            //     handle_list_client(inquirer);
+            // } else {
+            //     return;
+            // }
         } else {
             PLOGE << "Command not found: " << command << endl;
         }
