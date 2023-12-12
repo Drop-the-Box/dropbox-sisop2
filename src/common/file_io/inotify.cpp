@@ -41,12 +41,20 @@ void Inotify::read_event() {
 
             PLOGI << "The file " << full_file_path << " was created." << endl;
             FileHandler fileHandler(full_file_path);
-            fileHandler.send(this->socket, this->socket->socket_fd);
+            if (fileHandler.send(this->socket, this->socket->socket_fd)) {
+                PLOGI << "File " << full_file_path << " sent successfully." << endl;
+            } else {
+                PLOGE << "Error sending file " << full_file_path << "." << endl;
+            }
         } else if (event->mask & IN_MODIFY) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was modified." << endl;
             FileHandler fileHandler(full_file_path);
-            fileHandler.send(this->socket, this->socket->socket_fd);
+            if (fileHandler.send(this->socket, this->socket->socket_fd)) {
+                PLOGI << "File " << full_file_path << " sent successfully." << endl;
+            } else {
+                PLOGE << "Error sending file " << full_file_path << "." << endl;
+            }
         } else if (event->mask & IN_DELETE) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was deleted." << endl;

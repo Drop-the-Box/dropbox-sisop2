@@ -121,9 +121,9 @@ FileHandler::FileHandler(const string file_path) {
     smatch matches;
     regex_search(file_path, matches, rgx);
     string folder_path = matches[1];
-    PLOGD << "path: " << folder_path << endl;
+    // PLOGD << "path: " << folder_path << endl;
     string filename = matches[2];
-    PLOGD << "name: " << filename << endl;
+    // PLOGD << "name: " << filename << endl;
     shared_ptr<FileMetadata> file_metadata(new FileMetadata(filename, folder_path));
     this->metadata = file_metadata;
 }

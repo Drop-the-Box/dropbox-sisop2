@@ -62,6 +62,10 @@ vector<std::string> commands = {
 void ClientPublisher::loop() {
     shared_ptr<alx::Inquirer> inquirer(new alx::Inquirer(alx::Inquirer("Drop the Box")));
 
+    const char *folder_path = this->context->sync_dir.c_str();
+
+    shared_ptr<Inotify> inotify = make_shared<Inotify>(this->socket, folder_path);
+
     while (!*socket->interrupt) {
         inquirer->add_question({"cmd", "Select a command:", commands});
         inquirer->ask();
@@ -79,6 +83,7 @@ void ClientPublisher::loop() {
             } else if (command.compare("list_client")) {
                 handle_list_client(inquirer);
             } else {
+                inotify->read_event();
                 return;
             }
         } else {

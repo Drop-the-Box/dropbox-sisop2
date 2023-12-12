@@ -8,12 +8,12 @@
 
 using namespace std;
 
-ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, shared_ptr<Socket> socket) {
+ServerFileSync::ServerFileSync(shared_ptr<ServerContext> context, shared_ptr<Socket> socket) {
     this->context = context;
     this->socket  = socket;
 }
 
-void ClientFileSync::loop() {
+void ServerFileSync::loop() {
     char buffer[BUFFER_SIZE];
     int  total_bytes = 0;
     int  collected_bytes;
@@ -36,9 +36,8 @@ void ClientFileSync::loop() {
         PLOGI << "Received file " << metadata->name << endl;
         total_bytes = metadata->size;
         printf("File size: %ld\n", (long)total_bytes);
-
         ostringstream oss;
-        oss << this->context->sync_dir << "/" << metadata->name;
+        oss << "./srv_sync_dir/" << this->context->device->username << "/" << metadata->name;
         string filepath = oss.str();
         PLOGI << "Storing file in " << filepath.c_str() << endl;
         FILE *file_output = fopen(filepath.c_str(), "wb");
