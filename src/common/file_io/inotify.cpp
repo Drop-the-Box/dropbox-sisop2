@@ -33,6 +33,7 @@ void Inotify::read_event() {
     if (length < 0) {
         PLOGE << "Failed to read" << endl;
     }
+
     struct inotify_event *event = (struct inotify_event *)&(buffer)[0];
     if (event->len) {
         if (event->mask & IN_CREATE) {
@@ -40,20 +41,12 @@ void Inotify::read_event() {
 
             PLOGI << "The file " << full_file_path << " was created." << endl;
             FileHandler fileHandler(full_file_path);
-            if (fileHandler.send(this->socket, this->socket->socket_fd)) {
-                PLOGI << "File " << full_file_path << " sent successfully." << endl;
-            } else {
-                PLOGE << "Error sending file " << full_file_path << "." << endl;
-            }
+            fileHandler.send(this->socket, this->socket->socket_fd);
         } else if (event->mask & IN_MODIFY) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was modified." << endl;
             FileHandler fileHandler(full_file_path);
-            if (fileHandler.send(this->socket, this->socket->socket_fd)) {
-                PLOGI << "File " << full_file_path << " sent successfully." << endl;
-            } else {
-                PLOGE << "Error sending file " << full_file_path << "." << endl;
-            }
+            fileHandler.send(this->socket, this->socket->socket_fd);
         } else if (event->mask & IN_DELETE) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was deleted." << endl;
