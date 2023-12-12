@@ -1,5 +1,6 @@
 #include "publisher.hpp"
 #include <cpp-inquirer/inquirer.h>
+#include <filesystem>
 #include <iostream>
 #include <map>
 #include <plog/Log.h>
@@ -33,7 +34,7 @@ void handle_list_server(shared_ptr<alx::Inquirer> inquirer){};
 
 void handle_list_client(shared_ptr<alx::Inquirer> inquirer) {
     std::string path = "/path/to/directory";
-    for (const auto &entry : fs::directory_iterator(path))
+    for (const auto &entry : std::filesystem::directory_iterator(path))
         std::cout << entry.path() << std::endl;
 };
 
@@ -83,7 +84,7 @@ void ClientPublisher::loop() {
             } else if (command.compare("list_client")) {
                 handle_list_client(inquirer);
             } else if (command.compare("exit")) {
-                handle_exit(inquirer);
+                handle_exit();
             } else {
                 return;
             }
