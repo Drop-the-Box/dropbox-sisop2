@@ -27,9 +27,10 @@ enum EventType {
 static const map<string, CommandType> command_map = {
     {"upload", UploadFile},
     {"download", DownloadFile},
-    {"delete", DownloadFile},
+    {"delete", DeleteFile},
     {"list_server", ListServerFiles},
-    {"list_client", ListLocalFiles}};
+    {"list_client", ListLocalFiles},
+    {"exit", Exit}};
 
 class Command {
 public:

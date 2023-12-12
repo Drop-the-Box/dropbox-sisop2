@@ -117,7 +117,6 @@ size_t FileMetadata::to_bytes(uint8_t **bytes_ptr) {
 FileHandler::FileHandler(const string file_path) {
     this->file_path = file_path;
     this->file_ptr  = fopen(file_path.c_str(), "rb");
-
     regex  rgx("^(.*\\/)([^\\/]+)$");
     smatch matches;
     regex_search(file_path, matches, rgx);

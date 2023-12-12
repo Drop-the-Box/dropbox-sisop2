@@ -78,7 +78,9 @@ void *SessionManager::handle_session(void *session_ptr) {
     PLOGD << "Listening on channel " << channel << endl;
 
     if (session->setup()) {
+        PLOGI << "Starting session on channel " << channel << "..." << endl;
         session->run();
+        PLOGI << "Session on channel " << channel << " finished." << endl;
     }
 
     PLOGI << "Closing channel " << channel << "..." << endl;
@@ -88,6 +90,7 @@ void *SessionManager::handle_session(void *session_ptr) {
 }
 
 bool Session::setup() {
+    PLOGI << "Setting up session..." << endl;
     unique_ptr<uint8_t> buffer((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
     int                 channel      = context->connection->channel;
     int                 payload_size = context->socket->get_message_sync(buffer.get(), channel);
@@ -130,6 +133,7 @@ bool Session::setup() {
     }
     ostringstream oss;
     oss << "Session of type " << session_type << " established." << endl;
+    PLOGI << oss.str();
     shared_ptr<Event> accept_evt(new Event(SessionAccepted, oss.str()));
     accept_evt->send(context->socket, channel);
     return true;
@@ -140,6 +144,7 @@ Session::Session(shared_ptr<ServerContext> context) {
 }
 
 void Session::run() {
+    PLOGD << "Running session of type " << this->type << endl;
     switch (type) {
     case FileExchange: {
         unique_ptr<FileSync> file_sync(new FileSync(this->context));

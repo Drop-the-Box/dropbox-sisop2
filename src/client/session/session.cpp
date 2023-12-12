@@ -58,7 +58,9 @@ void *ClientSessionManager::handle_session(void *context_ptr) {
     unique_ptr<ClientSession> session(new ClientSession(context, socket));
     try {
         if (session->setup()) {
+            PLOGI << "Session setup complete..." << endl;
             session->run();
+            PLOGI << "Session teardown complete..." << endl;
         }
     } catch (const std::exception &exc) {
         PLOGE << "Terminated with error: " << exc.what() << endl;
@@ -102,20 +104,25 @@ bool ClientSession::setup() {
 }
 
 void ClientSession::run() {
+    PLOGI << "Running session..." << endl;
+    PLOGI << "Session type: " << session_type_map.at(context->session_type) << endl;
     switch (context->session_type) {
     case CommandPublisher: {
         unique_ptr<ClientPublisher> publisher(new ClientPublisher(context, socket));
         publisher->loop();
+        PLOGW << "Publisher loop finished..." << endl;
         break;
     }
     case CommandSubscriber: {
         unique_ptr<ClientSubscriber> subscriber(new ClientSubscriber(context, socket));
         subscriber->loop();
+        PLOGW << "Subscriber loop finished..." << endl;
         break;
     }
     case FileExchange: {
         unique_ptr<ClientFileSync> file_sync(new ClientFileSync(context, socket));
         file_sync->loop();
+        PLOGW << "File sync loop finished..." << endl;
         break;
     }
     default: {
