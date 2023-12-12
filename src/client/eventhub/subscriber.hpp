@@ -1,6 +1,7 @@
 #ifndef CLIENT_SUB_H
 #define CLIENT_SUB_H
 
+#include "../../common/file_io/inotify.hpp"
 #include "../../common/socket_io/socket.hpp"
 #include "../session/session.hpp"
 #include <memory>
