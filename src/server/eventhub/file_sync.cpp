@@ -30,6 +30,7 @@ void FileSync::sync_all() {
         unique_ptr<FileHandler> file(new FileHandler(filepath));
         file->send(context->socket, context->connection->channel);
     }
+    PLOGI << "End of filesync server loop" << endl;
 }
 
 void FileSync::loop() {

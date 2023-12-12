@@ -109,12 +109,14 @@ void ClientSession::run() {
     switch (context->session_type) {
     case CommandPublisher: {
         unique_ptr<ClientPublisher> publisher(new ClientPublisher(context, socket));
+        PLOGW << "Publisher loop starting..." << endl;
         publisher->loop();
         PLOGW << "Publisher loop finished..." << endl;
         break;
     }
     case CommandSubscriber: {
         unique_ptr<ClientSubscriber> subscriber(new ClientSubscriber(context, socket));
+        PLOGW << "Subscriber loop starting..." << endl;
         subscriber->loop();
         PLOGW << "Subscriber loop finished..." << endl;
         break;
