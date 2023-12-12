@@ -28,6 +28,7 @@ ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 $(eval $(ARGS):;@:)
 MAKEFLAGS += --silent
 $(eval TEST_TYPE := $(shell [[ -z "$(ARGS)" ]] && echo "null" || echo "$(ARGS)"))
+CLI_ARGS := $(filter-out $@,$(MAKECMDGOALS))
 
 
 # HELP COMMANDS
@@ -76,9 +77,9 @@ run-client:   ### build and run the client app
 	@ docker-compose up -d client && docker attach drop-the-box-client-1
 
 .PHONY: run-client-native $(ARGS)
-run-client-native:  ### build and run the client app on host machine
+run-client-native: ### build and run the client app on host machine
 	@ mkdir -p ./bin
-	@ bash -c ./scripts/run_client.sh $(ARGS)
+	@ bash -c ./scripts/run_client.sh ${ARGS}
 
 .PHONY: kill-client
 kill-client:  ### kills the client service
