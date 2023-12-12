@@ -29,15 +29,19 @@ void handle_delete(shared_ptr<alx::Inquirer> inquirer) {
     const string filename = inquirer->answer("file");
 };
 
-void handle_list_server(shared_ptr<alx::Inquirer> inquirer){
+void handle_list_server(shared_ptr<alx::Inquirer> inquirer){};
 
+void handle_list_client(shared_ptr<alx::Inquirer> inquirer) {
+    std::string path = "/path/to/directory";
+    for (const auto &entry : fs::directory_iterator(path))
+        std::cout << entry.path() << std::endl;
 };
 
-void handle_list_client(shared_ptr<alx::Inquirer> inquirer){
-
-};
-
-void handle_exit(shared_ptr<alx::Inquirer> inquirer) {
+void handle_exit() { //(std::shared_ptr<Socket> shared_ptr) {
+    // shared_ptr->close();
+    // ClientContext::server_port->Socket::close(shared_ptr->socket_fd);
+    // pthread_exit(NULL);
+    exit(0);
 }
 
 // using func=function<void(shared_ptr<alx::Inquirer>)>;
@@ -78,6 +82,8 @@ void ClientPublisher::loop() {
                 handle_list_server(inquirer);
             } else if (command.compare("list_client")) {
                 handle_list_client(inquirer);
+            } else if (command.compare("exit")) {
+                handle_exit(inquirer);
             } else {
                 return;
             }
