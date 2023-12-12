@@ -16,9 +16,7 @@ void ClientPublisher::loop() {
         PLOG_INFO << "Publisher channel: " << channel << endl;
         inotify->read_event();
         // colocar um sleep aqui
-        std::this_thread::sleep_for(std::chrono::seconds(10));
-
-        // inotify->read_event();
+        // std::this_thread::sleep_for(std::chrono::seconds(10));
     }
 };
 

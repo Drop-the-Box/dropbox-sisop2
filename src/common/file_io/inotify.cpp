@@ -39,18 +39,18 @@ void Inotify::read_event() {
         if (event->mask & IN_CREATE) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
 
-            PLOGE << "The file " << full_file_path << " was created." << endl;
-            // FileHandler fileHandler(full_file_path);
-            // fileHandler.send(this->socket, this->socket->socket_fd);
+            PLOGI << "The file " << full_file_path << " was created." << endl;
+            FileHandler fileHandler(full_file_path);
+            fileHandler.send(this->socket, this->socket->socket_fd);
         } else if (event->mask & IN_MODIFY) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
-            PLOGE << "The file " << full_file_path << " was modified." << endl;
-            // FileHandler fileHandler(full_file_path);
-            // fileHandler.send(this->socket, this->socket->socket_fd);
+            PLOGI << "The file " << full_file_path << " was modified." << endl;
+            FileHandler fileHandler(full_file_path);
+            fileHandler.send(this->socket, this->socket->socket_fd);
         } else if (event->mask & IN_DELETE) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
-            PLOGE << "The file " << full_file_path << " was deleted." << endl;
-            // FileHandler fileHandler(full_file_path);
+            PLOGI << "The file " << full_file_path << " was deleted." << endl;
+            FileHandler fileHandler(full_file_path);
             // ver função de deletar arquivo no servidor
         }
     }
