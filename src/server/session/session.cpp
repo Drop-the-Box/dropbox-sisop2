@@ -36,7 +36,11 @@ void SessionManager::start() {
             PLOGD << "Connected to " << client_addr << ":" << *client_port << " on channel " << channel << endl;
             channels.insert(channel);
             this->num_threads += 1;
+            PLOGI << "Creating new Connection ..." << endl;
             shared_ptr<Connection>    connection(new Connection(client_addr, *client_port, channel));
+
+            connection->get_conection_info();
+            
             shared_ptr<ServerContext> context(new ServerContext(socket, connection, storage));
             this->create_session(channel, context);
         }

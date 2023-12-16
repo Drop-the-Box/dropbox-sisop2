@@ -123,6 +123,7 @@ void ClientSession::run() {
     }
     case FileExchange: {
         unique_ptr<ClientFileSync> file_sync(new ClientFileSync(context, socket));
+        PLOGW << "File sync loop starting..." << endl;
         file_sync->loop();
         PLOGW << "File sync loop finished..." << endl;
         break;

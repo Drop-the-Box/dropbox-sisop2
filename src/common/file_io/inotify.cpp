@@ -33,7 +33,7 @@ void Inotify::read_event() {
     if (length < 0) {
         PLOGE << "Failed to read" << endl;
     }
-
+    PLOGI << "Read " << length << " bytes from inotify" << endl;
     struct inotify_event *event = (struct inotify_event *)&(buffer)[0];
     if (event->len) {
         if (event->mask & IN_CREATE) {

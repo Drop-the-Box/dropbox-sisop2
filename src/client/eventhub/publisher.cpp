@@ -67,28 +67,30 @@ void ClientPublisher::loop() {
     shared_ptr<Inotify> inotify = make_shared<Inotify>(this->socket, folder_path);
 
     while (!*socket->interrupt) {
-        inquirer->add_question({"cmd", "Select a command:", commands});
-        inquirer->ask();
-        const string command = inquirer->answer("cmd");
-        if (std::find(commands.begin(), commands.end(), command) != commands.end()) {
-            PLOGW << "Command result: " << command << endl;
-            inotify->read_event();
-            // if (command.compare("upload")) {
-            //     handle_upload(inquirer);
-            // } else if (command.compare("download")) {
-            //     handle_download(inquirer);
-            // } else if (command.compare("delete")) {
-            //     handle_delete(inquirer);
-            // } else if (command.compare("list_server")) {
-            //     handle_list_server(inquirer);
-            // } else if (command.compare("list_client")) {
-            //     handle_list_client(inquirer);
-            // } else {
-            //     return;
-            // }
-        } else {
-            PLOGE << "Command not found: " << command << endl;
-        }
+        PLOGI << "Publisher loop" << endl;
+        inotify->read_event();
+        // inquirer->add_question({"cmd", "Select a command:", commands});
+        // inquirer->ask();
+        // const string command = inquirer->answer("cmd");
+        // if (std::find(commands.begin(), commands.end(), command) != commands.end()) {
+        //     PLOGW << "Command result: " << command << endl;
+
+        // if (command.compare("upload")) {
+        //     handle_upload(inquirer);
+        // } else if (command.compare("download")) {
+        //     handle_download(inquirer);
+        // } else if (command.compare("delete")) {
+        //     handle_delete(inquirer);
+        // } else if (command.compare("list_server")) {
+        //     handle_list_server(inquirer);
+        // } else if (command.compare("list_client")) {
+        //     handle_list_client(inquirer);
+        // } else {
+        //     return;
+        // }
+        //} else {
+        //    PLOGE << "Command not found: " << command << endl;
+        //}
     }
 };
 

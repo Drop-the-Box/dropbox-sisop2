@@ -10,6 +10,7 @@
 
 #include "../../common/session/models.hpp"
 #include "models.hpp"
+#include <plog/Log.h>
 
 Connection::Connection(char *address, int port, int channel) {
     this->address = string(address);
@@ -30,4 +31,13 @@ string Connection::get_full_address() {
     oss << this->address << ":" << this->port;
     std::string conn_info = oss.str();
     return conn_info;
+}
+
+void Connection::get_conection_info(){
+    PLOGI << "Connection info: " << endl 
+          << "Address: " << this->address << endl 
+          << "Port: " << this->port << endl 
+          << "Channel: " << this->channel << endl 
+          << "Thread id: " << this->thread_id << endl 
+          << "Session type: " << this->session_type << endl;
 }
