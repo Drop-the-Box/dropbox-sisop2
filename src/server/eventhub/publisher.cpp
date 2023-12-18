@@ -22,21 +22,20 @@ void ServerEventPublisher::loop() {
     // PLOGI << "Publisher has event on channel " << channel << endl;
     while (true) {
         if (!context->socket->has_event(channel)) {
-            PLOGW << "Publisher waiting on channel " << channel << "..." << endl;
+            //PLOGW << "Publisher waiting on channel " << channel << "..." << endl;
             sleep(1);
         } else {
-            PLOGI << "Subscriber received event on channel " << channel << endl;
-            PLOGW << "Has event on channel " << channel << ": " << context->socket->has_event(channel) << endl;
+            PLOGI << "Publisher received event on channel " << channel << endl;
             int bytes = socket->receive(buffer, channel);
             if (bytes < 0) {
                 PLOGE << "Error reading from socket" << endl;
                 return;
             }
-            PLOGI << "Subscriber received " << bytes << " bytes" << endl;
+            PLOGI << "Publisher received " << bytes << " bytes" << endl;
             unique_ptr<ServerFileSync> file_sync(new ServerFileSync(context, socket));
+            PLOGI << "File sync loop" << endl;
             file_sync->loop();
-            PLOGI << "Subscriber received: " << buffer << endl;
-            PLOGW << "End of subscriber server loop" << endl;
+            PLOGI << "End of file sync loop" << endl;
         }
     }
 }

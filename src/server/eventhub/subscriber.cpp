@@ -16,7 +16,7 @@ void ServerEventSubscriber::loop() {
     uint8_t            buffer[BUFFER_SIZE];
     // PLOGI << "Subscriber has event on channel " << channel << endl;
     while (!context->socket->has_event(channel)) {
-        PLOGI << "Subscriber waiting on channel " << channel << "..." << endl;
+        //PLOGI << "Subscriber waiting on channel " << channel << "..." << endl;
         sleep(1);
     }
     if (context->socket->has_event(channel)) {

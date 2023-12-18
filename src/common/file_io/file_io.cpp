@@ -167,8 +167,9 @@ bool FileHandler::send(shared_ptr<Socket> socket, int channel) {
     float percentage       = 0;
 
     uint8_t *file_buf = (uint8_t *)calloc(file_buf_size, sizeof(uint8_t));
-
+    PLOGW << "teste: " << this->file_ptr << endl;
     if (this->file_ptr != NULL) {
+        PLOGI << "Sending file " << this->metadata->name << endl;
         while ((file_bytes_read = fread(file_buf, sizeof(uint8_t), file_buf_size, this->file_ptr)) > 0) {
             PLOGD << "Chunk index: " << seq_index << endl;
 

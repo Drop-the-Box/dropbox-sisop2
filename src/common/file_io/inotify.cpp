@@ -25,7 +25,7 @@ int Inotify::get_watch_descriptor() {
 }
 
 void Inotify::read_event() {
-    PLOG_INFO << "Inotify read event" << endl;
+    PLOGI << "Inotify read event" << endl;
 
     char   buffer[BUFFER_LEN];
     string full_file_path;
@@ -38,7 +38,6 @@ void Inotify::read_event() {
     if (event->len) {
         if (event->mask & IN_CREATE) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
-
             PLOGI << "The file " << full_file_path << " was created." << endl;
             FileHandler fileHandler(full_file_path);
             if (fileHandler.send(this->socket, this->socket->socket_fd)) {

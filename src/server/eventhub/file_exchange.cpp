@@ -18,10 +18,11 @@ void ServerFileSync::loop() {
     int  total_bytes = 0;
     int  collected_bytes;
     int  iteration;
-
+    PLOGI << "Waiting for file metadata" << endl;
     int chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
-
+    PLOGI << "Received file metadata" << endl;
     while (chars_read != 0) {
+        PLOGD << "Chars read: " << chars_read << endl;
         collected_bytes = 0;
         iteration       = 1;
         chars_read      = 0;
