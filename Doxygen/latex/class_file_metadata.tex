@@ -1,0 +1,154 @@
+\doxysection{File\+Metadata Class Reference}
+\hypertarget{class_file_metadata}{}\label{class_file_metadata}\index{FileMetadata@{FileMetadata}}
+
+
+{\ttfamily \#include $<$file\+\_\+io.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_file_metadata_a029d2b01cde3afafa4aa2bcf1287a1a1}{File\+Metadata}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes)
+\item 
+\mbox{\hyperlink{class_file_metadata_ab4df25dd746de18bbc65c693426c055b}{File\+Metadata}} (string \mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}}, string file\+\_\+path)
+\item 
+\mbox{\hyperlink{class_file_metadata_aea7d65bfce6470027eaeb897c9651cb1}{File\+Metadata}} (string full\+\_\+path)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_file_metadata_a84cf10b8d22c085b235d0b1a67e816c6}{to\+\_\+bytes}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}bytes)
+\item 
+bool \mbox{\hyperlink{class_file_metadata_a9fdba60be5fc6401ab4b37554a4e6506}{send}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$ socket, int channel)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}}
+\item 
+off\+\_\+t \mbox{\hyperlink{class_file_metadata_af34617761d3bf15ebd9499d4a73168a7}{size}}
+\item 
+time\+\_\+t \mbox{\hyperlink{class_file_metadata_aeb961d37156b70a891bb431c35c78f6c}{modified\+\_\+at}}
+\item 
+time\+\_\+t \mbox{\hyperlink{class_file_metadata_a4ee51f8c7e25ffb9c9e4dc48a431df2a}{accessed\+\_\+at}}
+\item 
+time\+\_\+t \mbox{\hyperlink{class_file_metadata_adfc2090c73bccbb49dbee6a9b291b173}{stat\+\_\+changed\+\_\+at}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source_l00018}{18}} of file \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source}{file\+\_\+io.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_file_metadata_a029d2b01cde3afafa4aa2bcf1287a1a1}\label{class_file_metadata_a029d2b01cde3afafa4aa2bcf1287a1a1} 
+\index{FileMetadata@{FileMetadata}!FileMetadata@{FileMetadata}}
+\index{FileMetadata@{FileMetadata}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{FileMetadata()}{FileMetadata()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily File\+Metadata\+::\+File\+Metadata (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_metadata_ab4df25dd746de18bbc65c693426c055b}\label{class_file_metadata_ab4df25dd746de18bbc65c693426c055b} 
+\index{FileMetadata@{FileMetadata}!FileMetadata@{FileMetadata}}
+\index{FileMetadata@{FileMetadata}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{FileMetadata()}{FileMetadata()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily File\+Metadata\+::\+File\+Metadata (\begin{DoxyParamCaption}\item[{string}]{name,  }\item[{string}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_metadata_aea7d65bfce6470027eaeb897c9651cb1}\label{class_file_metadata_aea7d65bfce6470027eaeb897c9651cb1} 
+\index{FileMetadata@{FileMetadata}!FileMetadata@{FileMetadata}}
+\index{FileMetadata@{FileMetadata}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{FileMetadata()}{FileMetadata()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily File\+Metadata\+::\+File\+Metadata (\begin{DoxyParamCaption}\item[{string}]{full\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00074}{74}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_file_metadata_a9fdba60be5fc6401ab4b37554a4e6506}\label{class_file_metadata_a9fdba60be5fc6401ab4b37554a4e6506} 
+\index{FileMetadata@{FileMetadata}!send@{send}}
+\index{send@{send}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{send()}{send()}}
+{\footnotesize\ttfamily bool File\+Metadata\+::send (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$}]{socket,  }\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00201}{201}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_metadata_a84cf10b8d22c085b235d0b1a67e816c6}\label{class_file_metadata_a84cf10b8d22c085b235d0b1a67e816c6} 
+\index{FileMetadata@{FileMetadata}!to\_bytes@{to\_bytes}}
+\index{to\_bytes@{to\_bytes}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{to\_bytes()}{to\_bytes()}}
+{\footnotesize\ttfamily size\+\_\+t File\+Metadata\+::to\+\_\+bytes (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{bytes }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00077}{77}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_file_metadata_a4ee51f8c7e25ffb9c9e4dc48a431df2a}\label{class_file_metadata_a4ee51f8c7e25ffb9c9e4dc48a431df2a} 
+\index{FileMetadata@{FileMetadata}!accessed\_at@{accessed\_at}}
+\index{accessed\_at@{accessed\_at}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{accessed\_at}{accessed\_at}}
+{\footnotesize\ttfamily time\+\_\+t File\+Metadata\+::accessed\+\_\+at}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source_l00023}{23}} of file \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source}{file\+\_\+io.\+hpp}}.
+
+\Hypertarget{class_file_metadata_aeb961d37156b70a891bb431c35c78f6c}\label{class_file_metadata_aeb961d37156b70a891bb431c35c78f6c} 
+\index{FileMetadata@{FileMetadata}!modified\_at@{modified\_at}}
+\index{modified\_at@{modified\_at}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{modified\_at}{modified\_at}}
+{\footnotesize\ttfamily time\+\_\+t File\+Metadata\+::modified\+\_\+at}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source_l00022}{22}} of file \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source}{file\+\_\+io.\+hpp}}.
+
+\Hypertarget{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}\label{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5} 
+\index{FileMetadata@{FileMetadata}!name@{name}}
+\index{name@{name}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily string File\+Metadata\+::name}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source_l00020}{20}} of file \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source}{file\+\_\+io.\+hpp}}.
+
+\Hypertarget{class_file_metadata_af34617761d3bf15ebd9499d4a73168a7}\label{class_file_metadata_af34617761d3bf15ebd9499d4a73168a7} 
+\index{FileMetadata@{FileMetadata}!size@{size}}
+\index{size@{size}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily off\+\_\+t File\+Metadata\+::size}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source_l00021}{21}} of file \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source}{file\+\_\+io.\+hpp}}.
+
+\Hypertarget{class_file_metadata_adfc2090c73bccbb49dbee6a9b291b173}\label{class_file_metadata_adfc2090c73bccbb49dbee6a9b291b173} 
+\index{FileMetadata@{FileMetadata}!stat\_changed\_at@{stat\_changed\_at}}
+\index{stat\_changed\_at@{stat\_changed\_at}!FileMetadata@{FileMetadata}}
+\doxysubsubsection{\texorpdfstring{stat\_changed\_at}{stat\_changed\_at}}
+{\footnotesize\ttfamily time\+\_\+t File\+Metadata\+::stat\+\_\+changed\+\_\+at}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source_l00024}{24}} of file \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source}{file\+\_\+io.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/common/file\+\_\+io/\mbox{\hyperlink{common_2file__io_2file__io_8hpp}{file\+\_\+io.\+hpp}}\item 
+src/common/file\+\_\+io/\mbox{\hyperlink{common_2file__io_2file__io_8cpp}{file\+\_\+io.\+cpp}}\end{DoxyCompactItemize}

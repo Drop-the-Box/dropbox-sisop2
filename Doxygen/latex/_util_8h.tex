@@ -1,0 +1,155 @@
+\doxysection{src/include/plog/\+Util.h File Reference}
+\hypertarget{_util_8h}{}\label{_util_8h}\index{src/include/plog/Util.h@{src/include/plog/Util.h}}
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$cstdio$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/time.\+h$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structplog_1_1util_1_1_time}{plog\+::util\+::\+Time}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_non_copyable}{plog\+::util\+::\+Non\+Copyable}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_file}{plog\+::util\+::\+File}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_mutex}{plog\+::util\+::\+Mutex}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_mutex_lock}{plog\+::util\+::\+Mutex\+Lock}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_singleton}{plog\+::util\+::\+Singleton$<$ T $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceplog}{plog}}
+\item 
+namespace \mbox{\hyperlink{namespaceplog_1_1util}{plog\+::util}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_util_8h_a82450da10c35be23c7eaab304910e09f}{PLOG\+\_\+\+ENABLE\+\_\+\+WCHAR\+\_\+\+INPUT}}~0
+\item 
+\#define \mbox{\hyperlink{_util_8h_a39f649c690c543d6f2f41010d6a4f900}{PLOG\+\_\+\+CHAR\+\_\+\+IS\+\_\+\+UTF8}}~1
+\item 
+\#define \mbox{\hyperlink{_util_8h_a551895a6402e05316b84b49ea8c34179}{PLOG\+\_\+\+LINKAGE}}
+\item 
+\#define \mbox{\hyperlink{_util_8h_a2c3b71932c85110f788ece8a0697ef3f}{PLOG\+\_\+\+LINKAGE\+\_\+\+HIDDEN}}
+\item 
+\#define \mbox{\hyperlink{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e}{PLOG\+\_\+\+NSTR}}(x)~x
+\item 
+\#define \mbox{\hyperlink{_util_8h_a4197054e58c9df2b3d0b132954de7bd4}{PLOG\+\_\+\+CDECL}}
+\item 
+\#define \mbox{\hyperlink{_util_8h_ab77de78ebb3bd909fca08605acd16591}{PLOG\+\_\+\+OVERRIDE}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::string \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{plog\+::util\+::nstring}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::ostringstream \mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{plog\+::util\+::nostringstream}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::istringstream \mbox{\hyperlink{namespaceplog_1_1util_a825e616e22f2ce43ff8a605d45516179}{plog\+::util\+::nistringstream}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::ostream \mbox{\hyperlink{namespaceplog_1_1util_acba973cf2bb87b95ce9b752a69309b55}{plog\+::util\+::nostream}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{plog\+::util\+::nchar}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1util_a829e3957b08288ccd481ddba24e37e41}{plog\+::util\+::localtime\+\_\+s}} (\mbox{\hyperlink{classplog_1_1_console_appender}{struct}} \mbox{\hyperlink{classplog_1_1_console_appender}{tm}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{t}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{time\+\_\+t}} \texorpdfstring{$\ast$}{*}time)
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1util_a10bab2b413e194f8e30770cff3cb00c7}{plog\+::util\+::gmtime\+\_\+s}} (\mbox{\hyperlink{classplog_1_1_console_appender}{struct}} \mbox{\hyperlink{classplog_1_1_console_appender}{tm}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{t}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{time\+\_\+t}} \texorpdfstring{$\ast$}{*}time)
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1util_ad2bfef2b4d327248ed80091a9a77893d}{plog\+::util\+::ftime}} (\mbox{\hyperlink{structplog_1_1util_1_1_time}{Time}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{t}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{unsigned}} \mbox{\hyperlink{classplog_1_1_console_appender}{int}} \mbox{\hyperlink{namespaceplog_1_1util_add2656286e84f4025dfca7c3053be004}{plog\+::util\+::gettid}} ()
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{int}} \mbox{\hyperlink{namespaceplog_1_1util_a7b526bacee14171571a965e08b6a65c4}{plog\+::util\+::vasprintf}} (\mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{strp}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}format, \mbox{\hyperlink{classplog_1_1_console_appender}{va\+\_\+list}} \mbox{\hyperlink{classplog_1_1_console_appender}{ap}})
+\item 
+std\+::string \mbox{\hyperlink{namespaceplog_1_1util_a21e790275eea0f204619fc8001b11921}{plog\+::util\+::process\+Func\+Name}} (\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{func}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespaceplog_1_1util_a3e0aace608e1f5d5f4bd707a673537f4}{plog\+::util\+::find\+Extension\+Dot}} (\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{file\+Name}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1util_a213ef20b4d0a99026624c936a22c5c97}{plog\+::util\+::split\+File\+Name}} (\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{file\+Name}}, \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{nstring}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{file\+Name\+No\+Ext}}, \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{nstring}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{file\+Ext}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_util_8h_a4197054e58c9df2b3d0b132954de7bd4}\label{_util_8h_a4197054e58c9df2b3d0b132954de7bd4} 
+\index{Util.h@{Util.h}!PLOG\_CDECL@{PLOG\_CDECL}}
+\index{PLOG\_CDECL@{PLOG\_CDECL}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{PLOG\_CDECL}{PLOG\_CDECL}}
+{\footnotesize\ttfamily \#define PLOG\+\_\+\+CDECL}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00094}{94}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{_util_8h_a39f649c690c543d6f2f41010d6a4f900}\label{_util_8h_a39f649c690c543d6f2f41010d6a4f900} 
+\index{Util.h@{Util.h}!PLOG\_CHAR\_IS\_UTF8@{PLOG\_CHAR\_IS\_UTF8}}
+\index{PLOG\_CHAR\_IS\_UTF8@{PLOG\_CHAR\_IS\_UTF8}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{PLOG\_CHAR\_IS\_UTF8}{PLOG\_CHAR\_IS\_UTF8}}
+{\footnotesize\ttfamily \#define PLOG\+\_\+\+CHAR\+\_\+\+IS\+\_\+\+UTF8~1}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00029}{29}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{_util_8h_a82450da10c35be23c7eaab304910e09f}\label{_util_8h_a82450da10c35be23c7eaab304910e09f} 
+\index{Util.h@{Util.h}!PLOG\_ENABLE\_WCHAR\_INPUT@{PLOG\_ENABLE\_WCHAR\_INPUT}}
+\index{PLOG\_ENABLE\_WCHAR\_INPUT@{PLOG\_ENABLE\_WCHAR\_INPUT}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{PLOG\_ENABLE\_WCHAR\_INPUT}{PLOG\_ENABLE\_WCHAR\_INPUT}}
+{\footnotesize\ttfamily \#define PLOG\+\_\+\+ENABLE\+\_\+\+WCHAR\+\_\+\+INPUT~0}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00014}{14}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{_util_8h_a551895a6402e05316b84b49ea8c34179}\label{_util_8h_a551895a6402e05316b84b49ea8c34179} 
+\index{Util.h@{Util.h}!PLOG\_LINKAGE@{PLOG\_LINKAGE}}
+\index{PLOG\_LINKAGE@{PLOG\_LINKAGE}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{PLOG\_LINKAGE}{PLOG\_LINKAGE}}
+{\footnotesize\ttfamily \#define PLOG\+\_\+\+LINKAGE}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00055}{55}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{_util_8h_a2c3b71932c85110f788ece8a0697ef3f}\label{_util_8h_a2c3b71932c85110f788ece8a0697ef3f} 
+\index{Util.h@{Util.h}!PLOG\_LINKAGE\_HIDDEN@{PLOG\_LINKAGE\_HIDDEN}}
+\index{PLOG\_LINKAGE\_HIDDEN@{PLOG\_LINKAGE\_HIDDEN}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{PLOG\_LINKAGE\_HIDDEN}{PLOG\_LINKAGE\_HIDDEN}}
+{\footnotesize\ttfamily \#define PLOG\+\_\+\+LINKAGE\+\_\+\+HIDDEN}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00059}{59}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e}\label{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e} 
+\index{Util.h@{Util.h}!PLOG\_NSTR@{PLOG\_NSTR}}
+\index{PLOG\_NSTR@{PLOG\_NSTR}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{PLOG\_NSTR}{PLOG\_NSTR}}
+{\footnotesize\ttfamily \#define PLOG\+\_\+\+NSTR(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~x}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00085}{85}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{_util_8h_ab77de78ebb3bd909fca08605acd16591}\label{_util_8h_ab77de78ebb3bd909fca08605acd16591} 
+\index{Util.h@{Util.h}!PLOG\_OVERRIDE@{PLOG\_OVERRIDE}}
+\index{PLOG\_OVERRIDE@{PLOG\_OVERRIDE}!Util.h@{Util.h}}
+\doxysubsubsection{\texorpdfstring{PLOG\_OVERRIDE}{PLOG\_OVERRIDE}}
+{\footnotesize\ttfamily \#define PLOG\+\_\+\+OVERRIDE}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00100}{100}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+

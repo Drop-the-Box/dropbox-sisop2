@@ -1,0 +1,185 @@
+\doxysection{plog\+::util Namespace Reference}
+\hypertarget{namespaceplog_1_1util}{}\label{namespaceplog_1_1util}\index{plog::util@{plog::util}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_file}{File}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_mutex}{Mutex}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_mutex_lock}{Mutex\+Lock}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_non_copyable}{Non\+Copyable}}
+\item 
+class \mbox{\hyperlink{classplog_1_1util_1_1_singleton}{Singleton}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1util_1_1_time}{Time}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::string \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{nstring}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::ostringstream \mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{nostringstream}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::istringstream \mbox{\hyperlink{namespaceplog_1_1util_a825e616e22f2ce43ff8a605d45516179}{nistringstream}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::ostream \mbox{\hyperlink{namespaceplog_1_1util_acba973cf2bb87b95ce9b752a69309b55}{nostream}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1util_a829e3957b08288ccd481ddba24e37e41}{localtime\+\_\+s}} (\mbox{\hyperlink{classplog_1_1_console_appender}{struct}} \mbox{\hyperlink{classplog_1_1_console_appender}{tm}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{t}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{time\+\_\+t}} \texorpdfstring{$\ast$}{*}time)
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1util_a10bab2b413e194f8e30770cff3cb00c7}{gmtime\+\_\+s}} (\mbox{\hyperlink{classplog_1_1_console_appender}{struct}} \mbox{\hyperlink{classplog_1_1_console_appender}{tm}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{t}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{time\+\_\+t}} \texorpdfstring{$\ast$}{*}time)
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1util_ad2bfef2b4d327248ed80091a9a77893d}{ftime}} (\mbox{\hyperlink{structplog_1_1util_1_1_time}{Time}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{t}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{unsigned}} \mbox{\hyperlink{classplog_1_1_console_appender}{int}} \mbox{\hyperlink{namespaceplog_1_1util_add2656286e84f4025dfca7c3053be004}{gettid}} ()
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{int}} \mbox{\hyperlink{namespaceplog_1_1util_a7b526bacee14171571a965e08b6a65c4}{vasprintf}} (\mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{strp}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}format, \mbox{\hyperlink{classplog_1_1_console_appender}{va\+\_\+list}} \mbox{\hyperlink{classplog_1_1_console_appender}{ap}})
+\item 
+std\+::string \mbox{\hyperlink{namespaceplog_1_1util_a21e790275eea0f204619fc8001b11921}{process\+Func\+Name}} (\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{func}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespaceplog_1_1util_a3e0aace608e1f5d5f4bd707a673537f4}{find\+Extension\+Dot}} (\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{file\+Name}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1util_a213ef20b4d0a99026624c936a22c5c97}{split\+File\+Name}} (\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{file\+Name}}, \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{nstring}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{file\+Name\+No\+Ext}}, \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{nstring}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{file\+Ext}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}\label{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e} 
+\index{plog::util@{plog::util}!nchar@{nchar}}
+\index{nchar@{nchar}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{nchar}{nchar}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{plog\+::util\+::nchar}}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00112}{112}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_a825e616e22f2ce43ff8a605d45516179}\label{namespaceplog_1_1util_a825e616e22f2ce43ff8a605d45516179} 
+\index{plog::util@{plog::util}!nistringstream@{nistringstream}}
+\index{nistringstream@{nistringstream}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{nistringstream}{nistringstream}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::istringstream \mbox{\hyperlink{namespaceplog_1_1util_a825e616e22f2ce43ff8a605d45516179}{plog\+::util\+::nistringstream}}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00110}{110}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_acba973cf2bb87b95ce9b752a69309b55}\label{namespaceplog_1_1util_acba973cf2bb87b95ce9b752a69309b55} 
+\index{plog::util@{plog::util}!nostream@{nostream}}
+\index{nostream@{nostream}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{nostream}{nostream}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::ostream \mbox{\hyperlink{namespaceplog_1_1util_acba973cf2bb87b95ce9b752a69309b55}{plog\+::util\+::nostream}}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00111}{111}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}\label{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963} 
+\index{plog::util@{plog::util}!nostringstream@{nostringstream}}
+\index{nostringstream@{nostringstream}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{nostringstream}{nostringstream}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::ostringstream \mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{plog\+::util\+::nostringstream}}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00109}{109}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}\label{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f} 
+\index{plog::util@{plog::util}!nstring@{nstring}}
+\index{nstring@{nstring}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{nstring}{nstring}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{typedef}} std\+::string \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{plog\+::util\+::nstring}}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00108}{108}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceplog_1_1util_a3e0aace608e1f5d5f4bd707a673537f4}\label{namespaceplog_1_1util_a3e0aace608e1f5d5f4bd707a673537f4} 
+\index{plog::util@{plog::util}!findExtensionDot@{findExtensionDot}}
+\index{findExtensionDot@{findExtensionDot}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{findExtensionDot()}{findExtensionDot()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*} plog\+::util\+::find\+Extension\+Dot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*}}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00371}{371}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_ad2bfef2b4d327248ed80091a9a77893d}\label{namespaceplog_1_1util_ad2bfef2b4d327248ed80091a9a77893d} 
+\index{plog::util@{plog::util}!ftime@{ftime}}
+\index{ftime@{ftime}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{ftime()}{ftime()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{void}} plog\+::util\+::ftime (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structplog_1_1util_1_1_time}{Time}} \texorpdfstring{$\ast$}{*}}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00161}{161}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_add2656286e84f4025dfca7c3053be004}\label{namespaceplog_1_1util_add2656286e84f4025dfca7c3053be004} 
+\index{plog::util@{plog::util}!gettid@{gettid}}
+\index{gettid@{gettid}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{gettid()}{gettid()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{unsigned}} \mbox{\hyperlink{classplog_1_1_console_appender}{int}} plog\+::util\+::gettid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00171}{171}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_a10bab2b413e194f8e30770cff3cb00c7}\label{namespaceplog_1_1util_a10bab2b413e194f8e30770cff3cb00c7} 
+\index{plog::util@{plog::util}!gmtime\_s@{gmtime\_s}}
+\index{gmtime\_s@{gmtime\_s}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{gmtime\_s()}{gmtime\_s()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{void}} plog\+::util\+::gmtime\+\_\+s (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{struct}} \mbox{\hyperlink{classplog_1_1_console_appender}{tm}} \texorpdfstring{$\ast$}{*}}]{t,  }\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{time\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00134}{134}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_a829e3957b08288ccd481ddba24e37e41}\label{namespaceplog_1_1util_a829e3957b08288ccd481ddba24e37e41} 
+\index{plog::util@{plog::util}!localtime\_s@{localtime\_s}}
+\index{localtime\_s@{localtime\_s}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{localtime\_s()}{localtime\_s()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{void}} plog\+::util\+::localtime\+\_\+s (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{struct}} \mbox{\hyperlink{classplog_1_1_console_appender}{tm}} \texorpdfstring{$\ast$}{*}}]{t,  }\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{time\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00121}{121}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_a21e790275eea0f204619fc8001b11921}\label{namespaceplog_1_1util_a21e790275eea0f204619fc8001b11921} 
+\index{plog::util@{plog::util}!processFuncName@{processFuncName}}
+\index{processFuncName@{processFuncName}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{processFuncName()}{processFuncName()}}
+{\footnotesize\ttfamily std\+::string plog\+::util\+::process\+Func\+Name (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}}]{func }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00336}{336}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_a213ef20b4d0a99026624c936a22c5c97}\label{namespaceplog_1_1util_a213ef20b4d0a99026624c936a22c5c97} 
+\index{plog::util@{plog::util}!splitFileName@{splitFileName}}
+\index{splitFileName@{splitFileName}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{splitFileName()}{splitFileName()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{void}} plog\+::util\+::split\+File\+Name (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{nchar}} \texorpdfstring{$\ast$}{*}}]{file\+Name,  }\item[{\mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{nstring}} \&}]{file\+Name\+No\+Ext,  }\item[{\mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{nstring}} \&}]{file\+Ext }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00380}{380}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+
+\Hypertarget{namespaceplog_1_1util_a7b526bacee14171571a965e08b6a65c4}\label{namespaceplog_1_1util_a7b526bacee14171571a965e08b6a65c4} 
+\index{plog::util@{plog::util}!vasprintf@{vasprintf}}
+\index{vasprintf@{vasprintf}!plog::util@{plog::util}}
+\doxysubsubsection{\texorpdfstring{vasprintf()}{vasprintf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplog_1_1_console_appender}{int}} plog\+::util\+::vasprintf (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{strp,  }\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}}]{format,  }\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{va\+\_\+list}}}]{ap }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_util_8h_source_l00193}{193}} of file \mbox{\hyperlink{_util_8h_source}{Util.\+h}}.
+

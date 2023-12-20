@@ -1,0 +1,55 @@
+\doxysection{src/client/session/session.cpp File Reference}
+\hypertarget{client_2session_2session_8cpp}{}\label{client_2session_2session_8cpp}\index{src/client/session/session.cpp@{src/client/session/session.cpp}}
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$plog/\+Log.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include "{}../../common/eventhub/models.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../common/file\+\_\+io/file\+\_\+io.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../common/session/models.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../common/socket\+\_\+io/socket.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../common/vars.\+hpp"{}}\newline
+{\ttfamily \#include "{}../eventhub/file\+\_\+exchange.\+hpp"{}}\newline
+{\ttfamily \#include "{}../eventhub/publisher.\+hpp"{}}\newline
+{\ttfamily \#include "{}../eventhub/subscriber.\+hpp"{}}\newline
+{\ttfamily \#include "{}session.\+hpp"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{client_2session_2session_8cpp_a3dfdb78c2c134ab1928430a5aab1d617}{stop\+\_\+execution}} (int signal)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{client_2session_2session_8cpp_abeedec982d6cd374d8f100e3688de085}{interrupt}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{client_2session_2session_8cpp_a3dfdb78c2c134ab1928430a5aab1d617}\label{client_2session_2session_8cpp_a3dfdb78c2c134ab1928430a5aab1d617} 
+\index{session.cpp@{session.cpp}!stop\_execution@{stop\_execution}}
+\index{stop\_execution@{stop\_execution}!session.cpp@{session.cpp}}
+\doxysubsubsection{\texorpdfstring{stop\_execution()}{stop\_execution()}}
+{\footnotesize\ttfamily void stop\+\_\+execution (\begin{DoxyParamCaption}\item[{int}]{signal }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2session_2session_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{client_2session_2session_8cpp_source}{session.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{client_2session_2session_8cpp_abeedec982d6cd374d8f100e3688de085}\label{client_2session_2session_8cpp_abeedec982d6cd374d8f100e3688de085} 
+\index{session.cpp@{session.cpp}!interrupt@{interrupt}}
+\index{interrupt@{interrupt}!session.cpp@{session.cpp}}
+\doxysubsubsection{\texorpdfstring{interrupt}{interrupt}}
+{\footnotesize\ttfamily bool interrupt = false}
+
+
+
+Definition at line \mbox{\hyperlink{client_2session_2session_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{client_2session_2session_8cpp_source}{session.\+cpp}}.
+

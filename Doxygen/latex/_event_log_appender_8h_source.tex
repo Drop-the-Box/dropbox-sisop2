@@ -1,0 +1,123 @@
+\doxysection{Event\+Log\+Appender.\+h}
+\hypertarget{_event_log_appender_8h_source}{}\label{_event_log_appender_8h_source}\index{src/include/plog/Appenders/EventLogAppender.h@{src/include/plog/Appenders/EventLogAppender.h}}
+\mbox{\hyperlink{_event_log_appender_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_i_appender_8h}{plog/Appenders/IAppender.h}}>}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_win_api_8h}{plog/WinApi.h}}>}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00005}00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplog}{plog}}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00006}00006\ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00007}00007\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Formatter>}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00008}\mbox{\hyperlink{classplog_1_1_event_log_appender}{00008}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{_util_8h_a2c3b71932c85110f788ece8a0697ef3f}{PLOG\_LINKAGE\_HIDDEN}}\ \mbox{\hyperlink{classplog_1_1_event_log_appender}{EventLogAppender}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classplog_1_1_i_appender}{IAppender}}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00009}00009\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00011}\mbox{\hyperlink{classplog_1_1_event_log_appender_a99a2b17d0c0a10c0bddd241c6533fada}{00011}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_event_log_appender_a99a2b17d0c0a10c0bddd241c6533fada}{EventLogAppender}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}})\ :\ m\_eventSource(\mbox{\hyperlink{classplog_1_1_console_appender}{RegisterEventSourceW}}(\mbox{\hyperlink{classplog_1_1_console_appender}{NULL}},\ util::\mbox{\hyperlink{classplog_1_1_console_appender}{toWide}}(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}}).\mbox{\hyperlink{classplog_1_1_console_appender}{c\_str}}()))}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00012}00012\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00013}00013\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00015}\mbox{\hyperlink{classplog_1_1_event_log_appender_ac296ce7cd82216d3daef93249113def8}{00015}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_event_log_appender_ac296ce7cd82216d3daef93249113def8}{\string~EventLogAppender}}()}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00016}00016\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{DeregisterEventSource}}(m\_eventSource);}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00020}\mbox{\hyperlink{classplog_1_1_event_log_appender_a8aa8923b3f7d5e4b17282d73b8255a9b}{00020}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplog_1_1_event_log_appender_a8aa8923b3f7d5e4b17282d73b8255a9b}{write}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_record}{Record}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{record}})\ \mbox{\hyperlink{_util_8h_ab77de78ebb3bd909fca08605acd16591}{PLOG\_OVERRIDE}}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util::nstring}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}}\ =\ Formatter::format(\mbox{\hyperlink{classplog_1_1_console_appender}{record}});}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ write(\mbox{\hyperlink{classplog_1_1_console_appender}{record}}.getSeverity(),\ util::toWide(\mbox{\hyperlink{classplog_1_1_console_appender}{str}}).c\_str());}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00027}00027\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ write(\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{Severity}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{severity}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{wchar\_t}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}})}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{wchar\_t}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{logMessagePtr}}[]\ =\ \{\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}}\ \};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ ReportEventW(m\_eventSource,\ logSeverityToType(severity),\ \textcolor{keyword}{static\_cast<}WORD\textcolor{keyword}{>}(severity),\ 0,\ NULL,\ 1,\ 0,\ logMessagePtr,\ NULL);}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ WORD\ logSeverityToType(\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{plog::Severity}}\ severity)}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (severity)}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a87c879d34029ab027d8940169dcad463}{plog::fatal}}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1679ce0724a66a99dc188e41876ade78}{plog::error}}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ eventLog::kErrorType;}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1bf20988ef5019ca3d136d315c2e8c4e}{plog::warning}}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ eventLog::kWarningType;}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a53cec741b1a2186167465e39fdd9ff72}{plog::info}}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a241dcd076455366730559fad843d2ee3}{plog::debug}}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a3b6e929f6b4fcc90142944d9438aca7c}{plog::verbose}}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ eventLog::kInformationType;}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00054}00054\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ HANDLE\ m\_eventSource;}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00056}00056\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00058}\mbox{\hyperlink{classplog_1_1_event_log_appender_registry}{00058}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplog_1_1_event_log_appender_registry}{EventLogAppenderRegistry}}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00059}00059\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00060}00060\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00061}\mbox{\hyperlink{classplog_1_1_event_log_appender_registry_a3f0e783e87b5964e533b71ee6205ca44}{00061}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classplog_1_1_event_log_appender_registry_a3f0e783e87b5964e533b71ee6205ca44}{add}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{logName}}\ =\ \mbox{\hyperlink{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e}{PLOG\_NSTR}}(\textcolor{stringliteral}{"{}Application"{}}))}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ std::wstring\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ std::wstring\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ getKeyNames(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{logName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}});}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{HKEY}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKey}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (0\ !=\ \mbox{\hyperlink{classplog_1_1_console_appender}{RegCreateKeyExW}}(hkey::kLocalMachine,\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}}.c\_str(),\ 0,\ \mbox{\hyperlink{classplog_1_1_console_appender}{NULL}},\ 0,\ regSam::kSetValue,\ \mbox{\hyperlink{classplog_1_1_console_appender}{NULL}},\ \&\mbox{\hyperlink{classplog_1_1_console_appender}{sourceKey}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{NULL}}))}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{DWORD}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{kTypesSupported}}\ =\ eventLog::kErrorType\ |\ eventLog::kWarningType\ |\ eventLog::kInformationType;}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{RegSetValueExW}}(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceKey}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{L}}\textcolor{stringliteral}{"{}TypesSupported"{}},\ 0,\ regType::kDword,\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{classplog_1_1_console_appender}{BYTE}}*\textcolor{keyword}{>}(\&\mbox{\hyperlink{classplog_1_1_console_appender}{kTypesSupported}}),\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classplog_1_1_console_appender}{kTypesSupported}}));}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{classplog_1_1_console_appender}{kEventMessageFile}}[]\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{L}}\textcolor{stringliteral}{"{}\%windir\%\(\backslash\)\(\backslash\)Microsoft.NET\(\backslash\)\(\backslash\)Framework\(\backslash\)\(\backslash\)v4.0.30319\(\backslash\)\(\backslash\)EventLogMessages.dll;\%windir\%\(\backslash\)\(\backslash\)Microsoft.NET\(\backslash\)\(\backslash\)Framework\(\backslash\)\(\backslash\)v2.0.50727\(\backslash\)\(\backslash\)EventLogMessages.dll"{}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{RegSetValueExW}}(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceKey}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{L}}\textcolor{stringliteral}{"{}EventMessageFile"{}},\ 0,\ regType::kExpandSz,\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{classplog_1_1_console_appender}{BYTE}}*\textcolor{keyword}{>}(\mbox{\hyperlink{classplog_1_1_console_appender}{kEventMessageFile}}),\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classplog_1_1_console_appender}{kEventMessageFile}})\ -\/\ \textcolor{keyword}{sizeof}(*\mbox{\hyperlink{classplog_1_1_console_appender}{kEventMessageFile}}));}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{RegCloseKey}}(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceKey}});}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00083}\mbox{\hyperlink{classplog_1_1_event_log_appender_registry_a4b0e32e2017e20baf1ed24c2953d3c21}{00083}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classplog_1_1_event_log_appender_registry_a4b0e32e2017e20baf1ed24c2953d3c21}{exists}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{logName}}\ =\ \mbox{\hyperlink{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e}{PLOG\_NSTR}}(\textcolor{stringliteral}{"{}Application"{}}))}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ std::wstring\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ std::wstring\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ getKeyNames(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{logName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}});}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{HKEY}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKey}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (0\ !=\ \mbox{\hyperlink{classplog_1_1_console_appender}{RegOpenKeyExW}}(hkey::kLocalMachine,\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}}.c\_str(),\ 0,\ regSam::kQueryValue,\ \&\mbox{\hyperlink{classplog_1_1_console_appender}{sourceKey}}))}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{RegCloseKey}}(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceKey}});}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00099}\mbox{\hyperlink{classplog_1_1_event_log_appender_registry_a1574415075d51f95c5015c441402a161}{00099}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplog_1_1_event_log_appender_registry_a1574415075d51f95c5015c441402a161}{remove}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{logName}}\ =\ \mbox{\hyperlink{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e}{PLOG\_NSTR}}(\textcolor{stringliteral}{"{}Application"{}}))}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ std::wstring\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ std::wstring\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ getKeyNames(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{logName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}});}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{RegDeleteKeyW}}(hkey::kLocalMachine,\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}}.c\_str());}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{RegDeleteKeyW}}(hkey::kLocalMachine,\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}}.c\_str());}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00109}00109\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ getKeyNames(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceplog_1_1util_a5904dfdf0e59be15b2da55f49c34691e}{util::nchar}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{logName}},\ std::wstring\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}},\ std::wstring\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}})}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::wstring\ \mbox{\hyperlink{classplog_1_1_console_appender}{kPrefix}}\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{L}}\textcolor{stringliteral}{"{}SYSTEM\(\backslash\)\(\backslash\)CurrentControlSet\(\backslash\)\(\backslash\)Services\(\backslash\)\(\backslash\)EventLog\(\backslash\)\(\backslash\)"{}};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}}\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{kPrefix}}\ +\ util::toWide(\mbox{\hyperlink{classplog_1_1_console_appender}{logName}});}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{sourceKeyName}}\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{logKeyName}}\ +\ \mbox{\hyperlink{classplog_1_1_console_appender}{L}}\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}}\ +\ util::toWide(\mbox{\hyperlink{classplog_1_1_console_appender}{sourceName}});}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00116}00116\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_event_log_appender_8h_source_l00117}00117\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,103 @@
+\doxysection{main.\+cpp}
+\hypertarget{server_2main_8cpp_source}{}\label{server_2main_8cpp_source}\index{src/server/main.cpp@{src/server/main.cpp}}
+\mbox{\hyperlink{server_2main_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_color_console_appender_8h}{plog/Appenders/ColorConsoleAppender.h}}>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_txt_formatter_8h}{plog/Formatters/TxtFormatter.h}}>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_init_8h}{plog/Init.h}}>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <signal.h>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <errno.h>}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <sys/socket.h>}\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <arpa/inet.h>}\ \ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00017}00017\ \textcolor{comment}{//\ User-\/defined\ modules}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}../common/socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}../common/vars.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}session/session.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00022}00022\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00024}\mbox{\hyperlink{server_2main_8cpp_abeedec982d6cd374d8f100e3688de085}{00024}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{server_2main_8cpp_abeedec982d6cd374d8f100e3688de085}{interrupt}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00026}\mbox{\hyperlink{server_2main_8cpp_a3dfdb78c2c134ab1928430a5aab1d617}{00026}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{server_2main_8cpp_a3dfdb78c2c134ab1928430a5aab1d617}{stop\_execution}}(\textcolor{keywordtype}{int}\ signal)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}Caught\ signal:\ "{}}\ <<\ strsignal(signal)\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{server_2main_8cpp_abeedec982d6cd374d8f100e3688de085}{interrupt}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00031}\mbox{\hyperlink{server_2main_8cpp_a7c05ff22bef6f2f5c49430606981e3a7}{00031}}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{server_2main_8cpp_a7c05ff22bef6f2f5c49430606981e3a7}{get\_ip}}()\ \{}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ google\_dns\_server\ =\ \textcolor{stringliteral}{"{}8.8.8.8"{}};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{int}\ dns\_port\ =\ 53;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ serv;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{int}\ sock\ =\ socket(AF\_INET,\ SOCK\_DGRAM,\ 0);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{comment}{//Socket\ could\ not\ be\ created}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{keywordflow}{if}(sock\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00038}00038\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Socket\ error"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00040}00040\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00041}00041\ \ \ \ \ memset(\&serv,\ 0,\ \textcolor{keyword}{sizeof}(serv));}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00042}00042\ \ \ \ \ serv.sin\_family\ =\ AF\_INET;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00043}00043\ \ \ \ \ serv.sin\_addr.s\_addr\ =\ inet\_addr(google\_dns\_server);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00044}00044\ \ \ \ \ serv.sin\_port\ =\ htons(dns\_port);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{int}\ err\ =\ connect(sock,\ (\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ sockaddr*)\&serv,\ \textcolor{keyword}{sizeof}(serv));}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{if}\ (err\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00047}00047\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Error\ number:\ "{}}\ <<\ errno}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}.\ Error\ message:\ "{}}\ <<\ strerror(errno)\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00050}00050\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ name;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00053}00053\ \ \ \ \ socklen\_t\ namelen\ =\ \textcolor{keyword}{sizeof}(name);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00054}00054\ \ \ \ \ err\ =\ getsockname(sock,\ (\textcolor{keyword}{struct}\ sockaddr*)\&name,\ \&namelen);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{comment}{//\ declara\ variavel\ para\ armazenar\ ip\ local\ da\ maquina}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[80];}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p\ =\ inet\_ntop(AF\_INET,\ \&name.sin\_addr,\ buffer,\ 80);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{keywordflow}{if}(p\ ==\ NULL)}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00060}00060\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Error\ number:\ "{}}\ <<\ errno}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}.\ Error\ message:\ "{}}\ <<\ strerror(errno)\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00063}00063\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00065}00065\ \ \ \ \ close(sock);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ converte\ ip\ local\ para\ char*}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{keywordtype}{char}*\ ip\_local\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[80];}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00068}00068\ \ \ \ \ strcpy(ip\_local,\ buffer);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{return}\ ip\_local;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00071}00071\ \}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00073}\mbox{\hyperlink{server_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{00073}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{server_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classplog_1_1_color_console_appender}{plog::ColorConsoleAppender<plog::TxtFormatter>}}\ consoleAppender;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{namespaceplog_a2a5d0e6e4aef59555ac731272e6cde97}{plog::init}}(\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a241dcd076455366730559fad843d2ee3}{plog::debug}},\ \&consoleAppender);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00077}00077\ \ \ \ \ ::signal(SIGINT,\ \mbox{\hyperlink{server_2main_8cpp_a3dfdb78c2c134ab1928430a5aab1d617}{stop\_execution}});}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{keywordtype}{int}\ port\ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{vars_8hpp_ac42367fe5c999ec6650de83e9d72fe8c}{SERVER\_PORT}};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_requests\ =\ \mbox{\hyperlink{vars_8hpp_a8fc96cee4177a369a99de7026ebeba81}{MAX\_REQUESTS}};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{keywordtype}{int}\ buffer\_size\ \ =\ \mbox{\hyperlink{vars_8hpp_a6b20d41d6252e9871430c242cb1a56e7}{BUFFER\_SIZE}};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{comment}{//\ char*\ socket\_address\ =\ (char\ *)"{}0.0.0.0"{};}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{comment}{//\ conseguir\ ip\ da\ maquina\ automaticamente}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{keywordtype}{char}*\ ip\_local\ =\ \mbox{\hyperlink{server_2main_8cpp_a7c05ff22bef6f2f5c49430606981e3a7}{get\_ip}}();}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00085}00085\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}IP\ local:\ "{}}\ <<\ ip\_local\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00086}00086\ \ \ \ \ \textcolor{comment}{//\ convertendo\ char*\ para\ string}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00087}00087\ \ \ \ \ \textcolor{comment}{//string\ socket\_address\ =\ string(ip\_local);}}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{string}\ socket\_address\ =\ \textcolor{stringliteral}{"{}0.0.0.0"{}};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00089}00089\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Starting\ server\ on\ "{}}\ <<\ socket\_address\ <<\ \textcolor{stringliteral}{"{}:"{}}\ <<\ port\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00090}00090\ \ \ \ \ shared\_ptr<Socket>\ socket\ =\ make\_shared<Socket>(socket\_address,\ port,\ \&\mbox{\hyperlink{server_2main_8cpp_abeedec982d6cd374d8f100e3688de085}{interrupt}},\ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ac5e385618c6ca54e461a312031274f43}{Server}},\ buffer\_size,\ max\_requests);}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00092}00092\ \ \ \ \ unique\_ptr<SessionManager>\ session\_manager(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_session_manager}{SessionManager}}(socket));}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00093}00093\ \ \ \ \ session\_manager-\/>interrupt\ =\ \&\mbox{\hyperlink{server_2main_8cpp_abeedec982d6cd374d8f100e3688de085}{interrupt}};}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00094}00094\ \ \ \ \ session\_manager-\/>start();}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{server_2main_8cpp_source_l00097}00097\ \}}
+
+\end{DoxyCode}

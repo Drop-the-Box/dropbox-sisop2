@@ -1,0 +1,29 @@
+\doxysection{Func\+Message\+Formatter.\+h}
+\hypertarget{_func_message_formatter_8h_source}{}\label{_func_message_formatter_8h_source}\index{src/include/plog/Formatters/FuncMessageFormatter.h@{src/include/plog/Formatters/FuncMessageFormatter.h}}
+\mbox{\hyperlink{_func_message_formatter_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_record_8h}{plog/Record.h}}>}}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_util_8h}{plog/Util.h}}>}}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00005}00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplog}{plog}}}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00006}00006\ \{}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00007}\mbox{\hyperlink{classplog_1_1_func_message_formatter}{00007}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplog_1_1_func_message_formatter}{FuncMessageFormatter}}}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00008}00008\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00009}00009\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00010}\mbox{\hyperlink{classplog_1_1_func_message_formatter_ac95d35d7496c310137ea15d0df72f855}{00010}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util::nstring}}\ \mbox{\hyperlink{classplog_1_1_func_message_formatter_ac95d35d7496c310137ea15d0df72f855}{header}}()}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00011}00011\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util::nstring}}();}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00013}00013\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00015}\mbox{\hyperlink{classplog_1_1_func_message_formatter_a71975793ba7004e3787826671fb92f56}{00015}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util::nstring}}\ \mbox{\hyperlink{classplog_1_1_func_message_formatter_a71975793ba7004e3787826671fb92f56}{format}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_record}{Record}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{record}})}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00016}00016\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{ss}};}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{ss}}\ <<\ \mbox{\hyperlink{classplog_1_1_console_appender}{record}}.getFunc()\ <<\ \mbox{\hyperlink{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e}{PLOG\_NSTR}}(\textcolor{stringliteral}{"{}@"{}})\ <<\ \mbox{\hyperlink{classplog_1_1_console_appender}{record}}.getLine()\ <<\ \mbox{\hyperlink{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e}{PLOG\_NSTR}}(\textcolor{stringliteral}{"{}:\ "{}})\ <<\ \mbox{\hyperlink{classplog_1_1_console_appender}{record}}.getMessage()\ <<\ \mbox{\hyperlink{_util_8h_a44e21bdff40e351fc4d8bbc7b9f8fb6e}{PLOG\_NSTR}}(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classplog_1_1_console_appender}{ss}}.str();}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00022}00022\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_func_message_formatter_8h_source_l00023}00023\ \}}
+
+\end{DoxyCode}

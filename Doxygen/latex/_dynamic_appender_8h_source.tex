@@ -1,0 +1,48 @@
+\doxysection{Dynamic\+Appender.\+h}
+\hypertarget{_dynamic_appender_8h_source}{}\label{_dynamic_appender_8h_source}\index{src/include/plog/Appenders/DynamicAppender.h@{src/include/plog/Appenders/DynamicAppender.h}}
+\mbox{\hyperlink{_dynamic_appender_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_i_appender_8h}{plog/Appenders/IAppender.h}}>}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00005}00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplog}{plog}}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00006}00006\ \{}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00007}\mbox{\hyperlink{classplog_1_1_dynamic_appender}{00007}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{_util_8h_a2c3b71932c85110f788ece8a0697ef3f}{PLOG\_LINKAGE\_HIDDEN}}\ \mbox{\hyperlink{classplog_1_1_dynamic_appender}{DynamicAppender}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classplog_1_1_i_appender}{IAppender}}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00008}00008\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00009}00009\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00010}\mbox{\hyperlink{classplog_1_1_dynamic_appender_a752b7e913dcd98bce89190a3b629cbcf}{00010}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_dynamic_appender}{DynamicAppender}}\&\ \mbox{\hyperlink{classplog_1_1_dynamic_appender_a752b7e913dcd98bce89190a3b629cbcf}{addAppender}}(\mbox{\hyperlink{classplog_1_1_i_appender}{IAppender}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{appender}})}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00011}00011\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{assert}}(\mbox{\hyperlink{classplog_1_1_console_appender}{appender}}\ !=\ \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1util_1_1_mutex_lock}{util::MutexLock}}\ lock(m\_mutex);}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ m\_appenders.insert(\mbox{\hyperlink{classplog_1_1_console_appender}{appender}});}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00020}\mbox{\hyperlink{classplog_1_1_dynamic_appender_a755e254edc39be184ffe4a769e974cd0}{00020}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_dynamic_appender}{DynamicAppender}}\&\ \mbox{\hyperlink{classplog_1_1_dynamic_appender_a755e254edc39be184ffe4a769e974cd0}{removeAppender}}(\mbox{\hyperlink{classplog_1_1_i_appender}{IAppender}}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{appender}})}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1util_1_1_mutex_lock}{util::MutexLock}}\ lock(m\_mutex);}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ m\_appenders.erase(\mbox{\hyperlink{classplog_1_1_console_appender}{appender}});}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00028}\mbox{\hyperlink{classplog_1_1_dynamic_appender_a09e7071fd44e62c792fd5c3e1f292fd7}{00028}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplog_1_1_dynamic_appender_a09e7071fd44e62c792fd5c3e1f292fd7}{write}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_record}{Record}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{record}})\ \mbox{\hyperlink{_util_8h_ab77de78ebb3bd909fca08605acd16591}{PLOG\_OVERRIDE}}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1util_1_1_mutex_lock}{util::MutexLock}}\ lock(m\_mutex);}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::set<IAppender*>::iterator\ \mbox{\hyperlink{classplog_1_1_console_appender}{it}}\ =\ m\_appenders.begin();\ \mbox{\hyperlink{classplog_1_1_console_appender}{it}}\ !=\ m\_appenders.end();\ ++\mbox{\hyperlink{classplog_1_1_console_appender}{it}})}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*it)-\/>write(\mbox{\hyperlink{classplog_1_1_console_appender}{record}});}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00038}00038\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ \mbox{\hyperlink{classplog_1_1util_1_1_mutex}{util::Mutex}}\ \ \ \ \ m\_mutex;}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ std::set<IAppender*>\ \ \ \ m\_appenders;}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00041}00041\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_dynamic_appender_8h_source_l00042}00042\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,134 @@
+\doxysection{src/client/eventhub/publisher.cpp File Reference}
+\hypertarget{client_2eventhub_2publisher_8cpp}{}\label{client_2eventhub_2publisher_8cpp}\index{src/client/eventhub/publisher.cpp@{src/client/eventhub/publisher.cpp}}
+{\ttfamily \#include "{}publisher.\+hpp"{}}\newline
+{\ttfamily \#include $<$cpp-\/inquirer/inquirer.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$plog/\+Log.\+h$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$regex$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$sys/sendfile.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a92325a9759a4fb06079ad15efbb8d60f}{handle\+\_\+upload}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$ inquirer, const string sync\+\_\+dir)
+\item 
+void \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_aef0a69d5874ffbda01a969802f132577}{handle\+\_\+download}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$ inquirer)
+\item 
+void \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_ad7a624df64ecd168aca5366e3efbf19d}{handle\+\_\+delete}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$ inquirer)
+\item 
+void \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_ab0e3f01501345e80f32c5e76755d7351}{handle\+\_\+list\+\_\+server}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$ inquirer)
+\item 
+void \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a57e4ab6b4a9e91fe1b49df97575ed679}{handle\+\_\+list\+\_\+client}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$ inquirer)
+\item 
+void \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a8bafa577ca8b0ad7c7cb0f21ef002e16}{handle\+\_\+exit}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$ inquirer)
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a1c8b7ea1f5d88c6b9e34288782c0491e}{run\+\_\+file\+\_\+monitor}} (void \texorpdfstring{$\ast$}{*}monitor)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ std\+::string $>$ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9}{commands}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{client_2eventhub_2publisher_8cpp_ad7a624df64ecd168aca5366e3efbf19d}\label{client_2eventhub_2publisher_8cpp_ad7a624df64ecd168aca5366e3efbf19d} 
+\index{publisher.cpp@{publisher.cpp}!handle\_delete@{handle\_delete}}
+\index{handle\_delete@{handle\_delete}!publisher.cpp@{publisher.cpp}}
+\doxysubsubsection{\texorpdfstring{handle\_delete()}{handle\_delete()}}
+{\footnotesize\ttfamily void handle\+\_\+delete (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$}]{inquirer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source_l00046}{46}} of file \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source}{publisher.\+cpp}}.
+
+\Hypertarget{client_2eventhub_2publisher_8cpp_aef0a69d5874ffbda01a969802f132577}\label{client_2eventhub_2publisher_8cpp_aef0a69d5874ffbda01a969802f132577} 
+\index{publisher.cpp@{publisher.cpp}!handle\_download@{handle\_download}}
+\index{handle\_download@{handle\_download}!publisher.cpp@{publisher.cpp}}
+\doxysubsubsection{\texorpdfstring{handle\_download()}{handle\_download()}}
+{\footnotesize\ttfamily void handle\+\_\+download (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$}]{inquirer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source}{publisher.\+cpp}}.
+
+\Hypertarget{client_2eventhub_2publisher_8cpp_a8bafa577ca8b0ad7c7cb0f21ef002e16}\label{client_2eventhub_2publisher_8cpp_a8bafa577ca8b0ad7c7cb0f21ef002e16} 
+\index{publisher.cpp@{publisher.cpp}!handle\_exit@{handle\_exit}}
+\index{handle\_exit@{handle\_exit}!publisher.cpp@{publisher.cpp}}
+\doxysubsubsection{\texorpdfstring{handle\_exit()}{handle\_exit()}}
+{\footnotesize\ttfamily void handle\+\_\+exit (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$}]{inquirer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source}{publisher.\+cpp}}.
+
+\Hypertarget{client_2eventhub_2publisher_8cpp_a57e4ab6b4a9e91fe1b49df97575ed679}\label{client_2eventhub_2publisher_8cpp_a57e4ab6b4a9e91fe1b49df97575ed679} 
+\index{publisher.cpp@{publisher.cpp}!handle\_list\_client@{handle\_list\_client}}
+\index{handle\_list\_client@{handle\_list\_client}!publisher.cpp@{publisher.cpp}}
+\doxysubsubsection{\texorpdfstring{handle\_list\_client()}{handle\_list\_client()}}
+{\footnotesize\ttfamily void handle\+\_\+list\+\_\+client (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$}]{inquirer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source_l00056}{56}} of file \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source}{publisher.\+cpp}}.
+
+\Hypertarget{client_2eventhub_2publisher_8cpp_ab0e3f01501345e80f32c5e76755d7351}\label{client_2eventhub_2publisher_8cpp_ab0e3f01501345e80f32c5e76755d7351} 
+\index{publisher.cpp@{publisher.cpp}!handle\_list\_server@{handle\_list\_server}}
+\index{handle\_list\_server@{handle\_list\_server}!publisher.cpp@{publisher.cpp}}
+\doxysubsubsection{\texorpdfstring{handle\_list\_server()}{handle\_list\_server()}}
+{\footnotesize\ttfamily void handle\+\_\+list\+\_\+server (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$}]{inquirer }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source}{publisher.\+cpp}}.
+
+\Hypertarget{client_2eventhub_2publisher_8cpp_a92325a9759a4fb06079ad15efbb8d60f}\label{client_2eventhub_2publisher_8cpp_a92325a9759a4fb06079ad15efbb8d60f} 
+\index{publisher.cpp@{publisher.cpp}!handle\_upload@{handle\_upload}}
+\index{handle\_upload@{handle\_upload}!publisher.cpp@{publisher.cpp}}
+\doxysubsubsection{\texorpdfstring{handle\_upload()}{handle\_upload()}}
+{\footnotesize\ttfamily void handle\+\_\+upload (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{classalx_1_1_inquirer}{alx\+::\+Inquirer}} $>$}]{inquirer,  }\item[{const string}]{sync\+\_\+dir }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source}{publisher.\+cpp}}.
+
+\Hypertarget{client_2eventhub_2publisher_8cpp_a1c8b7ea1f5d88c6b9e34288782c0491e}\label{client_2eventhub_2publisher_8cpp_a1c8b7ea1f5d88c6b9e34288782c0491e} 
+\index{publisher.cpp@{publisher.cpp}!run\_file\_monitor@{run\_file\_monitor}}
+\index{run\_file\_monitor@{run\_file\_monitor}!publisher.cpp@{publisher.cpp}}
+\doxysubsubsection{\texorpdfstring{run\_file\_monitor()}{run\_file\_monitor()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} run\+\_\+file\+\_\+monitor (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{monitor }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source_l00082}{82}} of file \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source}{publisher.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9}\label{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9} 
+\index{publisher.cpp@{publisher.cpp}!commands@{commands}}
+\index{commands@{commands}!publisher.cpp@{publisher.cpp}}
+\doxysubsubsection{\texorpdfstring{commands}{commands}}
+{\footnotesize\ttfamily vector$<$std\+::string$>$ commands}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}upload"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}download"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}delete"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}list\_server"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}list\_client"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}exit"{}}\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_source}{publisher.\+cpp}}.
+

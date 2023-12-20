@@ -1,0 +1,29 @@
+\doxysection{subscriber.\+cpp}
+\hypertarget{client_2eventhub_2subscriber_8cpp_source}{}\label{client_2eventhub_2subscriber_8cpp_source}\index{src/client/eventhub/subscriber.cpp@{src/client/eventhub/subscriber.cpp}}
+\mbox{\hyperlink{client_2eventhub_2subscriber_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{server_2eventhub_2subscriber_8hpp}{subscriber.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00004}\mbox{\hyperlink{class_client_subscriber_a7eaeb2eb41d5180dece417e317388342}{00004}}\ \mbox{\hyperlink{class_client_subscriber_a7eaeb2eb41d5180dece417e317388342}{ClientSubscriber::ClientSubscriber}}(shared\_ptr<ClientContext>\ context,\ shared\_ptr<Socket>\ socket)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00005}00005\ \ \ \ \ this-\/>context\ =\ context;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00006}00006\ \ \ \ \ this-\/>socket\ \ =\ socket;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00007}00007\ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00009}\mbox{\hyperlink{class_client_subscriber_ab2d6959b0de2a534ca5831a9afbc7b40}{00009}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_client_subscriber_ab2d6959b0de2a534ca5831a9afbc7b40}{ClientSubscriber::loop}}()\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00010}00010\ \ \ \ \ \textcolor{keywordtype}{int}\ count\ \ \ =\ 0;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordtype}{int}\ channel\ =\ this-\/>socket-\/>socket\_fd;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{keywordflow}{while}\ (!*socket-\/>interrupt)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{comment}{//count++;}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PLOG\_INFO\ <<\ "{}Subscriber\ loop\ count:\ "{}\ <<\ count\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PLOGI\ <<\ "{}Subscriber\ channel:\ "{}\ <<\ channel\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ sleep(5);}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::this\_thread::sleep\_for(std::chrono::seconds(5));}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00018}00018\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00019}00019\ \};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00021}\mbox{\hyperlink{client_2eventhub_2subscriber_8cpp_a7abee4313452e1c872f876ed861f851c}{00021}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{client_2eventhub_2subscriber_8cpp_a7abee4313452e1c872f876ed861f851c}{get\_event}}()\{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2subscriber_8cpp_source_l00023}00023\ \};}
+
+\end{DoxyCode}

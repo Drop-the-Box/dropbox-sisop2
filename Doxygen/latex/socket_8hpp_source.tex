@@ -1,0 +1,71 @@
+\doxysection{socket.\+hpp}
+\hypertarget{socket_8hpp_source}{}\label{socket_8hpp_source}\index{src/common/socket\_io/socket.hpp@{src/common/socket\_io/socket.hpp}}
+\mbox{\hyperlink{socket_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SOCKET\_H}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SOCKET\_H}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include<sys/socket.h>}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include<netinet/in.h>}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00009}00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00011}\mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{00011}}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{SocketMode}}\ \{}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00012}\mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ac5e385618c6ca54e461a312031274f43}{00012}}\ \ \ \ \ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ac5e385618c6ca54e461a312031274f43}{Server}},\ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ae5d09f815b2438dc14af448d00837cc8}{Client}}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00013}\mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ae5d09f815b2438dc14af448d00837cc8}{00013}}\ \};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00015}\mbox{\hyperlink{class_socket}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_socket}{Socket}}\ \{}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00016}00016\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ server\_address;}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{SocketMode}}\ mode;}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00018}00018\ \ \ \ \ \textcolor{comment}{//\ socklen\_t\ addr\_size;}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{void}\ init(\textcolor{keywordtype}{string}\ address,\ \textcolor{keywordtype}{int}\ port,\ \textcolor{keywordtype}{bool}\ *\mbox{\hyperlink{class_socket_af742590287facc103c02f7d8dc00bea1}{interrupt}},\ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{SocketMode}}\ mode,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}{buffer\_size}},\ \textcolor{keywordtype}{int}\ max\_requests);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00022}\mbox{\hyperlink{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}{00022}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}{buffer\_size}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00023}\mbox{\hyperlink{class_socket_a9d299cc162b31349ea49eb994b0ec394}{00023}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a9d299cc162b31349ea49eb994b0ec394}{socket\_flags}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00024}\mbox{\hyperlink{class_socket_a99bca95a2ec06a6ae44f993264b198a4}{00024}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a99bca95a2ec06a6ae44f993264b198a4}{socket\_fd}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00025}\mbox{\hyperlink{class_socket_af742590287facc103c02f7d8dc00bea1}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ *\mbox{\hyperlink{class_socket_af742590287facc103c02f7d8dc00bea1}{interrupt}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_socket}{Socket}}(\textcolor{keywordtype}{string}\ address,\ \textcolor{keywordtype}{int}\ port,\ \textcolor{keywordtype}{bool}\ *\mbox{\hyperlink{class_socket_af742590287facc103c02f7d8dc00bea1}{interrupt}},\ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{SocketMode}}\ mode,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}{buffer\_size}});}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_socket}{Socket}}(\textcolor{keywordtype}{string}\ address,\ \textcolor{keywordtype}{int}\ port,\ \textcolor{keywordtype}{bool}\ *\mbox{\hyperlink{class_socket_af742590287facc103c02f7d8dc00bea1}{interrupt}},\ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{SocketMode}}\ mode,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}{buffer\_size}},\ \textcolor{keywordtype}{int}\ max\_requests);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a7b987f0e116d6472ca3b56256b63e2b5}{listen}}(\textcolor{keywordtype}{int}\ max\_requests);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_socket_aca232ab08b811ab63a403d312e858012}{connect}}(\textcolor{keywordtype}{string}\ address,\ \textcolor{keywordtype}{int}\ port);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_socket_ace1da4f860ac0af46d702cb5fc875a51}{bind}}();}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a64b51ffed2f33df6298d1c8375512a1c}{accept}}(\textcolor{keywordtype}{char}\ *client\_addr,\ \textcolor{keywordtype}{int}\ *client\_port);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a04319b67548dcd8f110127a84e8dfa15}{send}}(uint8\_t*\ bytes,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a2e8e9d4fc6facf4d1324ec45ccca17a7}{receive}}(uint8\_t\ *buffer,\ \textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a4fcbd77cd8d7a8c5d3c52b849c9275d4}{close}}(\textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_socket_aae99ca7c09823d2174ee25201954af6a}{has\_error}}(\textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_socket_ac285e227cb6c9bd82c1b1419364e26e9}{is\_connected}}(\textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ bool\ get\_client\_info(int\ channel,\ char\ **client\_addr,\ int\ *client\_port);}}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_socket_a916838b44f0c3fac986794212f7c1399}{has\_event}}(\textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_socket_a0377e05384cf33119e98b399212e4bd1}{get\_message\_sync}}(uint8\_t\ *buffer,\ \textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00041}00041\ \};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00043}\mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0}{00043}}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0}{PacketType}}\ \{}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00044}\mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0aae5366af2a0d23ca55ea098bd03df289}{00044}}\ \ \ \ \ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a4e9fb8a5010894efb16f735ab4fb44b3}{SessionInit}},\ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0ac396d71d196f833a8ac7df2e86b099dd}{FileChunk}},\ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a1b8fca7eb091dbdbedcfb966a3286ddd}{FileMetadataMsg}},\ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a42da51fa9645cedd956bd787abf23783}{ErrorMsg}},\ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a2c195d5c97763ed383d825d7998d893e}{EventMsg}},\ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0aae5366af2a0d23ca55ea098bd03df289}{CommandMsg}},\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00045}00045\ \};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00047}\mbox{\hyperlink{class_packet}{00047}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_packet}{Packet}}\ \{}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00049}00049\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00050}\mbox{\hyperlink{class_packet_aebbae2cef32f967d0bbcabbe41dae6bf}{00050}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0}{PacketType}}\ \mbox{\hyperlink{class_packet_aebbae2cef32f967d0bbcabbe41dae6bf}{type}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00051}\mbox{\hyperlink{class_packet_af625ca8adf53518caae35bd392cbdc46}{00051}}\ \ \ \ \ \ \ \ \ uint16\_t\ \mbox{\hyperlink{class_packet_af625ca8adf53518caae35bd392cbdc46}{seq\_index}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00052}\mbox{\hyperlink{class_packet_a4e659747c6ee41d89f7f7b4aee36b500}{00052}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_packet_a4e659747c6ee41d89f7f7b4aee36b500}{total\_size}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00053}\mbox{\hyperlink{class_packet_aa66b9ba378582f1ba44aff40fe600649}{00053}}\ \ \ \ \ \ \ \ \ uint16\_t\ \mbox{\hyperlink{class_packet_aa66b9ba378582f1ba44aff40fe600649}{payload\_size}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00054}\mbox{\hyperlink{class_packet_aec6c090aa320fe3739769c41fa0f7f35}{00054}}\ \ \ \ \ \ \ \ \ uint8\_t\ *\mbox{\hyperlink{class_packet_aec6c090aa320fe3739769c41fa0f7f35}{payload}};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_packet}{Packet}}(uint8\_t\ *bytes);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_packet}{Packet}}(\mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0}{PacketType}}\ \mbox{\hyperlink{class_packet_aebbae2cef32f967d0bbcabbe41dae6bf}{type}},\ uint16\_t\ \mbox{\hyperlink{class_packet_af625ca8adf53518caae35bd392cbdc46}{seq\_index}},\ uint32\_t\ \mbox{\hyperlink{class_packet_a4e659747c6ee41d89f7f7b4aee36b500}{total\_size}},\ uint16\_t\ \mbox{\hyperlink{class_packet_aa66b9ba378582f1ba44aff40fe600649}{payload\_size}},\ uint8\_t\ *\mbox{\hyperlink{class_packet_aec6c090aa320fe3739769c41fa0f7f35}{payload}});}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_packet_a48938391fb7e07460bb0e01198ae5ede}{\string~Packet}}();}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_packet_a886ed6572ed89b66a370effdc305170b}{get\_max\_payload\_size}}();}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_packet_a9eca7f0e8d8e703547ea769f6ef7f839}{to\_bytes}}(uint8\_t**\ bytes\_ptr);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_packet_a27e06a3b50f7de5aaa33dc0d10b883cb}{send}}(shared\_ptr<Socket>\ socket,\ \textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00062}00062\ \};}
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{socket_8hpp_source_l00065}00065\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

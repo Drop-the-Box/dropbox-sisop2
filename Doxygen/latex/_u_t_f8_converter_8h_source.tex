@@ -1,0 +1,34 @@
+\doxysection{UTF8\+Converter.\+h}
+\hypertarget{_u_t_f8_converter_8h_source}{}\label{_u_t_f8_converter_8h_source}\index{src/include/plog/Converters/UTF8Converter.h@{src/include/plog/Converters/UTF8Converter.h}}
+\mbox{\hyperlink{_u_t_f8_converter_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_util_8h}{plog/Util.h}}>}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00004}00004\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplog}{plog}}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00005}00005\ \{}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00006}\mbox{\hyperlink{classplog_1_1_u_t_f8_converter}{00006}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplog_1_1_u_t_f8_converter}{UTF8Converter}}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00007}00007\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00008}00008\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00009}\mbox{\hyperlink{classplog_1_1_u_t_f8_converter_a1046a767a8c8bbf6f6b1775128f1517a}{00009}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \mbox{\hyperlink{classplog_1_1_u_t_f8_converter_a1046a767a8c8bbf6f6b1775128f1517a}{header}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util::nstring}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}})}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00010}00010\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{classplog_1_1_console_appender}{kBOM}}[]\ =\ \textcolor{stringliteral}{"{}\(\backslash\)xEF\(\backslash\)xBB\(\backslash\)xBF"{}};}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::string(\mbox{\hyperlink{classplog_1_1_console_appender}{kBOM}})\ +\ \mbox{\hyperlink{classplog_1_1_u_t_f8_converter_a14a26bceb659dce04cc3e04ac1c633ea}{convert}}(\mbox{\hyperlink{classplog_1_1_console_appender}{str}});}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00014}00014\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00016}00016\ \textcolor{preprocessor}{\#if\ PLOG\_CHAR\_IS\_UTF8}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{classplog_1_1_u_t_f8_converter_a14a26bceb659dce04cc3e04ac1c633ea}{convert}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util::nstring}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}})}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}};}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00021}00021\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00022}\mbox{\hyperlink{classplog_1_1_u_t_f8_converter_a14a26bceb659dce04cc3e04ac1c633ea}{00022}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \mbox{\hyperlink{classplog_1_1_u_t_f8_converter_a14a26bceb659dce04cc3e04ac1c633ea}{convert}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util::nstring}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}})}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ util::toNarrow(\mbox{\hyperlink{classplog_1_1_console_appender}{str}},\ codePage::kUTF8);}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00026}00026\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00027}00027\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_t_f8_converter_8h_source_l00028}00028\ \}}
+
+\end{DoxyCode}

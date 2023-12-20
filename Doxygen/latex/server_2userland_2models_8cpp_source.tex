@@ -1,0 +1,177 @@
+\doxysection{models.\+cpp}
+\hypertarget{server_2userland_2models_8cpp_source}{}\label{server_2userland_2models_8cpp_source}\index{src/server/userland/models.cpp@{src/server/userland/models.cpp}}
+\mbox{\hyperlink{server_2userland_2models_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <regex>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}../session/session.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{server_2userland_2models_8hpp}{models.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00013}00013\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00015}\mbox{\hyperlink{server_2userland_2models_8cpp_a66f25d7082cf1a0eb79d1e1aec889f81}{00015}}\ \textcolor{preprocessor}{\#define\ USER\_MAX\_DEVICES\ 2}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00017}\mbox{\hyperlink{class_device_a5129526da6236cd9ec33e3841ec7d30c}{00017}}\ \mbox{\hyperlink{class_device_a5129526da6236cd9ec33e3841ec7d30c}{Device::Device}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username,\ shared\_ptr<Connection>\ connection)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00018}00018\ \ \ \ \ this-\/>username\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{class_device_ae7dee2d174c7b93addad886f285549e5}{username}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00019}00019\ \ \ \ \ this-\/>\mbox{\hyperlink{class_device_aba662586b8dbc399e49afa93fa8e7200}{address}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ connection-\/>address;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00020}00020\ \ \ \ \ this-\/>\mbox{\hyperlink{class_device_ab63b76dbdca9ce4b4c25cb30d3c4155c}{connections}}[connection-\/>port]\ =\ connection;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00021}00021\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00023}\mbox{\hyperlink{class_user_store_a446e1354d30a1ccaa9a5edc0161d00db}{00023}}\ \mbox{\hyperlink{class_user_store_a446e1354d30a1ccaa9a5edc0161d00db}{UserStore::UserStore}}()\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00024}00024\ \ \ \ \ sem\_init(\&this-\/>devices\_lock,\ 0,\ 1);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00025}00025\ \};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00027}\mbox{\hyperlink{class_user_store_a0b3234b7497e9dc2e864081cb9d60fe8}{00027}}\ \mbox{\hyperlink{class_user_store_a0b3234b7497e9dc2e864081cb9d60fe8}{UserStore::\string~UserStore}}()\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00028}00028\ \ \ \ \ sem\_destroy(\&this-\/>devices\_lock);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00031}\mbox{\hyperlink{class_user_store_aec5ebcf2af0925d5f80bae114e952dc0}{00031}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_user_store_aec5ebcf2af0925d5f80bae114e952dc0}{UserStore::add\_user}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ user\_added\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>users\_devices.find(username)\ ==\ this-\/>users\_devices.end())\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ map<string,\ Device\ *>\ device\_map;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ this-\/>users\_devices[username]\ =\ device\_map;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ user\_added\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00037}00037\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}User\ "{}}\ <<\ username\ <<\ \textcolor{stringliteral}{"{}\ already\ registered."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{return}\ user\_added;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00041}00041\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00043}\mbox{\hyperlink{class_user_store_a595e832c5000b2d069e5107b03bbf666}{00043}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_user_store_a595e832c5000b2d069e5107b03bbf666}{UserStore::register\_device}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username,\ shared\_ptr<ServerContext>\ context)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00044}00044\ \ \ \ \ map<string,\ Device\ *>\ device\_map;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00046}00046\ \ \ \ \ shared\_ptr<Connection>\ connection\ =\ context-\/>connection;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ device\_map\ =\ this-\/>users\_devices.at(username);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00049}00049\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (out\_of\_range)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}User\ "{}}\ <<\ username\ <<\ \textcolor{stringliteral}{"{}\ is\ not\ registered.\ Registering..."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{class_user_store_aec5ebcf2af0925d5f80bae114e952dc0}{add\_user}}(username))\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ device\_map\ =\ this-\/>users\_devices.at(username);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{comment}{//\ \ This\ is\ where\ we\ limit\ max\ devices\ online}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{if}\ (device\_map.size()\ ==\ \mbox{\hyperlink{server_2userland_2models_8cpp_a66f25d7082cf1a0eb79d1e1aec889f81}{USER\_MAX\_DEVICES}})\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}User\ "{}}\ <<\ username\ <<\ \textcolor{stringliteral}{"{}\ reached\ maximum\ of\ simultaneously\ connected\ devices:\ "{}}\ <<\ \mbox{\hyperlink{server_2userland_2models_8cpp_a66f25d7082cf1a0eb79d1e1aec889f81}{USER\_MAX\_DEVICES}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}Connection\ from\ device\ with\ address\ "{}}\ <<\ connection-\/>address\ <<\ \textcolor{stringliteral}{"{}\ rejected."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00062}00062\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00063}00063\ \ \ \ \ \mbox{\hyperlink{class_device}{Device}}\ *device;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{if}\ (device\_map.find(connection-\/>address)\ ==\ device\_map.end())\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ device\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_device}{Device}}(username,\ connection);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ this-\/>users\_devices[username][connection-\/>address]\ =\ device;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00067}00067\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}Device\ with\ address\ "{}}\ <<\ connection-\/>\mbox{\hyperlink{class_device_aba662586b8dbc399e49afa93fa8e7200}{address}}\ <<\ \textcolor{stringliteral}{"{}\ already\ registered"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ device\ =\ this-\/>users\_devices.at(username).at(connection-\/>address);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00070}00070\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00071}00071\ \ \ \ \ context-\/>set\_device(device);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00074}00074\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00076}\mbox{\hyperlink{class_user_store_ae26d60edb2f05ac0f0efe30d860baa73}{00076}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_user_store_ae26d60edb2f05ac0f0efe30d860baa73}{UserStore::register\_connection}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username,\ shared\_ptr<ServerContext>\ context)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00077}00077\ \ \ \ \ sem\_wait(\&this-\/>devices\_lock);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00079}00079\ \ \ \ \ map<string,\ Device\ *>\ device\_map;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ device\_map\ =\ this-\/>users\_devices.at(username);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00084}00084\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (out\_of\_range)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{class_user_store_aec5ebcf2af0925d5f80bae114e952dc0}{add\_user}}(username))}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ device\_map\ =\ this-\/>users\_devices.at(username);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00088}00088\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00089}00089\ \ \ \ \ shared\_ptr<Connection>\ connection\ =\ context-\/>connection;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00091}00091\ \ \ \ \ \textcolor{keywordflow}{if}\ (device\_map.find(connection-\/>address)\ ==\ device\_map.end())\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ sem\_post(\&this-\/>devices\_lock);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ result\ =\ this-\/>\mbox{\hyperlink{class_user_store_a595e832c5000b2d069e5107b03bbf666}{register\_device}}(username,\ context);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00094}00094\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_device}{Device}}\ *device\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ device\_map[connection-\/>address];}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ device-\/>\mbox{\hyperlink{class_device_ab63b76dbdca9ce4b4c25cb30d3c4155c}{connections}}[connection-\/>port]\ =\ connection;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ context-\/>set\_device(device);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00098}00098\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00100}00100\ \ \ \ \ sem\_post(\&this-\/>devices\_lock);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00101}00101\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00102}00102\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00104}\mbox{\hyperlink{class_user_store_afa7505e0b42b61350d8c613cffed34ae}{00104}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_user_store_afa7505e0b42b61350d8c613cffed34ae}{UserStore::unregister\_connection}}(shared\_ptr<ServerContext>\ context)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{if}\ (context-\/>device\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ sem\_wait(\&this-\/>devices\_lock);\ \textcolor{comment}{//\ acquiring\ lock}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ shared\_ptr<Connection>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ connection\ =\ context-\/>connection;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ map<int,\ shared\_ptr<Connection>>::iterator\ iter\ \ \ \ \ \ \ =\ context-\/>device-\/>connections.find(context-\/>connection-\/>port);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (iter\ !=\ context-\/>device-\/>connections.end())\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>device-\/>connections.erase(iter);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (context-\/>device-\/>connections.size()\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ username\ \ \ =\ context-\/>device-\/>username;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ map<string,\ Device\ *>::iterator\ device\_key\ =\ this-\/>users\_devices[username].find(context-\/>device-\/>address);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (device\_key\ !=\ this-\/>users\_devices[username].end())\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Unregistering\ device\ "{}}\ <<\ context-\/>device-\/>address\ <<\ \textcolor{stringliteral}{"{}\ from\ user\ "{}}\ <<\ username\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>users\_devices[username].erase(device\_key);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>users\_devices[username].size()\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map<string,\ map<string,\ Device\ *>>::iterator\ user\_key\ =\ this-\/>users\_devices.find(username);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>users\_devices.erase(user\_key);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ sem\_post(\&this-\/>devices\_lock);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00127}00127\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00129}00129\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00131}\mbox{\hyperlink{class_user_store_a0a9621fe4df531e0784c2acdf9d4b084}{00131}}\ map<string,\ Device\ *>\ \mbox{\hyperlink{class_user_store_a775e74f2c57862f38f9bcecca906d890}{UserStore::get\_user\_devices}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00132}00132\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>users\_devices.at(username);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00134}00134\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (out\_of\_range)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Error!\ Cannot\ find\ username\ "{}}\ <<\ username\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00137}00137\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00138}00138\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00140}\mbox{\hyperlink{class_user_store_a85033710c3dd62c19723a6c1d4aa4edb}{00140}}\ \mbox{\hyperlink{class_device}{Device}}\ *\mbox{\hyperlink{class_user_store_a85033710c3dd62c19723a6c1d4aa4edb}{UserStore::get\_device}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ address)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>users\_devices.at(username).at(address);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00143}00143\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (out\_of\_range)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Cannot\ find\ device\ at\ address\ "{}}\ <<\ address\ <<\ \textcolor{stringliteral}{"{}\ from\ user\ "{}}\ <<\ username\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00145}00145\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00147}00147\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00149}\mbox{\hyperlink{class_user_store_a9762e61997a7780a74504fd508d1a8ab}{00149}}\ vector<string>\ \mbox{\hyperlink{class_user_store_a9762e61997a7780a74504fd508d1a8ab}{UserStore::get\_connected\_users}}()\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00150}00150\ \ \ \ \ vector<string>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ users;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00151}00151\ \ \ \ \ map<string,\ vector<shared\_ptr<Session>>>\ sessions\ =\ this-\/>users\_sessions;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00152}00152\ \ \ \ \ transform(}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ sessions.begin(),\ sessions.end(),\ back\_inserter(users),}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ [](pair<\textcolor{keywordtype}{string},\ vector<shared\_ptr<Session>>>\ p)\ \{\ \textcolor{keywordflow}{return}\ p.first;\ \}\ \textcolor{comment}{//\ NOLINT}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00155}00155\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00156}00156\ \ \ \ \ \textcolor{keywordflow}{return}\ users;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00157}00157\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00159}\mbox{\hyperlink{class_user_store_a775e74f2c57862f38f9bcecca906d890}{00159}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_user_store_a775e74f2c57862f38f9bcecca906d890}{UserStore::get\_user\_devices}}()\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00160}00160\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00162}\mbox{\hyperlink{class_server_context_a8bc7bee9beb2f813bda3e191dfad4dd1}{00162}}\ \mbox{\hyperlink{class_server_context_a8bc7bee9beb2f813bda3e191dfad4dd1}{ServerContext::ServerContext}}(shared\_ptr<Socket>\ socket,\ shared\_ptr<Connection>\ connection,\ shared\_ptr<UserStore>\ storage)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00163}00163\ \ \ \ \ this-\/>socket\ \ \ \ \ =\ \mbox{\hyperlink{class_server_context_a61d9a744a48cd075b6c09939aaf45a6b}{socket}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00164}00164\ \ \ \ \ this-\/>connection\ =\ \mbox{\hyperlink{class_server_context_ae5bf69223ebcc1d94da909a89a875902}{connection}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00165}00165\ \ \ \ \ this-\/>storage\ \ \ \ =\ \mbox{\hyperlink{class_server_context_a09470c09b8e14aec518e02fa0c10d295}{storage}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00166}00166\ \ \ \ \ this-\/>\mbox{\hyperlink{class_server_context_ac5d8af25d24334335e76ac47dd7e3320}{device}}\ \ \ \ \ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00167}00167\ \}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00169}\mbox{\hyperlink{class_server_context_abdf67fc70077f2e264b352f6b4c5f114}{00169}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_context_abdf67fc70077f2e264b352f6b4c5f114}{ServerContext::set\_device}}(\mbox{\hyperlink{class_device}{Device}}\ *device)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00170}00170\ \ \ \ \ this-\/>device\ =\ \mbox{\hyperlink{class_server_context_ac5d8af25d24334335e76ac47dd7e3320}{device}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8cpp_source_l00171}00171\ \}}
+
+\end{DoxyCode}

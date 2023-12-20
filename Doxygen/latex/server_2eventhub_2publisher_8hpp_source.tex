@@ -1,0 +1,28 @@
+\doxysection{publisher.\+hpp}
+\hypertarget{server_2eventhub_2publisher_8hpp_source}{}\label{server_2eventhub_2publisher_8hpp_source}\index{src/server/eventhub/publisher.hpp@{src/server/eventhub/publisher.hpp}}
+\mbox{\hyperlink{server_2eventhub_2publisher_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ PUBLISHER\_H}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ PUBLISHER\_H}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}../../common/socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}../session/models.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}../userland/models.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}../../common/file\_io/file\_io.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00011}00011\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00013}\mbox{\hyperlink{class_server_event_publisher}{00013}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_server_event_publisher}{ServerEventPublisher}}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00014}00014\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *buffer;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00015}00015\ \ \ \ \ shared\_ptr<ServerContext>\ context;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00017}00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{class_server_event_publisher}{ServerEventPublisher}}(shared\_ptr<ServerContext>\ context);}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_event_publisher_a074261b47f8d3526cff88f716efd56a8}{loop}}();}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00020}\mbox{\hyperlink{class_server_event_publisher_a43fc44a71122aa38431b2d499f5e0d62}{00020}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_event_publisher_a43fc44a71122aa38431b2d499f5e0d62}{send\_event}}();}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00021}00021\ \};}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8hpp_source_l00022}00022\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

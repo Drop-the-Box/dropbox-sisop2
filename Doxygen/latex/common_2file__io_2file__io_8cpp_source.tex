@@ -1,0 +1,341 @@
+\doxysection{file\+\_\+io.\+cpp}
+\hypertarget{common_2file__io_2file__io_8cpp_source}{}\label{common_2file__io_2file__io_8cpp_source}\index{src/common/file\_io/file\_io.cpp@{src/common/file\_io/file\_io.cpp}}
+\mbox{\hyperlink{common_2file__io_2file__io_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <dirent.h>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <regex>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <sys/stat.h>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{server_2file__io_2file__io_8hpp}{file\_io.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}../vars.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00018}00018\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00020}\mbox{\hyperlink{class_file_metadata_a029d2b01cde3afafa4aa2bcf1287a1a1}{00020}}\ \mbox{\hyperlink{class_file_metadata_a029d2b01cde3afafa4aa2bcf1287a1a1}{FileMetadata::FileMetadata}}(uint8\_t\ *bytes)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00021}00021\ \ \ \ \ uint8\_t\ *cursor\ =\ bytes;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00023}00023\ \ \ \ \ off\_t\ size\_prop;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00024}00024\ \ \ \ \ memmove(\&size\_prop,\ cursor,\ \textcolor{keyword}{sizeof}(off\_t));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00025}00025\ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_metadata_af34617761d3bf15ebd9499d4a73168a7}{size}}\ =\ (off\_t)ntohl(size\_prop);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00026}00026\ \ \ \ \ cursor\ +=\ \textcolor{keyword}{sizeof}(off\_t);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{comment}{//\ time\_t\ t\_prop;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{comment}{//\ size\_t\ time\_s\ =\ sizeof(time\_t);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{comment}{//\ memmove(\&t\_prop,\ cursor,\ time\_s);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ this-\/>accessed\_at\ =\ (time\_t)ntohs(t\_prop);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ cursor\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{comment}{//\ memmove(\&t\_prop,\ cursor,\ time\_s);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{comment}{//\ this-\/>modified\_at\ =\ (time\_t)ntohs(t\_prop);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{comment}{//\ cursor\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ memmove(\&t\_prop,\ cursor,\ time\_s);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{comment}{//\ this-\/>stat\_changed\_at\ =\ (time\_t)ntohs(t\_prop);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{comment}{//\ cursor\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00042}00042\ \ \ \ \ uint16\_t\ prop;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ uint16\_s\ =\ \textcolor{keyword}{sizeof}(uint16\_t);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00044}00044\ \ \ \ \ memmove(\&prop,\ cursor,\ uint16\_s);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00045}00045\ \ \ \ \ uint16\_t\ name\_size\ =\ ntohs(prop);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00046}00046\ \ \ \ \ cursor\ +=\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_name\_size\ =\ \mbox{\hyperlink{class_packet_a886ed6572ed89b66a370effdc305170b}{Packet::get\_max\_payload\_size}}()\ -\/\ \textcolor{keyword}{sizeof}(off\_t)\ -\/\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{if}\ (name\_size\ >\ max\_name\_size)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Buffer\ overflow:\ "{}}\ <<\ name\_size\ -\/\ max\_name\_size\ <<\ \textcolor{stringliteral}{"{}\ bigger\ than\ the\ buffer"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ name\_size\ =\ max\_name\_size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00052}00052\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00054}00054\ \ \ \ \ uint8\_t\ *\mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}}\ =\ (uint8\_t\ *)calloc(name\_size,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00055}00055\ \ \ \ \ memmove(\mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}},\ cursor,\ name\_size);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00056}00056\ \ \ \ \ this-\/>name\ =\ string((\textcolor{keywordtype}{char}\ *)\mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}},\ (\textcolor{keywordtype}{size\_t})name\_size);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00057}00057\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00059}\mbox{\hyperlink{class_file_metadata_ab4df25dd746de18bbc65c693426c055b}{00059}}\ \mbox{\hyperlink{class_file_metadata_a029d2b01cde3afafa4aa2bcf1287a1a1}{FileMetadata::FileMetadata}}(\textcolor{keywordtype}{string}\ filename,\ \textcolor{keywordtype}{string}\ file\_path)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{keyword}{struct\ }stat\ stat\_data;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ full\_path\ =\ file\_path\ +\ filename;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (stat(full\_path.c\_str(),\ \&stat\_data)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}}\ \ \ \ \ \ \ \ \ \ \ \ =\ filename;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_metadata_af34617761d3bf15ebd9499d4a73168a7}{size}}\ \ \ \ \ \ \ \ \ \ \ \ =\ stat\_data.st\_size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_metadata_a4ee51f8c7e25ffb9c9e4dc48a431df2a}{accessed\_at}}\ \ \ \ \ =\ stat\_data.st\_atim.tv\_sec;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_metadata_aeb961d37156b70a891bb431c35c78f6c}{modified\_at}}\ \ \ \ \ =\ stat\_data.st\_mtim.tv\_sec;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_metadata_adfc2090c73bccbb49dbee6a9b291b173}{stat\_changed\_at}}\ =\ stat\_data.st\_ctim.tv\_sec;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00068}00068\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Error\ loading\ file\ "{}}\ <<\ filename\ <<\ \textcolor{stringliteral}{"{}\ metadata:\ "{}}\ <<\ strerror(errno)\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00071}00071\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00072}00072\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00074}\mbox{\hyperlink{class_file_metadata_aea7d65bfce6470027eaeb897c9651cb1}{00074}}\ \mbox{\hyperlink{class_file_metadata_a029d2b01cde3afafa4aa2bcf1287a1a1}{FileMetadata::FileMetadata}}(\textcolor{keywordtype}{string}\ full\_path)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00075}00075\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00077}\mbox{\hyperlink{class_file_metadata_a84cf10b8d22c085b235d0b1a67e816c6}{00077}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_file_metadata_a84cf10b8d22c085b235d0b1a67e816c6}{FileMetadata::to\_bytes}}(uint8\_t\ **bytes\_ptr)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ time\_s\ \ \ \ =\ \textcolor{keyword}{sizeof}(time\_t);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ uint16\_s\ \ =\ \textcolor{keyword}{sizeof}(uint16\_t);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00080}00080\ \ \ \ \ uint16\_t\ name\_size\ =\ this-\/>\mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}}.size()\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ packet\_size\ =\ \textcolor{keyword}{sizeof}(off\_t);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{comment}{//\ packet\_size\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{comment}{//\ packet\_size\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{comment}{//\ packet\_size\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00086}00086\ \ \ \ \ packet\_size\ +=\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00087}00087\ \ \ \ \ packet\_size\ +=\ name\_size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00089}00089\ \ \ \ \ *bytes\_ptr\ \ \ \ \ \ =\ (uint8\_t\ *)calloc(packet\_size,\ \textcolor{keyword}{sizeof}(uint8\_t));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00090}00090\ \ \ \ \ uint8\_t\ *cursor\ =\ *bytes\_ptr;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00092}00092\ \ \ \ \ off\_t\ enc\_size\ =\ htonl(this-\/>\mbox{\hyperlink{class_file_metadata_af34617761d3bf15ebd9499d4a73168a7}{size}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00093}00093\ \ \ \ \ memmove(cursor,\ \&enc\_size,\ \textcolor{keyword}{sizeof}(off\_t));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00094}00094\ \ \ \ \ cursor\ +=\ \textcolor{keyword}{sizeof}(off\_t);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00096}00096\ \ \ \ \ \textcolor{comment}{//\ time\_t\ prop\_t\ =\ htonl(this-\/>accessed\_at);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{comment}{//\ memmove(cursor,\ \&prop\_t,\ time\_s);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00098}00098\ \ \ \ \ \textcolor{comment}{//\ cursor\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00100}00100\ \ \ \ \ \textcolor{comment}{//\ prop\_t\ =\ htonl(this-\/>modified\_at);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00101}00101\ \ \ \ \ \textcolor{comment}{//\ memmove(cursor,\ \&prop\_t,\ time\_s);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00102}00102\ \ \ \ \ \textcolor{comment}{//\ cursor\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{comment}{//\ prop\_t\ =\ htonl(this-\/>stat\_changed\_at);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{comment}{//\ memmove(cursor,\ \&prop\_t,\ time\_s);}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00106}00106\ \ \ \ \ \textcolor{comment}{//\ cursor\ +=\ time\_s;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00107}00107\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00109}00109\ \ \ \ \ uint16\_t\ name\_size\_enc\ =\ htons(name\_size);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00110}00110\ \ \ \ \ memmove(cursor,\ \&name\_size\_enc,\ uint16\_s);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00111}00111\ \ \ \ \ cursor\ +=\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00113}00113\ \ \ \ \ memmove(cursor,\ this-\/>\mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}}.c\_str(),\ name\_size);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00114}00114\ \ \ \ \ \textcolor{keywordflow}{return}\ packet\_size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00115}00115\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00119}\mbox{\hyperlink{class_file_handler_a85c4c37e48f96acac4b702b23f7e8dd0}{00119}}\ \mbox{\hyperlink{class_file_handler_a85c4c37e48f96acac4b702b23f7e8dd0}{FileHandler::FileHandler}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ work\_dir)\{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00120}00120\ \ \ \ \ this-\/>work\_dir\ =\ work\_dir;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00121}00121\ \ \ \ \ this-\/>file\_ptr\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00122}00122\ \ \ \ \ this-\/>metadata\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00123}00123\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00125}\mbox{\hyperlink{class_file_handler_a1ce10cd0ad31b313a8d526fba6f1e676}{00125}}\ \mbox{\hyperlink{class_file_handler_a1ce10cd0ad31b313a8d526fba6f1e676}{FileHandler::\string~FileHandler}}()\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00126}00126\ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>file\_ptr\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_handler_a433c4ffbf9c22fba56fad4ea00a9225c}{close}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00128}00128\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00130}\mbox{\hyperlink{class_file_handler_a96f77d7db750a6b2de2cff1370040119}{00130}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_file_handler_a96f77d7db750a6b2de2cff1370040119}{FileHandler::open}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ file\_path)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00131}00131\ \ \ \ \ this-\/>file\_path\ =\ file\_path;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00132}00132\ \ \ \ \ this-\/>file\_ptr\ \ =\ fopen(file\_path.c\_str(),\ \textcolor{stringliteral}{"{}rb"{}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00133}00133\ \ \ \ \ regex\ \ rgx(\textcolor{stringliteral}{"{}\string^(.*\(\backslash\)\(\backslash\)/)([\string^\(\backslash\)\(\backslash\)/]+)\$"{}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00134}00134\ \ \ \ \ smatch\ matches;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00135}00135\ \ \ \ \ regex\_search(file\_path,\ matches,\ rgx);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00136}00136\ \ \ \ \ \textcolor{keywordtype}{string}\ folder\_path\ =\ matches[1];}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00137}00137\ \ \ \ \ \textcolor{comment}{//\ PLOGD\ <<\ "{}path:\ "{}\ <<\ folder\_path\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00138}00138\ \ \ \ \ \textcolor{keywordtype}{string}\ filename\ =\ matches[2];}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00139}00139\ \ \ \ \ \textcolor{comment}{//\ PLOGD\ <<\ "{}name:\ "{}\ <<\ filename\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00140}00140\ \ \ \ \ shared\_ptr<FileMetadata>\ file\_metadata(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_file_metadata}{FileMetadata}}(filename,\ folder\_path));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00141}00141\ \ \ \ \ this-\/>metadata\ =\ file\_metadata;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00142}00142\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00144}\mbox{\hyperlink{class_file_handler_a433c4ffbf9c22fba56fad4ea00a9225c}{00144}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_file_handler_a433c4ffbf9c22fba56fad4ea00a9225c}{FileHandler::close}}()\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00145}00145\ \ \ \ \ fclose(this-\/>file\_ptr);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00146}00146\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00148}\mbox{\hyperlink{class_file_handler_a225fb8c6507571c95ce7041e2255a487}{00148}}\ std::vector<string>\ \mbox{\hyperlink{class_file_handler_a225fb8c6507571c95ce7041e2255a487}{FileHandler::list\_files}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ directory)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00149}00149\ \ \ \ \ \textcolor{keyword}{struct\ }dirent\ *entry;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00150}00150\ \ \ \ \ vector<string>\ files;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00152}00152\ \ \ \ \ DIR\ *dir\_ptr\ =\ opendir(directory.c\_str());}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00153}00153\ \ \ \ \ \textcolor{keywordflow}{if}\ (dir\_ptr\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((entry\ =\ readdir(dir\_ptr)))\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (entry-\/>d\_type\ ==\ DT\_REG)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ files.push\_back(\textcolor{keywordtype}{string}(entry-\/>d\_name));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ closedir(dir\_ptr);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00160}00160\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Couldn't\ open\ the\ directory"{}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Cannot\ open\ directory\ "{}}\ <<\ directory\ <<\ \textcolor{stringliteral}{"{}\ Reason:\ "{}}\ <<\ strerror(errno)\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00163}00163\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00164}00164\ \ \ \ \ \textcolor{keywordflow}{return}\ files;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00165}00165\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00167}\mbox{\hyperlink{class_file_handler_a49ed1a95af9d098192d195fe3278a8ff}{00167}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_file_handler_a49ed1a95af9d098192d195fe3278a8ff}{FileHandler::send}}(shared\_ptr<Socket>\ socket,\ \textcolor{keywordtype}{int}\ channel)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00168}00168\ \ \ \ \ this-\/>metadata-\/>send(socket,\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00169}00169\ \ \ \ \ off\_t\ file\_size\ =\ this-\/>metadata-\/>size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00170}00170\ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}File\ size:\ "{}}\ <<\ file\_size\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00171}00171\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ seq\_index\ \ \ \ \ \ \ \ =\ 1;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00172}00172\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ file\_buf\_size\ \ \ \ =\ \mbox{\hyperlink{class_packet_a886ed6572ed89b66a370effdc305170b}{Packet::get\_max\_payload\_size}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00173}00173\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ file\_bytes\_read\ \ =\ 0;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00174}00174\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ total\_bytes\_sent\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00175}00175\ \ \ \ \ \textcolor{keywordtype}{float}\ percentage\ \ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00177}00177\ \ \ \ \ uint8\_t\ *file\_buf\ =\ (uint8\_t\ *)calloc(file\_buf\_size,\ \textcolor{keyword}{sizeof}(uint8\_t));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00178}00178\ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}teste:\ "{}}\ <<\ this-\/>file\_ptr\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00179}00179\ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>file\_ptr\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Sending\ file\ "{}}\ <<\ this-\/>metadata-\/>name\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((file\_bytes\_read\ =\ fread(file\_buf,\ \textcolor{keyword}{sizeof}(uint8\_t),\ file\_buf\_size,\ this-\/>file\_ptr))\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Chunk\ index:\ "{}}\ <<\ seq\_index\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ unique\_ptr<Packet>\ packet(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_packet}{Packet}}(\mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0ac396d71d196f833a8ac7df2e86b099dd}{FileChunk}},\ seq\_index,\ file\_size,\ file\_bytes\_read,\ file\_buf));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Total\ file\ size:\ "{}}\ <<\ packet-\/>total\_size\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ packet-\/>send(socket,\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ total\_bytes\_sent\ +=\ file\_bytes\_read;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ percentage\ =\ (float)(total\_bytes\_sent\ /\ (\textcolor{keywordtype}{float})file\_size);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Transfering\ \ "{}}\ <<\ this-\/>metadata-\/>name\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ percentage\ *\ 100\ <<\ \textcolor{stringliteral}{"{}\ \%"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ bzero(file\_buf,\ file\_bytes\_read);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ seq\_index\ +=\ 1;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00197}00197\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00198}00198\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00199}00199\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00201}\mbox{\hyperlink{class_file_metadata_a9fdba60be5fc6401ab4b37554a4e6506}{00201}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_file_metadata_a9fdba60be5fc6401ab4b37554a4e6506}{FileMetadata::send}}(shared\_ptr<Socket>\ socket,\ \textcolor{keywordtype}{int}\ channel)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00202}00202\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ *bytes;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00203}00203\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bsize\ =\ this-\/>\mbox{\hyperlink{class_file_metadata_a84cf10b8d22c085b235d0b1a67e816c6}{to\_bytes}}(\&bytes);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00204}00204\ \ \ \ \ unique\_ptr<Packet>\ packet(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_packet}{Packet}}(\mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a1b8fca7eb091dbdbedcfb966a3286ddd}{FileMetadataMsg}},\ 1,\ bsize,\ bsize,\ bytes));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00205}00205\ \ \ \ \ packet-\/>send(socket,\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00206}00206\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00207}00207\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00209}\mbox{\hyperlink{class_file_handler_aa2fb9ba1c8f8a2da2cef776b49083651}{00209}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_file_handler_aa2fb9ba1c8f8a2da2cef776b49083651}{FileHandler::delete\_self}}()\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00210}00210\ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_handler_a433c4ffbf9c22fba56fad4ea00a9225c}{close}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00212}00212\ \ \ \ \ \textcolor{keywordflow}{if}\ (remove(filename.c\_str())\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Error:\ Unable\ to\ delete\ the\ file.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00215}00215\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00217}00217\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}File\ "{}}\ <<\ this-\/>filename\ <<\ \textcolor{stringliteral}{"{}\ deleted\ successfully.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00218}00218\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00219}00219\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00221}\mbox{\hyperlink{class_file_handler_a3a2a4660b476aa3c5bb9325bd0a57e32}{00221}}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_file_handler_a3a2a4660b476aa3c5bb9325bd0a57e32}{FileHandler::get\_size}}()\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00222}00222\ \ \ \ \ \textcolor{keyword}{struct\ }stat\ file\_status;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00223}00223\ \ \ \ \ \textcolor{keywordflow}{if}\ (stat(this-\/>file\_path.c\_str(),\ \&file\_status)\ <\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00225}00225\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00226}00226\ \ \ \ \ \textcolor{keywordflow}{return}\ file\_status.st\_size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00227}00227\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00229}\mbox{\hyperlink{class_file_handler_a453387799b143ac5f79ca3d51eff6e7e}{00229}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_file_handler_a453387799b143ac5f79ca3d51eff6e7e}{FileHandler::get\_path\_metadata}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ path,\ \textcolor{keyword}{struct}\ stat\ *metadata)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00230}00230\ \ \ \ \ \textcolor{keywordflow}{return}\ stat(path.c\_str(),\ metadata)\ ==\ 0;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00231}00231\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00233}\mbox{\hyperlink{class_file_handler_a3c37c407760daf99cf5a78f716742973}{00233}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_file_handler_a3c37c407760daf99cf5a78f716742973}{FileHandler::path\_exists}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ path)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00234}00234\ \ \ \ \ \textcolor{keyword}{struct\ }stat\ metadata;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00235}00235\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_file_handler_a453387799b143ac5f79ca3d51eff6e7e}{FileHandler::get\_path\_metadata}}(path,\ \&metadata);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00236}00236\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00238}\mbox{\hyperlink{class_file_handler_a08d651298f9dc8c97b78943681e0a324}{00238}}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_file_handler_a08d651298f9dc8c97b78943681e0a324}{FileHandler::get\_digest}}()\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00239}00239\ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Error:\ Hash\ calculation\ not\ implemented.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00240}00240\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00241}00241\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00243}\mbox{\hyperlink{class_file_handler_ad99bb6d7720c607bcf99d491f4cf379f}{00243}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_file_handler_ad99bb6d7720c607bcf99d491f4cf379f}{FileHandler::listen\_file}}()\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00244}00244\ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Error:\ File\ listening\ not\ implemented.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00245}00245\ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00247}\mbox{\hyperlink{class_file_handler_a3a63215b8ffb2f5af27623a618e66a90}{00247}}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_file_handler_a3a63215b8ffb2f5af27623a618e66a90}{FileHandler::get\_sync\_dir}}(\textcolor{keywordtype}{string}\ username,\ \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08}{SYNC\_DIR\_TYPE}}\ mode)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00248}00248\ \ \ \ \ ostringstream\ sync\_dir;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00249}00249\ \ \ \ \ \textcolor{keywordflow}{if}\ (mode\ ==\ \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08af12637d7516a570d5309d5176a3a16c5}{DIR\_SERVER}})\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ sync\_dir\ <<\ \textcolor{stringliteral}{"{}./srv\_sync\_dir/"{}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00251}00251\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ sync\_dir\ <<\ \textcolor{stringliteral}{"{}./sync\_dir/"{}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00253}00253\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00254}00254\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_file_handler_a3c37c407760daf99cf5a78f716742973}{FileHandler::path\_exists}}(sync\_dir.str()))\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ main\_dir\_result\ =\ mkdir(sync\_dir.str().c\_str(),\ 0755);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Creating\ main\ sync\ dir\ "{}}\ <<\ sync\_dir.str()\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00257}00257\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00258}00258\ \ \ \ \ sync\_dir\ <<\ username;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00259}00259\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_file_handler_a3c37c407760daf99cf5a78f716742973}{FileHandler::path\_exists}}(sync\_dir.str()))\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Creating\ sync\ dir\ "{}}\ <<\ sync\_dir.str()\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ dir\_result\ =\ mkdir(sync\_dir.str().c\_str(),\ 0755);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dir\_result\ !=\ 0\ \&\&\ errno\ !=\ EEXIST)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Cannot\ create\ directory:\ "{}}\ <<\ sync\_dir.str()\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00266}00266\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00267}00267\ \ \ \ \ \textcolor{keywordflow}{return}\ sync\_dir.str();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00268}00268\ \};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00270}\mbox{\hyperlink{class_file_handler_a55b291e17602732ad060b7bdf1edf8e9}{00270}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_file_handler_a55b291e17602732ad060b7bdf1edf8e9}{FileHandler::receive\_file}}(\textcolor{keywordtype}{string}\ work\_dir,\ shared\_ptr<FileMetadata>\ metadata,\ shared\_ptr<Socket>\ socket,\ \textcolor{keywordtype}{int}\ channel)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00271}00271\ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[\mbox{\hyperlink{vars_8hpp_a6b20d41d6252e9871430c242cb1a56e7}{BUFFER\_SIZE}}];}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00272}00272\ \ \ \ \ \textcolor{keywordtype}{int}\ \ total\_bytes\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00273}00273\ \ \ \ \ \textcolor{keywordtype}{int}\ \ collected\_bytes;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00274}00274\ \ \ \ \ \textcolor{keywordtype}{int}\ \ iteration;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00275}00275\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Waiting\ for\ file\ metadata"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00276}00276\ \ \ \ \ \textcolor{keywordtype}{int}\ chars\_read\ =\ socket-\/>get\_message\_sync((uint8\_t\ *)buffer,\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00277}00277\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Received\ file\ metadata"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00278}00278\ \ \ \ \ \textcolor{keywordflow}{while}\ (chars\_read\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Chars\ read:\ "{}}\ <<\ chars\_read\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ collected\_bytes\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ iteration\ \ \ \ \ \ \ =\ 1;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ chars\_read\ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chars\_read\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}ERROR\ reading\ from\ socket\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_packet}{Packet}}\ *packet\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_packet}{Packet}}((uint8\_t\ *)buffer);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (packet-\/>\mbox{\hyperlink{class_packet_aebbae2cef32f967d0bbcabbe41dae6bf}{type}}\ !=\ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a1b8fca7eb091dbdbedcfb966a3286ddd}{FileMetadataMsg}})\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Invalid\ packet\ type.\ Expected\ file\ metadata,\ received:\ "{}}\ <<\ packet-\/>\mbox{\hyperlink{class_packet_aebbae2cef32f967d0bbcabbe41dae6bf}{type}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \textcolor{comment}{//unique\_ptr<FileMetadata>\ metadata(new\ FileMetadata(packet-\/>payload));}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00291}00291\ \ \ \ \ \ \ \ \ metadata\ =\ make\_shared<FileMetadata>(packet-\/>\mbox{\hyperlink{class_packet_aec6c090aa320fe3739769c41fa0f7f35}{payload}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Received\ file\ "{}}\ <<\ metadata-\/>name\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00293}00293\ \ \ \ \ \ \ \ \ total\_bytes\ =\ metadata-\/>size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00294}00294\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}File\ size:\ \%ld\(\backslash\)n"{}},\ (\textcolor{keywordtype}{long})total\_bytes);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00295}00295\ \ \ \ \ \ \ \ \ ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00296}00296\ \ \ \ \ \ \ \ \ oss\ <<\ work\_dir\ <<\ \textcolor{stringliteral}{"{}/"{}}\ <<\ metadata-\/>name;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ filepath\ =\ oss.str();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Storing\ file\ in\ "{}}\ <<\ filepath.c\_str()\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00299}00299\ \ \ \ \ \ \ \ \ FILE\ *file\_output\ =\ fopen(filepath.c\_str(),\ \textcolor{stringliteral}{"{}wb"{}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (collected\_bytes\ <\ total\_bytes)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ chars\_read\ =\ socket-\/>get\_message\_sync((uint8\_t\ *)buffer,\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Chars\ read:\ "{}}\ <<\ chars\_read\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chars\_read\ <\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}ERROR\ reading\ from\ socket\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Iteration:\ "{}}\ <<\ iteration\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ iteration\ +=\ 1;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ unique\_ptr<Packet>\ packet(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_packet}{Packet}}((uint8\_t\ *)buffer));}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (packet-\/>type\ !=\ \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0ac396d71d196f833a8ac7df2e86b099dd}{FileChunk}})\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Invalid\ file\ chunk:\ "{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Packet\ type:\ "{}}\ <<\ packet-\/>type\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Packet\ seq\ idx:\ "{}}\ <<\ packet-\/>seq\_index\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Packet\ total\ size:\ "{}}\ <<\ packet-\/>total\_size\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Packet\ payload\ size:\ "{}}\ <<\ packet-\/>payload\_size\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Packet\ payload:\ "{}}\ <<\ packet-\/>payload\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ fwrite(packet-\/>payload,\ 1,\ packet-\/>payload\_size\ *\ \textcolor{keyword}{sizeof}(uint8\_t),\ file\_output);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Received\ packet\ type\ "{}}\ <<\ packet-\/>type\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}File\ size:\ "{}}\ <<\ (long)packet-\/>total\_size\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Chunk\ size:\ "{}}\ <<\ packet-\/>payload\_size\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Chunk\ index:\ "{}}\ <<\ packet-\/>seq\_index\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ collected\_bytes\ +=\ packet-\/>payload\_size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Collected\ bytes:\ "{}}\ <<\ collected\_bytes\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ total\_bytes\ =\ packet-\/>total\_size;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ bzero(buffer,\ \mbox{\hyperlink{vars_8hpp_a6b20d41d6252e9871430c242cb1a56e7}{BUFFER\_SIZE}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (file\_output\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ fclose(file\_output);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00333}00333\ \ \ \ \ \ \ \ \ chars\_read\ =\ socket-\/>get\_message\_sync((uint8\_t\ *)buffer,\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00334}00334\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8cpp_source_l00335}00335\ \}}
+
+\end{DoxyCode}

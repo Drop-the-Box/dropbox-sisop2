@@ -1,0 +1,89 @@
+\doxysection{src/common/socket\+\_\+io/socket.hpp File Reference}
+\hypertarget{socket_8hpp}{}\label{socket_8hpp}\index{src/common/socket\_io/socket.hpp@{src/common/socket\_io/socket.hpp}}
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_socket}{Socket}}
+\item 
+class \mbox{\hyperlink{class_packet}{Packet}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{Socket\+Mode}} \{ \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ac5e385618c6ca54e461a312031274f43}{Server}}
+, \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ae5d09f815b2438dc14af448d00837cc8}{Client}}
+ \}
+\item 
+enum \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0}{Packet\+Type}} \{ \newline
+\mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a4e9fb8a5010894efb16f735ab4fb44b3}{Session\+Init}}
+, \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0ac396d71d196f833a8ac7df2e86b099dd}{File\+Chunk}}
+, \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a1b8fca7eb091dbdbedcfb966a3286ddd}{File\+Metadata\+Msg}}
+, \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a42da51fa9645cedd956bd787abf23783}{Error\+Msg}}
+, \newline
+\mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a2c195d5c97763ed383d825d7998d893e}{Event\+Msg}}
+, \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0aae5366af2a0d23ca55ea098bd03df289}{Command\+Msg}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0}\label{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0} 
+\index{socket.hpp@{socket.hpp}!PacketType@{PacketType}}
+\index{PacketType@{PacketType}!socket.hpp@{socket.hpp}}
+\doxysubsubsection{\texorpdfstring{PacketType}{PacketType}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0}{Packet\+Type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SessionInit@{SessionInit}!socket.hpp@{socket.hpp}}\index{socket.hpp@{socket.hpp}!SessionInit@{SessionInit}}}\Hypertarget{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a4e9fb8a5010894efb16f735ab4fb44b3}\label{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a4e9fb8a5010894efb16f735ab4fb44b3} 
+Session\+Init&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FileChunk@{FileChunk}!socket.hpp@{socket.hpp}}\index{socket.hpp@{socket.hpp}!FileChunk@{FileChunk}}}\Hypertarget{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0ac396d71d196f833a8ac7df2e86b099dd}\label{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0ac396d71d196f833a8ac7df2e86b099dd} 
+File\+Chunk&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FileMetadataMsg@{FileMetadataMsg}!socket.hpp@{socket.hpp}}\index{socket.hpp@{socket.hpp}!FileMetadataMsg@{FileMetadataMsg}}}\Hypertarget{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a1b8fca7eb091dbdbedcfb966a3286ddd}\label{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a1b8fca7eb091dbdbedcfb966a3286ddd} 
+File\+Metadata\+Msg&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ErrorMsg@{ErrorMsg}!socket.hpp@{socket.hpp}}\index{socket.hpp@{socket.hpp}!ErrorMsg@{ErrorMsg}}}\Hypertarget{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a42da51fa9645cedd956bd787abf23783}\label{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a42da51fa9645cedd956bd787abf23783} 
+Error\+Msg&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EventMsg@{EventMsg}!socket.hpp@{socket.hpp}}\index{socket.hpp@{socket.hpp}!EventMsg@{EventMsg}}}\Hypertarget{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a2c195d5c97763ed383d825d7998d893e}\label{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a2c195d5c97763ed383d825d7998d893e} 
+Event\+Msg&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CommandMsg@{CommandMsg}!socket.hpp@{socket.hpp}}\index{socket.hpp@{socket.hpp}!CommandMsg@{CommandMsg}}}\Hypertarget{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0aae5366af2a0d23ca55ea098bd03df289}\label{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0aae5366af2a0d23ca55ea098bd03df289} 
+Command\+Msg&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{socket_8hpp_source_l00043}{43}} of file \mbox{\hyperlink{socket_8hpp_source}{socket.\+hpp}}.
+
+\Hypertarget{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}\label{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9} 
+\index{socket.hpp@{socket.hpp}!SocketMode@{SocketMode}}
+\index{SocketMode@{SocketMode}!socket.hpp@{socket.hpp}}
+\doxysubsubsection{\texorpdfstring{SocketMode}{SocketMode}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{Socket\+Mode}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Server@{Server}!socket.hpp@{socket.hpp}}\index{socket.hpp@{socket.hpp}!Server@{Server}}}\Hypertarget{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ac5e385618c6ca54e461a312031274f43}\label{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ac5e385618c6ca54e461a312031274f43} 
+Server&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Client@{Client}!socket.hpp@{socket.hpp}}\index{socket.hpp@{socket.hpp}!Client@{Client}}}\Hypertarget{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ae5d09f815b2438dc14af448d00837cc8}\label{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9ae5d09f815b2438dc14af448d00837cc8} 
+Client&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{socket_8hpp_source_l00011}{11}} of file \mbox{\hyperlink{socket_8hpp_source}{socket.\+hpp}}.
+

@@ -1,0 +1,55 @@
+\doxysection{models.\+hpp}
+\hypertarget{common_2eventhub_2models_8hpp_source}{}\label{common_2eventhub_2models_8hpp_source}\index{src/common/eventhub/models.hpp@{src/common/eventhub/models.hpp}}
+\mbox{\hyperlink{common_2eventhub_2models_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ USERLAND\_CMN\_MODELS\_H}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ USERLAND\_CMN\_MODELS\_H}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00009}00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00011}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352}{00011}}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352}{CommandType}}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00012}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a8db7be34477a5d445f2fda399c9a940a}{00012}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a8db7be34477a5d445f2fda399c9a940a}{UploadFile}},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00013}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a68c17be609dfb282b6b1f4d4c9955f61}{00013}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a68c17be609dfb282b6b1f4d4c9955f61}{DownloadFile}},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00014}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a57479680371066393b8b4fdd05ab5600}{00014}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a57479680371066393b8b4fdd05ab5600}{DeleteFile}},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00015}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a67d6a9cc6d1faaf271fcb246bcac9fff}{00015}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a67d6a9cc6d1faaf271fcb246bcac9fff}{ListServerFiles}},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00016}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a5206d823b1277e1185259e8e39fb27a4}{00016}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a5206d823b1277e1185259e8e39fb27a4}{ListLocalFiles}},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352aed2fed565c58a841153245e9d3b94c3b}{Exit}}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00018}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352aed2fed565c58a841153245e9d3b94c3b}{00018}}\ \};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00020}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}{00020}}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}{EventType}}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00021}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faafd87c0d89e467558f7e0048e145f83cc}{00021}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faafd87c0d89e467558f7e0048e145f83cc}{SessionAccepted}},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00022}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa69da609ce0d437ca0be14e7e117b8713}{00022}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa69da609ce0d437ca0be14e7e117b8713}{SessionRejected}},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00023}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa57065b81f473806bccc6f66f1452e0fe}{00023}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa57065b81f473806bccc6f66f1452e0fe}{FileCreated}},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faadc8a2434701f8d2517d797db4ef976c4}{FileDeleted}}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00025}\mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faadc8a2434701f8d2517d797db4ef976c4}{00025}}\ \};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00027}00027\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ map<string,\ CommandType>\ command\_map\ =\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00028}00028\ \ \ \ \ \{\textcolor{stringliteral}{"{}upload"{}},\ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a8db7be34477a5d445f2fda399c9a940a}{UploadFile}}\},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00029}00029\ \ \ \ \ \{\textcolor{stringliteral}{"{}download"{}},\ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a68c17be609dfb282b6b1f4d4c9955f61}{DownloadFile}}\},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00030}00030\ \ \ \ \ \{\textcolor{stringliteral}{"{}delete"{}},\ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a57479680371066393b8b4fdd05ab5600}{DeleteFile}}\},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00031}00031\ \ \ \ \ \{\textcolor{stringliteral}{"{}list\_server"{}},\ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a67d6a9cc6d1faaf271fcb246bcac9fff}{ListServerFiles}}\},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00032}00032\ \ \ \ \ \{\textcolor{stringliteral}{"{}list\_client"{}},\ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a5206d823b1277e1185259e8e39fb27a4}{ListLocalFiles}}\},}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00033}00033\ \ \ \ \ \{\textcolor{stringliteral}{"{}exit"{}},\ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352aed2fed565c58a841153245e9d3b94c3b}{Exit}}\}\};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00035}\mbox{\hyperlink{class_command}{00035}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_command}{Command}}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00036}00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00037}\mbox{\hyperlink{class_command_afd23b7e189739dbae6c0f2e93ba02c81}{00037}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352}{CommandType}}\ \mbox{\hyperlink{class_command_afd23b7e189739dbae6c0f2e93ba02c81}{type}};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00038}00038\ \};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00040}\mbox{\hyperlink{class_event}{00040}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_event}{Event}}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00041}00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00042}\mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{00042}}\ \ \ \ \ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}{EventType}}\ \mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00043}\mbox{\hyperlink{class_event_a27fbdfdfc11e6cb9a1e4344f13dbe531}{00043}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \mbox{\hyperlink{class_event_a27fbdfdfc11e6cb9a1e4344f13dbe531}{message}};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00045}00045\ \ \ \ \ \mbox{\hyperlink{class_event}{Event}}(uint8\_t\ *bytes);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{class_event}{Event}}(\mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}{EventType}}\ \mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}},\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_event_a27fbdfdfc11e6cb9a1e4344f13dbe531}{message}});}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_event_a0708137774ee69b5a8e3e2f9d1c70945}{send}}(shared\_ptr<Socket>,\ \textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00048}00048\ \};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8hpp_source_l00049}00049\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

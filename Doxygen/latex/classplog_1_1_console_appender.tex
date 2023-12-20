@@ -1,0 +1,135 @@
+\doxysection{plog\+::Console\+Appender\texorpdfstring{$<$}{<} Formatter \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classplog_1_1_console_appender}{}\label{classplog_1_1_console_appender}\index{plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}}
+
+
+{\ttfamily \#include $<$Console\+Appender.\+h$>$}
+
+Inheritance diagram for plog\+::Console\+Appender\texorpdfstring{$<$}{<} Formatter \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classplog_1_1_console_appender}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender_ad9ca007db9cffa20e0348d2f9da635f9}{Console\+Appender}} (\mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7}{Output\+Stream}} \mbox{\hyperlink{classplog_1_1_console_appender}{out\+Stream}}=\mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7a717168b1e207b95e7422bb622597a355}{stream\+Std\+Out}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{virtual}} \mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{classplog_1_1_console_appender_a0d6c04b90f7f23bfb08901f9a52d9313}{write}} (\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_record}{Record}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{record}}) \mbox{\hyperlink{_util_8h_ab77de78ebb3bd909fca08605acd16591}{PLOG\+\_\+\+OVERRIDE}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classplog_1_1_i_appender}{plog\+::\+IAppender}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{virtual}} \mbox{\hyperlink{classplog_1_1_i_appender_a62a6b7e6bd46b5f6284bf8fcbff53fcd}{\texorpdfstring{$\sim$}{\string~}\+IAppender}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{classplog_1_1_console_appender_aae4ba93cd16de16da0c1c1f0aaac7149}{writestr}} (\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util\+::nstring}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{str}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplog_1_1util_1_1_mutex}{util\+::\+Mutex}} \mbox{\hyperlink{classplog_1_1_console_appender_adabe0be03f9a7b1fd6d6b3c7a979b0e5}{m\+\_\+mutex}}
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{bool}} \mbox{\hyperlink{classplog_1_1_console_appender_a0953801d7ceb747c8fb79a3b142123ce}{m\+\_\+isatty}}
+\item 
+std\+::ostream \& \mbox{\hyperlink{classplog_1_1_console_appender_a751ea0b762e86e839b93d6a86d0f6803}{m\+\_\+output\+Stream}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{classplog_1_1_console_appender_ad9ca007db9cffa20e0348d2f9da635f9}{class}} \mbox{\hyperlink{classplog_1_1_console_appender_ad9ca007db9cffa20e0348d2f9da635f9}{Formatter}}$>$\newline
+class plog\+::\+Console\+Appender$<$ Formatter $>$}
+
+
+Definition at line \mbox{\hyperlink{_console_appender_8h_source_l00016}{16}} of file \mbox{\hyperlink{_console_appender_8h_source}{Console\+Appender.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classplog_1_1_console_appender_ad9ca007db9cffa20e0348d2f9da635f9}\label{classplog_1_1_console_appender_ad9ca007db9cffa20e0348d2f9da635f9} 
+\index{plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}!ConsoleAppender@{ConsoleAppender}}
+\index{ConsoleAppender@{ConsoleAppender}!plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}}
+\doxysubsubsection{\texorpdfstring{ConsoleAppender()}{ConsoleAppender()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$ \\
+\mbox{\hyperlink{classplog_1_1_console_appender}{plog\+::\+Console\+Appender}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$\+::\+Console\+Appender (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7}{Output\+Stream}}}]{out\+Stream = {\ttfamily \mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7a717168b1e207b95e7422bb622597a355}{stream\+Std\+Out}}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_console_appender_8h_source_l00034}{34}} of file \mbox{\hyperlink{_console_appender_8h_source}{Console\+Appender.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classplog_1_1_console_appender_a0d6c04b90f7f23bfb08901f9a52d9313}\label{classplog_1_1_console_appender_a0d6c04b90f7f23bfb08901f9a52d9313} 
+\index{plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}!write@{write}}
+\index{write@{write}!plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$ \\
+\mbox{\hyperlink{classplog_1_1_console_appender}{virtual}} \mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{classplog_1_1_console_appender}{plog\+::\+Console\+Appender}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$\+::write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_record}{Record}} \&}]{record }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classplog_1_1_i_appender_a7a38d65d04c6c70d9fedb40ac6ee4a70}{plog\+::\+IAppender}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classplog_1_1_color_console_appender_a9172e80a1c9c64594a15db85ba183612}{plog\+::\+Color\+Console\+Appender$<$ Formatter $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_console_appender_8h_source_l00040}{40}} of file \mbox{\hyperlink{_console_appender_8h_source}{Console\+Appender.\+h}}.
+
+\Hypertarget{classplog_1_1_console_appender_aae4ba93cd16de16da0c1c1f0aaac7149}\label{classplog_1_1_console_appender_aae4ba93cd16de16da0c1c1f0aaac7149} 
+\index{plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}!writestr@{writestr}}
+\index{writestr@{writestr}!plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}}
+\doxysubsubsection{\texorpdfstring{writestr()}{writestr()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$ \\
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{classplog_1_1_console_appender}{plog\+::\+Console\+Appender}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$\+::writestr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util\+::nstring}} \&}]{str }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_console_appender_8h_source_l00049}{49}} of file \mbox{\hyperlink{_console_appender_8h_source}{Console\+Appender.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classplog_1_1_console_appender_a0953801d7ceb747c8fb79a3b142123ce}\label{classplog_1_1_console_appender_a0953801d7ceb747c8fb79a3b142123ce} 
+\index{plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}!m\_isatty@{m\_isatty}}
+\index{m\_isatty@{m\_isatty}!plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}}
+\doxysubsubsection{\texorpdfstring{m\_isatty}{m\_isatty}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$ \\
+\mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{bool}} \mbox{\hyperlink{classplog_1_1_console_appender}{plog\+::\+Console\+Appender}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$\+::m\+\_\+isatty\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_console_appender_8h_source_l00077}{77}} of file \mbox{\hyperlink{_console_appender_8h_source}{Console\+Appender.\+h}}.
+
+\Hypertarget{classplog_1_1_console_appender_adabe0be03f9a7b1fd6d6b3c7a979b0e5}\label{classplog_1_1_console_appender_adabe0be03f9a7b1fd6d6b3c7a979b0e5} 
+\index{plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}!m\_mutex@{m\_mutex}}
+\index{m\_mutex@{m\_mutex}!plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}}
+\doxysubsubsection{\texorpdfstring{m\_mutex}{m\_mutex}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$ \\
+\mbox{\hyperlink{classplog_1_1util_1_1_mutex}{util\+::\+Mutex}} \mbox{\hyperlink{classplog_1_1_console_appender}{plog\+::\+Console\+Appender}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$\+::m\+\_\+mutex\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_console_appender_8h_source_l00076}{76}} of file \mbox{\hyperlink{_console_appender_8h_source}{Console\+Appender.\+h}}.
+
+\Hypertarget{classplog_1_1_console_appender_a751ea0b762e86e839b93d6a86d0f6803}\label{classplog_1_1_console_appender_a751ea0b762e86e839b93d6a86d0f6803} 
+\index{plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}!m\_outputStream@{m\_outputStream}}
+\index{m\_outputStream@{m\_outputStream}!plog::ConsoleAppender$<$ Formatter $>$@{plog::ConsoleAppender$<$ Formatter $>$}}
+\doxysubsubsection{\texorpdfstring{m\_outputStream}{m\_outputStream}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$ \\
+std\+::ostream\& \mbox{\hyperlink{classplog_1_1_console_appender}{plog\+::\+Console\+Appender}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}} $>$\+::m\+\_\+output\+Stream\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_console_appender_8h_source_l00078}{78}} of file \mbox{\hyperlink{_console_appender_8h_source}{Console\+Appender.\+h}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/include/plog/\+Appenders/\mbox{\hyperlink{_console_appender_8h}{Console\+Appender.\+h}}\end{DoxyCompactItemize}

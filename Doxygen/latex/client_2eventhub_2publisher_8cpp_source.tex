@@ -1,0 +1,143 @@
+\doxysection{publisher.\+cpp}
+\hypertarget{client_2eventhub_2publisher_8cpp_source}{}\label{client_2eventhub_2publisher_8cpp_source}\index{src/client/eventhub/publisher.cpp@{src/client/eventhub/publisher.cpp}}
+\mbox{\hyperlink{client_2eventhub_2publisher_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{server_2eventhub_2publisher_8hpp}{publisher.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{inquirer_8h}{cpp-\/inquirer/inquirer.h}}>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <regex>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <sys/sendfile.h>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00017}00017\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00019}\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a92325a9759a4fb06079ad15efbb8d60f}{00019}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a92325a9759a4fb06079ad15efbb8d60f}{handle\_upload}}(shared\_ptr<alx::Inquirer>\ inquirer,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ sync\_dir)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00020}00020\ \ \ \ \ inquirer-\/>add\_question(\{\textcolor{stringliteral}{"{}filepath"{}},\ \textcolor{stringliteral}{"{}Which\ file\ would\ you\ like\ to\ upload?"{}}\});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00021}00021\ \ \ \ \ inquirer-\/>ask();}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ file\_path\ =\ inquirer-\/>answer(\textcolor{stringliteral}{"{}filepath"{}});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Uploading\ file\ to\ server\ from\ "{}}\ <<\ file\_path\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00024}00024\ \ \ \ \ regex\ \ rgx(\textcolor{stringliteral}{"{}\string^(.*\(\backslash\)\(\backslash\)/)([\string^\(\backslash\)\(\backslash\)/]+)\$"{}});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00025}00025\ \ \ \ \ smatch\ matches;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00026}00026\ \ \ \ \ regex\_search(file\_path,\ matches,\ rgx);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{string}\ filename\ =\ matches[2];}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00028}00028\ \ \ \ \ ostringstream\ output\_path;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00029}00029\ \ \ \ \ output\_path\ <<\ sync\_dir\ <<\ \textcolor{stringliteral}{"{}/"{}}\ <<\ filename;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00030}00030\ \ \ \ \ ostringstream\ command;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00031}00031\ \ \ \ \ command\ <<\ \textcolor{stringliteral}{"{}cp\ "{}}\ <<\ file\_path\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ sync\_dir\ <<\ \textcolor{stringliteral}{"{}/"{}}\ <<\ filename;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ command.str()\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ system(command.str().c\_str());}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00035}00035\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}(\textcolor{keyword}{const}\ exception\ \&exc)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Cannot\ copy\ file"{}}\ <<\ file\_path\ <<\ \textcolor{stringliteral}{"{}.\ Reason:\ "{}}\ <<\ exc.what()\ <<\ endl;\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00037}00037\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00038}00038\ \};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00040}\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_aef0a69d5874ffbda01a969802f132577}{00040}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_aef0a69d5874ffbda01a969802f132577}{handle\_download}}(shared\_ptr<alx::Inquirer>\ inquirer)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00041}00041\ \ \ \ \ inquirer-\/>add\_question(\{\textcolor{stringliteral}{"{}file"{}},\ \textcolor{stringliteral}{"{}Which\ file\ would\ you\ like\ to\ download?"{}}\});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00042}00042\ \ \ \ \ inquirer-\/>ask();}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ filename\ =\ inquirer-\/>answer(\textcolor{stringliteral}{"{}file"{}});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00044}00044\ \};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00046}\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_ad7a624df64ecd168aca5366e3efbf19d}{00046}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_ad7a624df64ecd168aca5366e3efbf19d}{handle\_delete}}(shared\_ptr<alx::Inquirer>\ inquirer)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00047}00047\ \ \ \ \ inquirer-\/>add\_question(\{\textcolor{stringliteral}{"{}file"{}},\ \textcolor{stringliteral}{"{}Which\ file\ would\ you\ like\ to\ delete?"{}}\});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00048}00048\ \ \ \ \ inquirer-\/>ask();}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ filename\ =\ inquirer-\/>answer(\textcolor{stringliteral}{"{}file"{}});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00050}00050\ \};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00052}\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_ab0e3f01501345e80f32c5e76755d7351}{00052}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_ab0e3f01501345e80f32c5e76755d7351}{handle\_list\_server}}(shared\_ptr<alx::Inquirer>\ inquirer)\{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00054}00054\ \};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00056}\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a57e4ab6b4a9e91fe1b49df97575ed679}{00056}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a57e4ab6b4a9e91fe1b49df97575ed679}{handle\_list\_client}}(shared\_ptr<alx::Inquirer>\ inquirer)\{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00058}00058\ \};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00060}\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a8bafa577ca8b0ad7c7cb0f21ef002e16}{00060}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a8bafa577ca8b0ad7c7cb0f21ef002e16}{handle\_exit}}(shared\_ptr<alx::Inquirer>\ inquirer)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00061}00061\ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00063}00063\ \textcolor{comment}{//\ using\ func=function<void(shared\_ptr<alx::Inquirer>)>;}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00064}00064\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00065}00065\ \textcolor{comment}{//\ static\ const\ map<std::string,\ std::function<void>(*)(shared\_ptr<alx::Inquirer>)\ >\ command\_map\ =\ \{}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00066}00066\ \textcolor{comment}{//\ \ \ \ \ \{"{}upload"{},\ \&handle\_upload\ \},}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00067}00067\ \textcolor{comment}{//\ \ \ \ \ \{"{}download"{},\ \&handle\_download\ \},}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00068}00068\ \textcolor{comment}{//\ \ \ \ \ \{"{}delete"{},\ \&handle\_delete\ \},}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00069}00069\ \textcolor{comment}{//\ \ \ \ \ \{"{}list\_server"{},\ \&handle\_list\_server\ \},}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00070}00070\ \textcolor{comment}{//\ \ \ \ \ \{"{}list\_client"{},\ \&handle\_list\_client\ \},}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00071}00071\ \textcolor{comment}{//\ \ \ \ \ \{"{}exit"{},\ \&handle\_exit\ \}}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00072}00072\ \textcolor{comment}{//\ \};}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00073}\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9}{00073}}\ vector<std::string>\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9}{commands}}\ =\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{stringliteral}{"{}upload"{}},}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{stringliteral}{"{}download"{}},}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00076}00076\ \ \ \ \ \textcolor{stringliteral}{"{}delete"{}},}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00077}00077\ \ \ \ \ \textcolor{stringliteral}{"{}list\_server"{}},}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{stringliteral}{"{}list\_client"{}},}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{stringliteral}{"{}exit"{}}\};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00080}00080\ \textcolor{comment}{//\ for(const\ auto\ \&[key,\ \_]:\ command\_map)\ \{\ commands.push\_back(key);\ \};}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00082}\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a1c8b7ea1f5d88c6b9e34288782c0491e}{00082}}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a1c8b7ea1f5d88c6b9e34288782c0491e}{run\_file\_monitor}}(\textcolor{keywordtype}{void}\ *monitor)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00083}00083\ \ \ \ \ \mbox{\hyperlink{class_inotify}{Inotify}}*\ file\_monitor\ =\ (\mbox{\hyperlink{class_inotify}{Inotify}}\ *)monitor;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{keywordflow}{while}(\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ file\_monitor-\/>\mbox{\hyperlink{class_inotify_a44d298bba6b112553ecd26cb34e49f55}{read\_event}}();}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ usleep(1000);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00087}00087\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00088}00088\ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00089}00089\ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00091}\mbox{\hyperlink{class_client_publisher_ab00bd769b8389061078e46de6c973905}{00091}}\ \mbox{\hyperlink{class_client_publisher_ab00bd769b8389061078e46de6c973905}{ClientPublisher::ClientPublisher}}(shared\_ptr<ClientContext>\ context,\ shared\_ptr<Socket>\ socket)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00092}00092\ \ \ \ \ this-\/>context\ =\ context;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00093}00093\ \ \ \ \ this-\/>socket\ \ =\ socket;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *folder\_path\ =\ this-\/>context-\/>sync\_dir.c\_str();}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00096}00096\ \ \ \ \ \mbox{\hyperlink{class_inotify}{Inotify}}*\ inotify\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_inotify}{Inotify}}(this-\/>socket,\ folder\_path);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00098}00098\ \ \ \ \ pthread\_t\ monitor\_thread;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00099}00099\ \ \ \ \ pthread\_create(\&monitor\_thread,\ NULL,\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a1c8b7ea1f5d88c6b9e34288782c0491e}{run\_file\_monitor}},\ inotify);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00100}00100\ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00103}\mbox{\hyperlink{class_client_publisher_ae1f93ecea18de7dbf7f25e7d3b0711ef}{00103}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_client_publisher_ae1f93ecea18de7dbf7f25e7d3b0711ef}{ClientPublisher::loop}}()\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{while}\ (!*socket-\/>interrupt)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ shared\_ptr<alx::Inquirer>\ inquirer(\textcolor{keyword}{new}\ \mbox{\hyperlink{classalx_1_1_inquirer}{alx::Inquirer}}(\mbox{\hyperlink{classalx_1_1_inquirer}{alx::Inquirer}}(\textcolor{stringliteral}{"{}Drop\ the\ Box"{}})));}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ inquirer-\/>add\_question(\{\textcolor{stringliteral}{"{}cmd"{}},\ \textcolor{stringliteral}{"{}Select\ a\ command:"{}},\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9}{commands}}\});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ inquirer-\/>ask();}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ command\ =\ inquirer-\/>answer(\textcolor{stringliteral}{"{}cmd"{}});}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::find(\mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9}{commands}}.begin(),\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9}{commands}}.end(),\ command)\ !=\ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a5b2482bf04f97bc416c750be5d8f66f9}{commands}}.end())\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}Command\ result:\ "{}}\ <<\ command\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (command.compare(\textcolor{stringliteral}{"{}upload"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a92325a9759a4fb06079ad15efbb8d60f}{handle\_upload}}(inquirer,\ this-\/>context-\/>sync\_dir.c\_str());}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (command.compare(\textcolor{stringliteral}{"{}download"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_aef0a69d5874ffbda01a969802f132577}{handle\_download}}(inquirer);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (command.compare(\textcolor{stringliteral}{"{}delete"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_ad7a624df64ecd168aca5366e3efbf19d}{handle\_delete}}(inquirer);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (command.compare(\textcolor{stringliteral}{"{}list\_server"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_ab0e3f01501345e80f32c5e76755d7351}{handle\_list\_server}}(inquirer);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (command.compare(\textcolor{stringliteral}{"{}list\_client"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{client_2eventhub_2publisher_8cpp_a57e4ab6b4a9e91fe1b49df97575ed679}{handle\_list\_client}}(inquirer);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (command.compare(\textcolor{stringliteral}{"{}exit"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Bye!"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ exit(0);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Command\ not\ found:\ "{}}\ <<\ command\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00129}00129\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00130}00130\ \ \ \ \ socket-\/>close(socket-\/>socket\_fd);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00131}00131\ \ \ \ \ pthread\_exit(NULL);}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00132}00132\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00133}00133\ \};}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00135}\mbox{\hyperlink{class_client_publisher_ad79f9568936ffbdcc16e04bff56ea62f}{00135}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_client_publisher_ad79f9568936ffbdcc16e04bff56ea62f}{ClientPublisher::send\_event}}()\ \{}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00136}00136\ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Publisher\ send\ event"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2eventhub_2publisher_8cpp_source_l00137}00137\ \};}
+
+\end{DoxyCode}

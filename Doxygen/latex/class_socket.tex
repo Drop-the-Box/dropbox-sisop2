@@ -1,0 +1,238 @@
+\doxysection{Socket Class Reference}
+\hypertarget{class_socket}{}\label{class_socket}\index{Socket@{Socket}}
+
+
+{\ttfamily \#include $<$socket.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_socket_a7f36dc0c62727fdec9085f8ffd43e827}{Socket}} (string address, int port, bool \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_socket_af742590287facc103c02f7d8dc00bea1}{interrupt}}, \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{Socket\+Mode}} mode, int \mbox{\hyperlink{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}{buffer\+\_\+size}})
+\item 
+\mbox{\hyperlink{class_socket_aafee7487746f8043d1f2c73c5380d8cb}{Socket}} (string address, int port, bool \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_socket_af742590287facc103c02f7d8dc00bea1}{interrupt}}, \mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{Socket\+Mode}} mode, int \mbox{\hyperlink{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}{buffer\+\_\+size}}, int max\+\_\+requests)
+\item 
+int \mbox{\hyperlink{class_socket_a7b987f0e116d6472ca3b56256b63e2b5}{listen}} (int max\+\_\+requests)
+\item 
+void \mbox{\hyperlink{class_socket_aca232ab08b811ab63a403d312e858012}{connect}} (string address, int port)
+\item 
+void \mbox{\hyperlink{class_socket_ace1da4f860ac0af46d702cb5fc875a51}{bind}} ()
+\item 
+int \mbox{\hyperlink{class_socket_a64b51ffed2f33df6298d1c8375512a1c}{accept}} (char \texorpdfstring{$\ast$}{*}client\+\_\+addr, int \texorpdfstring{$\ast$}{*}client\+\_\+port)
+\item 
+int \mbox{\hyperlink{class_socket_a04319b67548dcd8f110127a84e8dfa15}{send}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, size\+\_\+t size, int channel)
+\item 
+int \mbox{\hyperlink{class_socket_a2e8e9d4fc6facf4d1324ec45ccca17a7}{receive}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, int channel)
+\item 
+int \mbox{\hyperlink{class_socket_a4fcbd77cd8d7a8c5d3c52b849c9275d4}{close}} (int channel)
+\item 
+bool \mbox{\hyperlink{class_socket_aae99ca7c09823d2174ee25201954af6a}{has\+\_\+error}} (int channel)
+\item 
+bool \mbox{\hyperlink{class_socket_ac285e227cb6c9bd82c1b1419364e26e9}{is\+\_\+connected}} (int channel)
+\item 
+bool \mbox{\hyperlink{class_socket_a916838b44f0c3fac986794212f7c1399}{has\+\_\+event}} (int channel)
+\item 
+int \mbox{\hyperlink{class_socket_a0377e05384cf33119e98b399212e4bd1}{get\+\_\+message\+\_\+sync}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, int channel)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}{buffer\+\_\+size}}
+\item 
+int \mbox{\hyperlink{class_socket_a9d299cc162b31349ea49eb994b0ec394}{socket\+\_\+flags}}
+\item 
+int \mbox{\hyperlink{class_socket_a99bca95a2ec06a6ae44f993264b198a4}{socket\+\_\+fd}}
+\item 
+bool \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_socket_af742590287facc103c02f7d8dc00bea1}{interrupt}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{socket_8hpp_source_l00015}{15}} of file \mbox{\hyperlink{socket_8hpp_source}{socket.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_socket_a7f36dc0c62727fdec9085f8ffd43e827}\label{class_socket_a7f36dc0c62727fdec9085f8ffd43e827} 
+\index{Socket@{Socket}!Socket@{Socket}}
+\index{Socket@{Socket}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{Socket()}{Socket()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Socket\+::\+Socket (\begin{DoxyParamCaption}\item[{string}]{address,  }\item[{int}]{port,  }\item[{bool \texorpdfstring{$\ast$}{*}}]{interrupt,  }\item[{\mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{Socket\+Mode}}}]{mode,  }\item[{int}]{buffer\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_aafee7487746f8043d1f2c73c5380d8cb}\label{class_socket_aafee7487746f8043d1f2c73c5380d8cb} 
+\index{Socket@{Socket}!Socket@{Socket}}
+\index{Socket@{Socket}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{Socket()}{Socket()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Socket\+::\+Socket (\begin{DoxyParamCaption}\item[{string}]{address,  }\item[{int}]{port,  }\item[{bool \texorpdfstring{$\ast$}{*}}]{interrupt,  }\item[{\mbox{\hyperlink{socket_8hpp_a27327a3338b74bd9c2ceec2e6a6af6e9}{Socket\+Mode}}}]{mode,  }\item[{int}]{buffer\+\_\+size,  }\item[{int}]{max\+\_\+requests }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_socket_a64b51ffed2f33df6298d1c8375512a1c}\label{class_socket_a64b51ffed2f33df6298d1c8375512a1c} 
+\index{Socket@{Socket}!accept@{accept}}
+\index{accept@{accept}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily int Socket\+::accept (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{client\+\_\+addr,  }\item[{int \texorpdfstring{$\ast$}{*}}]{client\+\_\+port }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00120}{120}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_ace1da4f860ac0af46d702cb5fc875a51}\label{class_socket_ace1da4f860ac0af46d702cb5fc875a51} 
+\index{Socket@{Socket}!bind@{bind}}
+\index{bind@{bind}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily void Socket\+::bind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00107}{107}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_a4fcbd77cd8d7a8c5d3c52b849c9275d4}\label{class_socket_a4fcbd77cd8d7a8c5d3c52b849c9275d4} 
+\index{Socket@{Socket}!close@{close}}
+\index{close@{close}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily int Socket\+::close (\begin{DoxyParamCaption}\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00234}{234}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_aca232ab08b811ab63a403d312e858012}\label{class_socket_aca232ab08b811ab63a403d312e858012} 
+\index{Socket@{Socket}!connect@{connect}}
+\index{connect@{connect}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{connect()}{connect()}}
+{\footnotesize\ttfamily void Socket\+::connect (\begin{DoxyParamCaption}\item[{string}]{address,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00101}{101}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_a0377e05384cf33119e98b399212e4bd1}\label{class_socket_a0377e05384cf33119e98b399212e4bd1} 
+\index{Socket@{Socket}!get\_message\_sync@{get\_message\_sync}}
+\index{get\_message\_sync@{get\_message\_sync}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{get\_message\_sync()}{get\_message\_sync()}}
+{\footnotesize\ttfamily int Socket\+::get\+\_\+message\+\_\+sync (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer,  }\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00247}{247}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_aae99ca7c09823d2174ee25201954af6a}\label{class_socket_aae99ca7c09823d2174ee25201954af6a} 
+\index{Socket@{Socket}!has\_error@{has\_error}}
+\index{has\_error@{has\_error}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{has\_error()}{has\_error()}}
+{\footnotesize\ttfamily bool Socket\+::has\+\_\+error (\begin{DoxyParamCaption}\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00179}{179}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_a916838b44f0c3fac986794212f7c1399}\label{class_socket_a916838b44f0c3fac986794212f7c1399} 
+\index{Socket@{Socket}!has\_event@{has\_event}}
+\index{has\_event@{has\_event}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{has\_event()}{has\_event()}}
+{\footnotesize\ttfamily bool Socket\+::has\+\_\+event (\begin{DoxyParamCaption}\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00133}{133}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_ac285e227cb6c9bd82c1b1419364e26e9}\label{class_socket_ac285e227cb6c9bd82c1b1419364e26e9} 
+\index{Socket@{Socket}!is\_connected@{is\_connected}}
+\index{is\_connected@{is\_connected}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{is\_connected()}{is\_connected()}}
+{\footnotesize\ttfamily bool Socket\+::is\+\_\+connected (\begin{DoxyParamCaption}\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00194}{194}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_a7b987f0e116d6472ca3b56256b63e2b5}\label{class_socket_a7b987f0e116d6472ca3b56256b63e2b5} 
+\index{Socket@{Socket}!listen@{listen}}
+\index{listen@{listen}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{listen()}{listen()}}
+{\footnotesize\ttfamily int Socket\+::listen (\begin{DoxyParamCaption}\item[{int}]{max\+\_\+requests }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00116}{116}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_a2e8e9d4fc6facf4d1324ec45ccca17a7}\label{class_socket_a2e8e9d4fc6facf4d1324ec45ccca17a7} 
+\index{Socket@{Socket}!receive@{receive}}
+\index{receive@{receive}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{receive()}{receive()}}
+{\footnotesize\ttfamily int Socket\+::receive (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer,  }\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00151}{151}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+\Hypertarget{class_socket_a04319b67548dcd8f110127a84e8dfa15}\label{class_socket_a04319b67548dcd8f110127a84e8dfa15} 
+\index{Socket@{Socket}!send@{send}}
+\index{send@{send}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{send()}{send()}}
+{\footnotesize\ttfamily int Socket\+::send (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes,  }\item[{size\+\_\+t}]{size,  }\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8cpp_source_l00211}{211}} of file \mbox{\hyperlink{socket_8cpp_source}{socket.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_socket_a29fdc94796d61e88e40d3a4b97e6e553}\label{class_socket_a29fdc94796d61e88e40d3a4b97e6e553} 
+\index{Socket@{Socket}!buffer\_size@{buffer\_size}}
+\index{buffer\_size@{buffer\_size}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{buffer\_size}{buffer\_size}}
+{\footnotesize\ttfamily int Socket\+::buffer\+\_\+size}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8hpp_source_l00022}{22}} of file \mbox{\hyperlink{socket_8hpp_source}{socket.\+hpp}}.
+
+\Hypertarget{class_socket_af742590287facc103c02f7d8dc00bea1}\label{class_socket_af742590287facc103c02f7d8dc00bea1} 
+\index{Socket@{Socket}!interrupt@{interrupt}}
+\index{interrupt@{interrupt}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{interrupt}{interrupt}}
+{\footnotesize\ttfamily bool\texorpdfstring{$\ast$}{*} Socket\+::interrupt}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8hpp_source_l00025}{25}} of file \mbox{\hyperlink{socket_8hpp_source}{socket.\+hpp}}.
+
+\Hypertarget{class_socket_a99bca95a2ec06a6ae44f993264b198a4}\label{class_socket_a99bca95a2ec06a6ae44f993264b198a4} 
+\index{Socket@{Socket}!socket\_fd@{socket\_fd}}
+\index{socket\_fd@{socket\_fd}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{socket\_fd}{socket\_fd}}
+{\footnotesize\ttfamily int Socket\+::socket\+\_\+fd}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8hpp_source_l00024}{24}} of file \mbox{\hyperlink{socket_8hpp_source}{socket.\+hpp}}.
+
+\Hypertarget{class_socket_a9d299cc162b31349ea49eb994b0ec394}\label{class_socket_a9d299cc162b31349ea49eb994b0ec394} 
+\index{Socket@{Socket}!socket\_flags@{socket\_flags}}
+\index{socket\_flags@{socket\_flags}!Socket@{Socket}}
+\doxysubsubsection{\texorpdfstring{socket\_flags}{socket\_flags}}
+{\footnotesize\ttfamily int Socket\+::socket\+\_\+flags}
+
+
+
+Definition at line \mbox{\hyperlink{socket_8hpp_source_l00023}{23}} of file \mbox{\hyperlink{socket_8hpp_source}{socket.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/common/socket\+\_\+io/\mbox{\hyperlink{socket_8hpp}{socket.\+hpp}}\item 
+src/common/socket\+\_\+io/\mbox{\hyperlink{socket_8cpp}{socket.\+cpp}}\end{DoxyCompactItemize}

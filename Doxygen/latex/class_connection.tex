@@ -1,0 +1,166 @@
+\doxysection{Connection Class Reference}
+\hypertarget{class_connection}{}\label{class_connection}\index{Connection@{Connection}}
+
+
+{\ttfamily \#include $<$models.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_connection_afd88e785fa9488a4c8e9050ab3ffc0b4}{Connection}} (char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_connection_a86b59e0d16d67add8ecbf3f65ebcebac}{address}}, int \mbox{\hyperlink{class_connection_acd71bb5bf1dc3825ed387d81e7a29e71}{port}}, int \mbox{\hyperlink{class_connection_a85f9cc03b57850bd5224ed0a794bcac8}{channel}}, int \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_connection_aca28f54be1a50cea556cd8976ea62c7c}{pipe\+\_\+fd}})
+\item 
+void \mbox{\hyperlink{class_connection_a741aa39e70f602ec0513918a6f603b6b}{set\+\_\+thread\+\_\+id}} (pthread\+\_\+t \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_connection_a00f7ca166180cda07bd7634cd33d3494}{thread\+\_\+id}})
+\item 
+string \mbox{\hyperlink{class_connection_a9b9f9fb8c8c9a2e76a600097281ad955}{get\+\_\+full\+\_\+address}} ()
+\item 
+void \mbox{\hyperlink{class_connection_a6d1fbd2641df1d098acfb76bd4a47f8a}{set\+\_\+session\+\_\+type}} (\mbox{\hyperlink{common_2session_2models_8hpp_a0695685c902e6c161ea20c244f605044}{Session\+Type}} \mbox{\hyperlink{class_connection_afd9f8f02e0d6dd3cd6400e15577bb78a}{session\+\_\+type}})
+\item 
+void \mbox{\hyperlink{class_connection_aba401bc6b9a5c870913edd89dd49db1c}{get\+\_\+conection\+\_\+info}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{common_2session_2models_8hpp_a0695685c902e6c161ea20c244f605044}{Session\+Type}} \mbox{\hyperlink{class_connection_afd9f8f02e0d6dd3cd6400e15577bb78a}{session\+\_\+type}}
+\item 
+string \mbox{\hyperlink{class_connection_a86b59e0d16d67add8ecbf3f65ebcebac}{address}}
+\item 
+int \mbox{\hyperlink{class_connection_acd71bb5bf1dc3825ed387d81e7a29e71}{port}}
+\item 
+pthread\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_connection_a00f7ca166180cda07bd7634cd33d3494}{thread\+\_\+id}}
+\item 
+int \mbox{\hyperlink{class_connection_a85f9cc03b57850bd5224ed0a794bcac8}{channel}}
+\item 
+int \mbox{\hyperlink{class_connection_aca28f54be1a50cea556cd8976ea62c7c}{pipe\+\_\+fd}} \mbox{[}2\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8hpp_source_l00015}{15}} of file \mbox{\hyperlink{server_2session_2models_8hpp_source}{models.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_connection_afd88e785fa9488a4c8e9050ab3ffc0b4}\label{class_connection_afd88e785fa9488a4c8e9050ab3ffc0b4} 
+\index{Connection@{Connection}!Connection@{Connection}}
+\index{Connection@{Connection}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{Connection()}{Connection()}}
+{\footnotesize\ttfamily Connection\+::\+Connection (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{address,  }\item[{int}]{port,  }\item[{int}]{channel,  }\item[{int \texorpdfstring{$\ast$}{*}}]{pipe\+\_\+fd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{server_2session_2models_8cpp_source}{models.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_connection_aba401bc6b9a5c870913edd89dd49db1c}\label{class_connection_aba401bc6b9a5c870913edd89dd49db1c} 
+\index{Connection@{Connection}!get\_conection\_info@{get\_conection\_info}}
+\index{get\_conection\_info@{get\_conection\_info}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{get\_conection\_info()}{get\_conection\_info()}}
+{\footnotesize\ttfamily void Connection\+::get\+\_\+conection\+\_\+info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8cpp_source_l00038}{38}} of file \mbox{\hyperlink{server_2session_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_connection_a9b9f9fb8c8c9a2e76a600097281ad955}\label{class_connection_a9b9f9fb8c8c9a2e76a600097281ad955} 
+\index{Connection@{Connection}!get\_full\_address@{get\_full\_address}}
+\index{get\_full\_address@{get\_full\_address}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{get\_full\_address()}{get\_full\_address()}}
+{\footnotesize\ttfamily string Connection\+::get\+\_\+full\+\_\+address (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{server_2session_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_connection_a6d1fbd2641df1d098acfb76bd4a47f8a}\label{class_connection_a6d1fbd2641df1d098acfb76bd4a47f8a} 
+\index{Connection@{Connection}!set\_session\_type@{set\_session\_type}}
+\index{set\_session\_type@{set\_session\_type}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{set\_session\_type()}{set\_session\_type()}}
+{\footnotesize\ttfamily void Connection\+::set\+\_\+session\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{common_2session_2models_8hpp_a0695685c902e6c161ea20c244f605044}{Session\+Type}}}]{session\+\_\+type }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{server_2session_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_connection_a741aa39e70f602ec0513918a6f603b6b}\label{class_connection_a741aa39e70f602ec0513918a6f603b6b} 
+\index{Connection@{Connection}!set\_thread\_id@{set\_thread\_id}}
+\index{set\_thread\_id@{set\_thread\_id}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{set\_thread\_id()}{set\_thread\_id()}}
+{\footnotesize\ttfamily void Connection\+::set\+\_\+thread\+\_\+id (\begin{DoxyParamCaption}\item[{pthread\+\_\+t \texorpdfstring{$\ast$}{*}}]{thread\+\_\+id }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{server_2session_2models_8cpp_source}{models.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_connection_a86b59e0d16d67add8ecbf3f65ebcebac}\label{class_connection_a86b59e0d16d67add8ecbf3f65ebcebac} 
+\index{Connection@{Connection}!address@{address}}
+\index{address@{address}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{address}{address}}
+{\footnotesize\ttfamily string Connection\+::address}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8hpp_source_l00018}{18}} of file \mbox{\hyperlink{server_2session_2models_8hpp_source}{models.\+hpp}}.
+
+\Hypertarget{class_connection_a85f9cc03b57850bd5224ed0a794bcac8}\label{class_connection_a85f9cc03b57850bd5224ed0a794bcac8} 
+\index{Connection@{Connection}!channel@{channel}}
+\index{channel@{channel}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{channel}{channel}}
+{\footnotesize\ttfamily int Connection\+::channel}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8hpp_source_l00021}{21}} of file \mbox{\hyperlink{server_2session_2models_8hpp_source}{models.\+hpp}}.
+
+\Hypertarget{class_connection_aca28f54be1a50cea556cd8976ea62c7c}\label{class_connection_aca28f54be1a50cea556cd8976ea62c7c} 
+\index{Connection@{Connection}!pipe\_fd@{pipe\_fd}}
+\index{pipe\_fd@{pipe\_fd}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{pipe\_fd}{pipe\_fd}}
+{\footnotesize\ttfamily int Connection\+::pipe\+\_\+fd\mbox{[}2\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8hpp_source_l00022}{22}} of file \mbox{\hyperlink{server_2session_2models_8hpp_source}{models.\+hpp}}.
+
+\Hypertarget{class_connection_acd71bb5bf1dc3825ed387d81e7a29e71}\label{class_connection_acd71bb5bf1dc3825ed387d81e7a29e71} 
+\index{Connection@{Connection}!port@{port}}
+\index{port@{port}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{port}{port}}
+{\footnotesize\ttfamily int Connection\+::port}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8hpp_source_l00019}{19}} of file \mbox{\hyperlink{server_2session_2models_8hpp_source}{models.\+hpp}}.
+
+\Hypertarget{class_connection_afd9f8f02e0d6dd3cd6400e15577bb78a}\label{class_connection_afd9f8f02e0d6dd3cd6400e15577bb78a} 
+\index{Connection@{Connection}!session\_type@{session\_type}}
+\index{session\_type@{session\_type}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{session\_type}{session\_type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{common_2session_2models_8hpp_a0695685c902e6c161ea20c244f605044}{Session\+Type}} Connection\+::session\+\_\+type}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8hpp_source_l00017}{17}} of file \mbox{\hyperlink{server_2session_2models_8hpp_source}{models.\+hpp}}.
+
+\Hypertarget{class_connection_a00f7ca166180cda07bd7634cd33d3494}\label{class_connection_a00f7ca166180cda07bd7634cd33d3494} 
+\index{Connection@{Connection}!thread\_id@{thread\_id}}
+\index{thread\_id@{thread\_id}!Connection@{Connection}}
+\doxysubsubsection{\texorpdfstring{thread\_id}{thread\_id}}
+{\footnotesize\ttfamily pthread\+\_\+t\texorpdfstring{$\ast$}{*} Connection\+::thread\+\_\+id}
+
+
+
+Definition at line \mbox{\hyperlink{server_2session_2models_8hpp_source_l00020}{20}} of file \mbox{\hyperlink{server_2session_2models_8hpp_source}{models.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/server/session/\mbox{\hyperlink{server_2session_2models_8hpp}{models.\+hpp}}\item 
+src/server/session/\mbox{\hyperlink{server_2session_2models_8cpp}{models.\+cpp}}\end{DoxyCompactItemize}

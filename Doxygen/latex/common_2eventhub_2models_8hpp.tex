@@ -1,0 +1,99 @@
+\doxysection{src/common/eventhub/models.hpp File Reference}
+\hypertarget{common_2eventhub_2models_8hpp}{}\label{common_2eventhub_2models_8hpp}\index{src/common/eventhub/models.hpp@{src/common/eventhub/models.hpp}}
+{\ttfamily \#include "{}../socket\+\_\+io/socket.\+hpp"{}}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_command}{Command}}
+\item 
+class \mbox{\hyperlink{class_event}{Event}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352}{Command\+Type}} \{ \newline
+\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a8db7be34477a5d445f2fda399c9a940a}{Upload\+File}}
+, \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a68c17be609dfb282b6b1f4d4c9955f61}{Download\+File}}
+, \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a57479680371066393b8b4fdd05ab5600}{Delete\+File}}
+, \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a67d6a9cc6d1faaf271fcb246bcac9fff}{List\+Server\+Files}}
+, \newline
+\mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a5206d823b1277e1185259e8e39fb27a4}{List\+Local\+Files}}
+, \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352aed2fed565c58a841153245e9d3b94c3b}{Exit}}
+ \}
+\item 
+enum \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}{Event\+Type}} \{ \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faafd87c0d89e467558f7e0048e145f83cc}{Session\+Accepted}}
+, \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa69da609ce0d437ca0be14e7e117b8713}{Session\+Rejected}}
+, \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa57065b81f473806bccc6f66f1452e0fe}{File\+Created}}
+, \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faadc8a2434701f8d2517d797db4ef976c4}{File\+Deleted}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352}\label{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352} 
+\index{models.hpp@{models.hpp}!CommandType@{CommandType}}
+\index{CommandType@{CommandType}!models.hpp@{models.hpp}}
+\doxysubsubsection{\texorpdfstring{CommandType}{CommandType}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352}{Command\+Type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UploadFile@{UploadFile}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!UploadFile@{UploadFile}}}\Hypertarget{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a8db7be34477a5d445f2fda399c9a940a}\label{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a8db7be34477a5d445f2fda399c9a940a} 
+Upload\+File&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DownloadFile@{DownloadFile}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!DownloadFile@{DownloadFile}}}\Hypertarget{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a68c17be609dfb282b6b1f4d4c9955f61}\label{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a68c17be609dfb282b6b1f4d4c9955f61} 
+Download\+File&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DeleteFile@{DeleteFile}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!DeleteFile@{DeleteFile}}}\Hypertarget{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a57479680371066393b8b4fdd05ab5600}\label{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a57479680371066393b8b4fdd05ab5600} 
+Delete\+File&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ListServerFiles@{ListServerFiles}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!ListServerFiles@{ListServerFiles}}}\Hypertarget{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a67d6a9cc6d1faaf271fcb246bcac9fff}\label{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a67d6a9cc6d1faaf271fcb246bcac9fff} 
+List\+Server\+Files&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ListLocalFiles@{ListLocalFiles}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!ListLocalFiles@{ListLocalFiles}}}\Hypertarget{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a5206d823b1277e1185259e8e39fb27a4}\label{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352a5206d823b1277e1185259e8e39fb27a4} 
+List\+Local\+Files&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Exit@{Exit}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!Exit@{Exit}}}\Hypertarget{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352aed2fed565c58a841153245e9d3b94c3b}\label{common_2eventhub_2models_8hpp_a21e038f5b8958e203d28bc4f18472352aed2fed565c58a841153245e9d3b94c3b} 
+Exit&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{common_2eventhub_2models_8hpp_source_l00011}{11}} of file \mbox{\hyperlink{common_2eventhub_2models_8hpp_source}{models.\+hpp}}.
+
+\Hypertarget{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}\label{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa} 
+\index{models.hpp@{models.hpp}!EventType@{EventType}}
+\index{EventType@{EventType}!models.hpp@{models.hpp}}
+\doxysubsubsection{\texorpdfstring{EventType}{EventType}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}{Event\+Type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SessionAccepted@{SessionAccepted}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!SessionAccepted@{SessionAccepted}}}\Hypertarget{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faafd87c0d89e467558f7e0048e145f83cc}\label{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faafd87c0d89e467558f7e0048e145f83cc} 
+Session\+Accepted&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SessionRejected@{SessionRejected}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!SessionRejected@{SessionRejected}}}\Hypertarget{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa69da609ce0d437ca0be14e7e117b8713}\label{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa69da609ce0d437ca0be14e7e117b8713} 
+Session\+Rejected&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FileCreated@{FileCreated}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!FileCreated@{FileCreated}}}\Hypertarget{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa57065b81f473806bccc6f66f1452e0fe}\label{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faa57065b81f473806bccc6f66f1452e0fe} 
+File\+Created&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FileDeleted@{FileDeleted}!models.hpp@{models.hpp}}\index{models.hpp@{models.hpp}!FileDeleted@{FileDeleted}}}\Hypertarget{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faadc8a2434701f8d2517d797db4ef976c4}\label{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6faadc8a2434701f8d2517d797db4ef976c4} 
+File\+Deleted&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{common_2eventhub_2models_8hpp_source_l00020}{20}} of file \mbox{\hyperlink{common_2eventhub_2models_8hpp_source}{models.\+hpp}}.
+

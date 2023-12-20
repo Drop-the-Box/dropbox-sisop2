@@ -1,0 +1,202 @@
+\doxysection{Log.\+h}
+\hypertarget{_log_8h_source}{}\label{_log_8h_source}\index{src/include/plog/Log.h@{src/include/plog/Log.h}}
+\mbox{\hyperlink{_log_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00002}00002\ \textcolor{comment}{//\ \ Plog\ -\/\ portable\ and\ simple\ log\ for\ C++}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00003}00003\ \textcolor{comment}{//\ \ Documentation\ and\ sources:\ https://github.com/SergiusTheBest/plog}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00004}00004\ \textcolor{comment}{//\ \ License:\ MIT,\ https://choosealicense.com/licenses/mit}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00006}00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_logger_8h}{plog/Logger.h}}>}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00010}00010\ \textcolor{comment}{//\ Helper\ macros\ that\ get\ context\ info}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00012}00012\ \textcolor{preprocessor}{\#if\ defined(PLOG\_ENABLE\_GET\_THIS)\ \&\&\ defined(\_MSC\_VER)\ \&\&\ \_MSC\_VER\ >=\ 1600\ \&\&\ !defined(\_\_INTELLISENSE\_\_)\ \&\&\ !defined(\_\_INTEL\_COMPILER)\ \&\&\ !defined(\_\_llvm\_\_)\ \&\&\ !defined(\_\_RESHARPER\_\_)\ }\textcolor{comment}{//\ >=\ Visual\ Studio\ 2010,\ skip\ IntelliSense,\ Intel\ Compiler,\ Clang\ Code\ Model\ and\ ReSharper}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00013}00013\ \textcolor{preprocessor}{\#\ \ \ define\ PLOG\_GET\_THIS()\ \ \ \ \ \ \_\_if\_exists(this)\ \{\ this\ \}\ \_\_if\_not\_exists(this)\ \{\ 0\ \}}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00014}00014\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00015}\mbox{\hyperlink{_log_8h_a40a08b748766a79248a197d66c3fa8c7}{00015}}\ \textcolor{preprocessor}{\#\ \ \ define\ PLOG\_GET\_THIS()\ \ \ \ \ \ reinterpret\_cast<void*>(0)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00016}00016\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00018}00018\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00019}00019\ \textcolor{preprocessor}{\#\ \ \ define\ PLOG\_GET\_FUNC()\ \ \ \ \ \ \_\_FUNCTION\_\_}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00020}00020\ \textcolor{preprocessor}{\#elif\ defined(\_\_BORLANDC\_\_)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00021}00021\ \textcolor{preprocessor}{\#\ \ \ define\ PLOG\_GET\_FUNC()\ \ \ \ \ \ \_\_FUNC\_\_}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00022}00022\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00023}\mbox{\hyperlink{_log_8h_ad83515b8e9eac58b78cb1e5cecd23315}{00023}}\ \textcolor{preprocessor}{\#\ \ \ define\ PLOG\_GET\_FUNC()\ \ \ \ \ \ \_\_PRETTY\_FUNCTION\_\_}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00024}00024\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00026}00026\ \textcolor{preprocessor}{\#ifdef\ PLOG\_CAPTURE\_FILE}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00027}00027\ \textcolor{preprocessor}{\#\ \ \ define\ PLOG\_GET\_FILE()\ \ \ \ \ \ \_\_FILE\_\_}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00028}00028\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00029}\mbox{\hyperlink{_log_8h_a94c8b5f9481e18bebd2965c8a9241ce0}{00029}}\ \textcolor{preprocessor}{\#\ \ \ define\ PLOG\_GET\_FILE()\ \ \ \ \ \ "{}"{}}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00030}00030\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00033}00033\ \textcolor{comment}{//\ Log\ severity\ level\ checker}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00035}00035\ \textcolor{preprocessor}{\#ifdef\ PLOG\_DISABLE\_LOGGING}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00036}00036\ \textcolor{preprocessor}{\#\ \ \ ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00037}00037\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ IF\_PLOG\_(instanceId,\ severity)\ \ \_\_pragma(warning(push))\ \_\_pragma(warning(disable:4127))\ if\ (true)\ \{;\}\ else\ \_\_pragma(warning(pop))\ }\textcolor{comment}{//\ conditional\ expression\ is\ constant}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00038}00038\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00039}00039\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ IF\_PLOG\_(instanceId,\ severity)\ \ \ if\ (true)\ \{;\}\ else}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00040}00040\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00041}00041\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00042}\mbox{\hyperlink{_log_8h_a4870c52da6e54e44590a0f291294b132}{00042}}\ \textcolor{preprocessor}{\#\ \ \ define\ IF\_PLOG\_(instanceId,\ severity)\ \ \ if\ (!plog::get<instanceId>()\ ||\ !plog::get<instanceId>()-\/>checkSeverity(severity))\ \{;\}\ else}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00043}00043\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00045}\mbox{\hyperlink{_log_8h_a95c08338c3351eab96bd11809eed5cbb}{00045}}\ \textcolor{preprocessor}{\#define\ IF\_PLOG(severity)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IF\_PLOG\_(PLOG\_DEFAULT\_INSTANCE\_ID,\ severity)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00048}00048\ \textcolor{comment}{//\ Main\ logging\ macros}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00050}\mbox{\hyperlink{_log_8h_af25910b3040defe3fc40d424cd8abd61}{00050}}\ \textcolor{preprocessor}{\#define\ PLOG\_(instanceId,\ severity)\ \ \ \ \ \ IF\_PLOG\_(instanceId,\ severity)\ (*plog::get<instanceId>())\ +=\ plog::Record(severity,\ PLOG\_GET\_FUNC(),\ \_\_LINE\_\_,\ PLOG\_GET\_FILE(),\ PLOG\_GET\_THIS(),\ instanceId).ref()}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00051}\mbox{\hyperlink{_log_8h_ab2a4f3825f639b85c460a0ecafab8f84}{00051}}\ \textcolor{preprocessor}{\#define\ PLOG(severity)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_(PLOG\_DEFAULT\_INSTANCE\_ID,\ severity)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00053}\mbox{\hyperlink{_log_8h_ad9357555d4b6d8dc33bf6ab80c90d950}{00053}}\ \textcolor{preprocessor}{\#define\ PLOG\_VERBOSE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::verbose)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00054}\mbox{\hyperlink{_log_8h_ae0ccf25e6a21b8c526bfdf7b01f4dd19}{00054}}\ \textcolor{preprocessor}{\#define\ PLOG\_DEBUG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::debug)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00055}\mbox{\hyperlink{_log_8h_a394a007ae3ce62056be0e2ee9af7a3b1}{00055}}\ \textcolor{preprocessor}{\#define\ PLOG\_INFO\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::info)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00056}\mbox{\hyperlink{_log_8h_a8c0d433ab163ff01f08e741f7a06aaf6}{00056}}\ \textcolor{preprocessor}{\#define\ PLOG\_WARNING\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::warning)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00057}\mbox{\hyperlink{_log_8h_a3c6739edfac7710eec35f586247f5137}{00057}}\ \textcolor{preprocessor}{\#define\ PLOG\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::error)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00058}\mbox{\hyperlink{_log_8h_af5d0e0fc4460f12acc2e73d24300c940}{00058}}\ \textcolor{preprocessor}{\#define\ PLOG\_FATAL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::fatal)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00059}\mbox{\hyperlink{_log_8h_aa2d375011a1ae5726ac51f019f42fb51}{00059}}\ \textcolor{preprocessor}{\#define\ PLOG\_NONE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::none)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00061}\mbox{\hyperlink{_log_8h_ae46f62341557ff7f9a47c9925eb4eda2}{00061}}\ \textcolor{preprocessor}{\#define\ PLOG\_VERBOSE\_(instanceId)\ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::verbose)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00062}\mbox{\hyperlink{_log_8h_ab93f2bd306c224896ef42ec05dd83c00}{00062}}\ \textcolor{preprocessor}{\#define\ PLOG\_DEBUG\_(instanceId)\ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::debug)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00063}\mbox{\hyperlink{_log_8h_aca7d8c87392f8b4be271e0535bf5fb28}{00063}}\ \textcolor{preprocessor}{\#define\ PLOG\_INFO\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::info)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00064}\mbox{\hyperlink{_log_8h_a9c60b9fc178589789b27e43eb4a747b9}{00064}}\ \textcolor{preprocessor}{\#define\ PLOG\_WARNING\_(instanceId)\ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::warning)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00065}\mbox{\hyperlink{_log_8h_ac53e5a766891377df1e04ae6e1505870}{00065}}\ \textcolor{preprocessor}{\#define\ PLOG\_ERROR\_(instanceId)\ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::error)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00066}\mbox{\hyperlink{_log_8h_a466f09f6c244d43ec2ff15fcb7fc81a5}{00066}}\ \textcolor{preprocessor}{\#define\ PLOG\_FATAL\_(instanceId)\ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::fatal)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00067}\mbox{\hyperlink{_log_8h_a8e958ebd962d40edf48d6062a4fbccf9}{00067}}\ \textcolor{preprocessor}{\#define\ PLOG\_NONE\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::none)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00069}\mbox{\hyperlink{_log_8h_a04a3fe24287a8d1fdf6996e2131464fc}{00069}}\ \textcolor{preprocessor}{\#define\ PLOGV\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_VERBOSE}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00070}\mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{00070}}\ \textcolor{preprocessor}{\#define\ PLOGD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_DEBUG}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00071}\mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{00071}}\ \textcolor{preprocessor}{\#define\ PLOGI\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_INFO}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00072}\mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{00072}}\ \textcolor{preprocessor}{\#define\ PLOGW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_WARNING}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00073}\mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{00073}}\ \textcolor{preprocessor}{\#define\ PLOGE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_ERROR}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00074}\mbox{\hyperlink{_log_8h_acbe284f7b6d02db9da59a0cec60f4a99}{00074}}\ \textcolor{preprocessor}{\#define\ PLOGF\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_FATAL}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00075}\mbox{\hyperlink{_log_8h_a4ff9995f0adb4b4400fa8d359d93794d}{00075}}\ \textcolor{preprocessor}{\#define\ PLOGN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_NONE}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00077}\mbox{\hyperlink{_log_8h_a63ca5609f48ae5916a5d14eeff00c442}{00077}}\ \textcolor{preprocessor}{\#define\ PLOGV\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_VERBOSE\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00078}\mbox{\hyperlink{_log_8h_a5b12fef2ff8716490ff970898dedb7c0}{00078}}\ \textcolor{preprocessor}{\#define\ PLOGD\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_DEBUG\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00079}\mbox{\hyperlink{_log_8h_a3ed15d21ca510c500d3f8c9068bf68f6}{00079}}\ \textcolor{preprocessor}{\#define\ PLOGI\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_INFO\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00080}\mbox{\hyperlink{_log_8h_a959e360298c0c4d900a0c9764f5a1aea}{00080}}\ \textcolor{preprocessor}{\#define\ PLOGW\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_WARNING\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00081}\mbox{\hyperlink{_log_8h_ac12d56e5a7b2a20b12db894e67c9a3d7}{00081}}\ \textcolor{preprocessor}{\#define\ PLOGE\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_ERROR\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00082}\mbox{\hyperlink{_log_8h_a926891fd26340f2f40f39b80dfe5e959}{00082}}\ \textcolor{preprocessor}{\#define\ PLOGF\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_FATAL\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00083}\mbox{\hyperlink{_log_8h_ac17c99320f08b25b7a99f546c9ddc2ab}{00083}}\ \textcolor{preprocessor}{\#define\ PLOGN\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_NONE\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00086}00086\ \textcolor{comment}{//\ Conditional\ logging\ macros}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00088}\mbox{\hyperlink{_log_8h_a4905120596c8c879e967d9bcf9251097}{00088}}\ \textcolor{preprocessor}{\#define\ PLOG\_IF\_(instanceId,\ severity,\ condition)\ \ if\ (!(condition))\ \{;\}\ else\ PLOG\_(instanceId,\ severity)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00089}\mbox{\hyperlink{_log_8h_a20a0cbd13ac9ede8ee7e41a82ab7c200}{00089}}\ \textcolor{preprocessor}{\#define\ PLOG\_IF(severity,\ condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF\_(PLOG\_DEFAULT\_INSTANCE\_ID,\ severity,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00091}\mbox{\hyperlink{_log_8h_a4e8e087363437398635e6d2bae395ee1}{00091}}\ \textcolor{preprocessor}{\#define\ PLOG\_VERBOSE\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::verbose,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00092}\mbox{\hyperlink{_log_8h_a07920aa499368b5c89e5b441b1b8561e}{00092}}\ \textcolor{preprocessor}{\#define\ PLOG\_DEBUG\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::debug,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00093}\mbox{\hyperlink{_log_8h_a01824f77d12f82c1160350c7608a6ccf}{00093}}\ \textcolor{preprocessor}{\#define\ PLOG\_INFO\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::info,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00094}\mbox{\hyperlink{_log_8h_a29e256b0563d3f78bf774eebf7407f94}{00094}}\ \textcolor{preprocessor}{\#define\ PLOG\_WARNING\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::warning,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00095}\mbox{\hyperlink{_log_8h_acbc83e954622372e9e701fc8a11f58cc}{00095}}\ \textcolor{preprocessor}{\#define\ PLOG\_ERROR\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::error,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00096}\mbox{\hyperlink{_log_8h_a147736501e1acf135860dc8a5c899a2b}{00096}}\ \textcolor{preprocessor}{\#define\ PLOG\_FATAL\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::fatal,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00097}\mbox{\hyperlink{_log_8h_a4b7d755af4786ed5c5b8646436639eef}{00097}}\ \textcolor{preprocessor}{\#define\ PLOG\_NONE\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::none,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00099}\mbox{\hyperlink{_log_8h_a1cb4461c89806520bbb574b0958281e5}{00099}}\ \textcolor{preprocessor}{\#define\ PLOG\_VERBOSE\_IF\_(instanceId,\ condition)\ \ PLOG\_IF\_(instanceId,\ plog::verbose,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00100}\mbox{\hyperlink{_log_8h_a3a3563206c95d803eb8b42792702f0ea}{00100}}\ \textcolor{preprocessor}{\#define\ PLOG\_DEBUG\_IF\_(instanceId,\ condition)\ \ \ \ PLOG\_IF\_(instanceId,\ plog::debug,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00101}\mbox{\hyperlink{_log_8h_a83acb5dc547f4192b1b4da00883c4d98}{00101}}\ \textcolor{preprocessor}{\#define\ PLOG\_INFO\_IF\_(instanceId,\ condition)\ \ \ \ \ PLOG\_IF\_(instanceId,\ plog::info,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00102}\mbox{\hyperlink{_log_8h_a9c9573e5d5e2d05a0edba662bd9f2dcc}{00102}}\ \textcolor{preprocessor}{\#define\ PLOG\_WARNING\_IF\_(instanceId,\ condition)\ \ PLOG\_IF\_(instanceId,\ plog::warning,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00103}\mbox{\hyperlink{_log_8h_af81114d77fa0adef91d4c7d7a582b07d}{00103}}\ \textcolor{preprocessor}{\#define\ PLOG\_ERROR\_IF\_(instanceId,\ condition)\ \ \ \ PLOG\_IF\_(instanceId,\ plog::error,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00104}\mbox{\hyperlink{_log_8h_ab218460525197a745ee5fc5842cffe58}{00104}}\ \textcolor{preprocessor}{\#define\ PLOG\_FATAL\_IF\_(instanceId,\ condition)\ \ \ \ PLOG\_IF\_(instanceId,\ plog::fatal,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00105}\mbox{\hyperlink{_log_8h_ad5c361910321195f7d576b147d62f2bc}{00105}}\ \textcolor{preprocessor}{\#define\ PLOG\_NONE\_IF\_(instanceId,\ condition)\ \ \ \ \ PLOG\_IF\_(instanceId,\ plog::none,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00107}\mbox{\hyperlink{_log_8h_aef321546335211a7b535e043030f10bf}{00107}}\ \textcolor{preprocessor}{\#define\ PLOGV\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_VERBOSE\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00108}\mbox{\hyperlink{_log_8h_aa158091e2dd86c485ec8b6268934d6e7}{00108}}\ \textcolor{preprocessor}{\#define\ PLOGD\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_DEBUG\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00109}\mbox{\hyperlink{_log_8h_a0bfb876b63d465a068a2c82fe752582d}{00109}}\ \textcolor{preprocessor}{\#define\ PLOGI\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_INFO\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00110}\mbox{\hyperlink{_log_8h_a4cd613ca7dc0e87a5aba7eba9180aae6}{00110}}\ \textcolor{preprocessor}{\#define\ PLOGW\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_WARNING\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00111}\mbox{\hyperlink{_log_8h_ad5c0d1ea5511bd43817c12a4c7e9be83}{00111}}\ \textcolor{preprocessor}{\#define\ PLOGE\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_ERROR\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00112}\mbox{\hyperlink{_log_8h_ad3f87a5c4372d8a7bb0275dd81b2185f}{00112}}\ \textcolor{preprocessor}{\#define\ PLOGF\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_FATAL\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00113}\mbox{\hyperlink{_log_8h_a9de2a4bd79d8c798c9a790b99a3a183d}{00113}}\ \textcolor{preprocessor}{\#define\ PLOGN\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_NONE\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00115}\mbox{\hyperlink{_log_8h_add231e7a05dd6fd73a7207423172d9cc}{00115}}\ \textcolor{preprocessor}{\#define\ PLOGV\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_VERBOSE\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00116}\mbox{\hyperlink{_log_8h_a27d9528517e4236bce7ad41cab40e0af}{00116}}\ \textcolor{preprocessor}{\#define\ PLOGD\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_DEBUG\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00117}\mbox{\hyperlink{_log_8h_a6f960df3d8284781c39ad5ae23098920}{00117}}\ \textcolor{preprocessor}{\#define\ PLOGI\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_INFO\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00118}\mbox{\hyperlink{_log_8h_a7a28e3405ab3c9a404349e60cb64842f}{00118}}\ \textcolor{preprocessor}{\#define\ PLOGW\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_WARNING\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00119}\mbox{\hyperlink{_log_8h_a6cbfbddfd32d2da85b219c8ee2fa05bb}{00119}}\ \textcolor{preprocessor}{\#define\ PLOGE\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_ERROR\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00120}\mbox{\hyperlink{_log_8h_a7ee5940052c20ebebbf37f9f9ffd718d}{00120}}\ \textcolor{preprocessor}{\#define\ PLOGF\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_FATAL\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00121}\mbox{\hyperlink{_log_8h_aba8b1809c0592a497e6b214021c1c180}{00121}}\ \textcolor{preprocessor}{\#define\ PLOGN\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_NONE\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00123}00123\ \textcolor{comment}{//\ Old\ macro\ names\ for\ downward\ compatibility.\ To\ bypass\ including\ these\ macro\ names,\ add}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00124}00124\ \textcolor{comment}{//\ \#define\ PLOG\_OMIT\_LOG\_DEFINES\ before\ \#include\ <plog/Log.h>}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00125}00125\ \textcolor{preprocessor}{\#ifndef\ PLOG\_OMIT\_LOG\_DEFINES}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00128}00128\ \textcolor{comment}{//\ Main\ logging\ macros\ -\/\ can\ be\ changed\ later\ to\ point\ at\ macros\ for\ a\ different\ logging\ package}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00130}\mbox{\hyperlink{_log_8h_a4268382f316f61a87b03b10f85070d93}{00130}}\ \textcolor{preprocessor}{\#define\ LOG\_(instanceId,\ severity)\ \ \ \ \ \ IF\_PLOG\_(instanceId,\ severity)\ (*plog::get<instanceId>())\ +=\ plog::Record(severity,\ PLOG\_GET\_FUNC(),\ \_\_LINE\_\_,\ PLOG\_GET\_FILE(),\ PLOG\_GET\_THIS(),\ instanceId).ref()}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00131}\mbox{\hyperlink{_log_8h_accad43a85d781d53381cd53a9894b6ae}{00131}}\ \textcolor{preprocessor}{\#define\ LOG(severity)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_(PLOG\_DEFAULT\_INSTANCE\_ID,\ severity)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00133}\mbox{\hyperlink{_log_8h_a44f7f25988447c6a7064f1a31c0133a2}{00133}}\ \textcolor{preprocessor}{\#define\ LOG\_VERBOSE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::verbose)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00134}\mbox{\hyperlink{_log_8h_a6ff63e8955665c4a58b1598f2b07c51a}{00134}}\ \textcolor{preprocessor}{\#define\ LOG\_DEBUG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::debug)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00135}\mbox{\hyperlink{_log_8h_aeb4f36db01bd128c7afeac5889dac311}{00135}}\ \textcolor{preprocessor}{\#define\ LOG\_INFO\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::info)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00136}\mbox{\hyperlink{_log_8h_adf4476a6a4ea6c74231c826e899d7189}{00136}}\ \textcolor{preprocessor}{\#define\ LOG\_WARNING\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::warning)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00137}\mbox{\hyperlink{_log_8h_aced66975c154ea0e2a8ec3bc818b4e08}{00137}}\ \textcolor{preprocessor}{\#define\ LOG\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::error)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00138}\mbox{\hyperlink{_log_8h_ac2164369b4d2bf72296f8ba6ea576ecf}{00138}}\ \textcolor{preprocessor}{\#define\ LOG\_FATAL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::fatal)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00139}\mbox{\hyperlink{_log_8h_a1632479322efa3952798f98177b54471}{00139}}\ \textcolor{preprocessor}{\#define\ LOG\_NONE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG(plog::none)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00141}\mbox{\hyperlink{_log_8h_a6e632c4d4231f21026a6c3ebef2b9923}{00141}}\ \textcolor{preprocessor}{\#define\ LOG\_VERBOSE\_(instanceId)\ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::verbose)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00142}\mbox{\hyperlink{_log_8h_a6e57932cde01cec58b84333993a06885}{00142}}\ \textcolor{preprocessor}{\#define\ LOG\_DEBUG\_(instanceId)\ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::debug)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00143}\mbox{\hyperlink{_log_8h_aa8324ff2f2fe938c8571d7fade1ae999}{00143}}\ \textcolor{preprocessor}{\#define\ LOG\_INFO\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::info)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00144}\mbox{\hyperlink{_log_8h_a2db23a4cc4d7d5988dab03c887cdd481}{00144}}\ \textcolor{preprocessor}{\#define\ LOG\_WARNING\_(instanceId)\ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::warning)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00145}\mbox{\hyperlink{_log_8h_a2c58b022dcc9dc4a8e1e19d2fc6c2d7e}{00145}}\ \textcolor{preprocessor}{\#define\ LOG\_ERROR\_(instanceId)\ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::error)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00146}\mbox{\hyperlink{_log_8h_abd3988f01e9d810a138414fb63b6cc14}{00146}}\ \textcolor{preprocessor}{\#define\ LOG\_FATAL\_(instanceId)\ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::fatal)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00147}\mbox{\hyperlink{_log_8h_afcabe788985b105a6854c4f51452f220}{00147}}\ \textcolor{preprocessor}{\#define\ LOG\_NONE\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ PLOG\_(instanceId,\ plog::none)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00149}\mbox{\hyperlink{_log_8h_aea56e9bb712e47d7ba831b9ca7d0b5bb}{00149}}\ \textcolor{preprocessor}{\#define\ LOGV\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_VERBOSE}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00150}\mbox{\hyperlink{_log_8h_a62b5282578b939fd77b7bb1d00c4f15a}{00150}}\ \textcolor{preprocessor}{\#define\ LOGD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_DEBUG}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00151}\mbox{\hyperlink{_log_8h_a13fd5c842ec8d93baac58bb616497fe8}{00151}}\ \textcolor{preprocessor}{\#define\ LOGI\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_INFO}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00152}\mbox{\hyperlink{_log_8h_ac6f0b43ab85743ce5de50d53bda6de62}{00152}}\ \textcolor{preprocessor}{\#define\ LOGW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_WARNING}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00153}\mbox{\hyperlink{_log_8h_ae08358ff7da64345ad674296a5957823}{00153}}\ \textcolor{preprocessor}{\#define\ LOGE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_ERROR}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00154}\mbox{\hyperlink{_log_8h_ac4c513cbda38bfa3bace1f2420511271}{00154}}\ \textcolor{preprocessor}{\#define\ LOGF\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_FATAL}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00155}\mbox{\hyperlink{_log_8h_aa7c39f30636a35aaebd2dcdc04d9d8fd}{00155}}\ \textcolor{preprocessor}{\#define\ LOGN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_NONE}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00157}\mbox{\hyperlink{_log_8h_a8224a9f083fdfb323624d1f8b25e12b8}{00157}}\ \textcolor{preprocessor}{\#define\ LOGV\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_VERBOSE\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00158}\mbox{\hyperlink{_log_8h_a3a215763702c105f4c17d7aa3872322d}{00158}}\ \textcolor{preprocessor}{\#define\ LOGD\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_DEBUG\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00159}\mbox{\hyperlink{_log_8h_a87018a03a99b2e7f60f8a8a0f1424e0e}{00159}}\ \textcolor{preprocessor}{\#define\ LOGI\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_INFO\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00160}\mbox{\hyperlink{_log_8h_aeb8923510f9df0f8dcd2978995cc1885}{00160}}\ \textcolor{preprocessor}{\#define\ LOGW\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_WARNING\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00161}\mbox{\hyperlink{_log_8h_aa135166e7eec3926284927a497fc20d7}{00161}}\ \textcolor{preprocessor}{\#define\ LOGE\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_ERROR\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00162}\mbox{\hyperlink{_log_8h_a3de1f3a016003f522b0abac193cc26a0}{00162}}\ \textcolor{preprocessor}{\#define\ LOGF\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_FATAL\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00163}\mbox{\hyperlink{_log_8h_a74a38d0899644aff46cc87bb13579cb0}{00163}}\ \textcolor{preprocessor}{\#define\ LOGN\_(instanceId)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_NONE\_(instanceId)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00166}00166\ \textcolor{comment}{//\ Conditional\ logging\ macros}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00168}\mbox{\hyperlink{_log_8h_a53300f754f3fa0893f9459f5d86f9a14}{00168}}\ \textcolor{preprocessor}{\#define\ LOG\_IF\_(instanceId,\ severity,\ condition)\ \ if\ (!(condition))\ \{;\}\ else\ PLOG\_(instanceId,\ severity)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00169}\mbox{\hyperlink{_log_8h_a09f7d88282cf92c9f231270ac113e5c6}{00169}}\ \textcolor{preprocessor}{\#define\ LOG\_IF(severity,\ condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF\_(PLOG\_DEFAULT\_INSTANCE\_ID,\ severity,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00171}\mbox{\hyperlink{_log_8h_ac890c0b143f44c4855fffd7ac73dc5d7}{00171}}\ \textcolor{preprocessor}{\#define\ LOG\_VERBOSE\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::verbose,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00172}\mbox{\hyperlink{_log_8h_a3e071ea897c75172848174607de5c728}{00172}}\ \textcolor{preprocessor}{\#define\ LOG\_DEBUG\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::debug,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00173}\mbox{\hyperlink{_log_8h_af9789f8490586c600074be7afb5c9cf8}{00173}}\ \textcolor{preprocessor}{\#define\ LOG\_INFO\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::info,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00174}\mbox{\hyperlink{_log_8h_a7e3b7cf749ee7576737341666cc39a97}{00174}}\ \textcolor{preprocessor}{\#define\ LOG\_WARNING\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::warning,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00175}\mbox{\hyperlink{_log_8h_a3c0ca6823be01e2eb0b04838f19364aa}{00175}}\ \textcolor{preprocessor}{\#define\ LOG\_ERROR\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::error,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00176}\mbox{\hyperlink{_log_8h_acbb85aaef76ecbac308d9d9e5b3cdd96}{00176}}\ \textcolor{preprocessor}{\#define\ LOG\_FATAL\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::fatal,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00177}\mbox{\hyperlink{_log_8h_a383a3c95b31682116d7a875e2ce8a697}{00177}}\ \textcolor{preprocessor}{\#define\ LOG\_NONE\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_IF(plog::none,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00179}\mbox{\hyperlink{_log_8h_acc5c512e6457885103b400976a3b34ba}{00179}}\ \textcolor{preprocessor}{\#define\ LOG\_VERBOSE\_IF\_(instanceId,\ condition)\ \ PLOG\_IF\_(instanceId,\ plog::verbose,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00180}\mbox{\hyperlink{_log_8h_ac2a6c1916aa7031a80c3673e148169a5}{00180}}\ \textcolor{preprocessor}{\#define\ LOG\_DEBUG\_IF\_(instanceId,\ condition)\ \ \ \ PLOG\_IF\_(instanceId,\ plog::debug,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00181}\mbox{\hyperlink{_log_8h_aa250a2a261773ccf0fb923f96f16fa2c}{00181}}\ \textcolor{preprocessor}{\#define\ LOG\_INFO\_IF\_(instanceId,\ condition)\ \ \ \ \ PLOG\_IF\_(instanceId,\ plog::info,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00182}\mbox{\hyperlink{_log_8h_a66ee2a0d81ed2dbfe9c1c6c9aeb3f668}{00182}}\ \textcolor{preprocessor}{\#define\ LOG\_WARNING\_IF\_(instanceId,\ condition)\ \ PLOG\_IF\_(instanceId,\ plog::warning,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00183}\mbox{\hyperlink{_log_8h_ae273063cdca20c7d37cf479a6acf056e}{00183}}\ \textcolor{preprocessor}{\#define\ LOG\_ERROR\_IF\_(instanceId,\ condition)\ \ \ \ PLOG\_IF\_(instanceId,\ plog::error,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00184}\mbox{\hyperlink{_log_8h_a80b29275b8da08ed7d02351f56dcaa56}{00184}}\ \textcolor{preprocessor}{\#define\ LOG\_FATAL\_IF\_(instanceId,\ condition)\ \ \ \ PLOG\_IF\_(instanceId,\ plog::fatal,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00185}\mbox{\hyperlink{_log_8h_a5b4dd8d8d63b6b091a03549ac5ad3a6c}{00185}}\ \textcolor{preprocessor}{\#define\ LOG\_NONE\_IF\_(instanceId,\ condition)\ \ \ \ \ PLOG\_IF\_(instanceId,\ plog::none,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00187}\mbox{\hyperlink{_log_8h_a7142934dbef35e56333bd058c98aba69}{00187}}\ \textcolor{preprocessor}{\#define\ LOGV\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_VERBOSE\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00188}\mbox{\hyperlink{_log_8h_a0182c84e04c9e7d2d051aa9d54b4ba8e}{00188}}\ \textcolor{preprocessor}{\#define\ LOGD\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_DEBUG\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00189}\mbox{\hyperlink{_log_8h_a4a6328a9183d0619d4861a6ffde7bb94}{00189}}\ \textcolor{preprocessor}{\#define\ LOGI\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_INFO\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00190}\mbox{\hyperlink{_log_8h_a314b7ee2ad6a3fa9f13815a987ed73c3}{00190}}\ \textcolor{preprocessor}{\#define\ LOGW\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_WARNING\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00191}\mbox{\hyperlink{_log_8h_ad8d37afbac36fb102d86fc0a8904017b}{00191}}\ \textcolor{preprocessor}{\#define\ LOGE\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_ERROR\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00192}\mbox{\hyperlink{_log_8h_a62e60446ff36051e7cdcdae5d0a749c9}{00192}}\ \textcolor{preprocessor}{\#define\ LOGF\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_FATAL\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00193}\mbox{\hyperlink{_log_8h_a3e695ea216f1f81ede02f135fe8caf0f}{00193}}\ \textcolor{preprocessor}{\#define\ LOGN\_IF(condition)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLOG\_NONE\_IF(condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00195}\mbox{\hyperlink{_log_8h_a9eb5745d0ebc2c73553aba074006f319}{00195}}\ \textcolor{preprocessor}{\#define\ LOGV\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_VERBOSE\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00196}\mbox{\hyperlink{_log_8h_abfdd88c55b5c099d5c6bdd73940dfb4d}{00196}}\ \textcolor{preprocessor}{\#define\ LOGD\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_DEBUG\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00197}\mbox{\hyperlink{_log_8h_abb8870eae97efd06517cc3008d8df2fb}{00197}}\ \textcolor{preprocessor}{\#define\ LOGI\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_INFO\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00198}\mbox{\hyperlink{_log_8h_a9ac228503b434889553a56cee34ea423}{00198}}\ \textcolor{preprocessor}{\#define\ LOGW\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_WARNING\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00199}\mbox{\hyperlink{_log_8h_a04150dd7b659d14f0e6b2d4b69c12cac}{00199}}\ \textcolor{preprocessor}{\#define\ LOGE\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_ERROR\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00200}\mbox{\hyperlink{_log_8h_a21ba3ce12f106d4c502812fb5b6a8c08}{00200}}\ \textcolor{preprocessor}{\#define\ LOGF\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_FATAL\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00201}\mbox{\hyperlink{_log_8h_af0c80bf3b403cbcf64ad2172e13811d8}{00201}}\ \textcolor{preprocessor}{\#define\ LOGN\_IF\_(instanceId,\ condition)\ \ \ \ \ \ \ \ \ PLOG\_NONE\_IF\_(instanceId,\ condition)}}
+\DoxyCodeLine{\Hypertarget{_log_8h_source_l00202}00202\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

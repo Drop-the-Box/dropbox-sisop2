@@ -1,0 +1,92 @@
+\doxysection{file\+\_\+exchange.\+cpp}
+\hypertarget{file__exchange_8cpp_source}{}\label{file__exchange_8cpp_source}\index{src/client/eventhub/file\_exchange.cpp@{src/client/eventhub/file\_exchange.cpp}}
+\mbox{\hyperlink{file__exchange_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{file__exchange_8hpp}{file\_exchange.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00008}00008\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00010}\mbox{\hyperlink{class_client_file_sync_a392e804b0b3bfa3b8a3efaa2e0c24900}{00010}}\ \mbox{\hyperlink{class_client_file_sync_a392e804b0b3bfa3b8a3efaa2e0c24900}{ClientFileSync::ClientFileSync}}(shared\_ptr<ClientContext>\ context,\ shared\_ptr<Socket>\ socket)\ \{}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00011}00011\ \ \ \ \ this-\/>context\ =\ context;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00012}00012\ \ \ \ \ this-\/>socket\ \ =\ socket;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00014}00014\ \ \ \ \ ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00015}00015\ \ \ \ \ oss\ <<\ this-\/>context-\/>sync\_dir;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00016}00016\ \ \ \ \ this-\/>file\_handler\ =\ make\_shared<FileHandler>(this-\/>context-\/>sync\_dir);}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00019}\mbox{\hyperlink{class_client_file_sync_a200aba01fcbb1c8145eb3c057c5ad6a6}{00019}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_client_file_sync_a200aba01fcbb1c8145eb3c057c5ad6a6}{ClientFileSync::loop}}()\ \{}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00020}00020\ \ \ \ \ shared\_ptr<FileMetadata>\ metadata;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00021}00021\ \ \ \ \ ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00022}00022\ \ \ \ \ oss\ <<\ this-\/>context-\/>sync\_dir;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00023}00023\ \ \ \ \ file\_handler-\/>receive\_file(oss.str(),\ metadata,\ socket,\ socket-\/>socket\_fd);}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{comment}{//\ char\ buffer[BUFFER\_SIZE];}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00025}00025\ \ \ \ \ \textcolor{comment}{//\ int\ \ total\_bytes\ =\ 0;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{comment}{//\ int\ \ collected\_bytes;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{comment}{//\ int\ \ iteration;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{comment}{//\ int\ chars\_read\ =\ socket-\/>get\_message\_sync((uint8\_t\ *)buffer,\ socket-\/>socket\_fd);}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ while\ (chars\_read\ !=\ 0)\ \{}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ collected\_bytes\ =\ 0;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ iteration\ \ \ \ \ \ \ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ chars\_read\ \ \ \ \ \ =\ 0;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (chars\_read\ <\ 0)}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ printf("{}ERROR\ reading\ from\ socket\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ Packet\ *packet\ =\ new\ Packet((uint8\_t\ *)buffer);}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (packet-\/>type\ !=\ FileMetadataMsg)\ \{}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ PLOGE\ <<\ "{}Invalid\ packet\ type.\ Expected\ file\ metadata,\ received:\ "{}\ <<\ packet-\/>type\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ break;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ unique\_ptr<FileMetadata>\ metadata(new\ FileMetadata(packet-\/>payload));}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ PLOGI\ <<\ "{}Received\ file\ "{}\ <<\ metadata-\/>name\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ total\_bytes\ =\ metadata-\/>size;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ printf("{}File\ size:\ \%ld\(\backslash\)n"{},\ (long)total\_bytes);}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00047}00047\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ ostringstream\ oss;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ oss\ <<\ this-\/>context-\/>sync\_dir\ <<\ "{}/"{}\ <<\ metadata-\/>name;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ string\ filepath\ =\ oss.str();}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ PLOGI\ <<\ "{}Storing\ file\ in\ "{}\ <<\ filepath.c\_str()\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ FILE\ *file\_output\ =\ fopen(filepath.c\_str(),\ "{}wb"{});}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ while\ (collected\_bytes\ <\ total\_bytes)\ \{}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ chars\_read\ =\ socket-\/>get\_message\_sync((uint8\_t\ *)buffer,\ socket-\/>socket\_fd);}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00055}00055\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Chars\ read:\ "{}\ <<\ chars\_read\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ if\ (chars\_read\ <\ 0)\ \{}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ printf("{}ERROR\ reading\ from\ socket\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ break;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Iteration:\ "{}\ <<\ iteration\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ iteration\ +=\ 1;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ unique\_ptr<Packet>\ packet(new\ Packet((uint8\_t\ *)buffer));}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00063}00063\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ if\ (packet-\/>type\ !=\ FileChunk)\ \{}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ PLOGE\ <<\ "{}Invalid\ file\ chunk:\ "{}\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Packet\ type:\ "{}\ <<\ packet-\/>type\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Packet\ seq\ idx:\ "{}\ <<\ packet-\/>seq\_index\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Packet\ total\ size:\ "{}\ <<\ packet-\/>total\_size\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00068}00068\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Packet\ payload\ size:\ "{}\ <<\ packet-\/>payload\_size\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Packet\ payload:\ "{}\ <<\ packet-\/>payload\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ return;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00071}00071\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ fwrite(packet-\/>payload,\ 1,\ packet-\/>payload\_size\ *\ sizeof(uint8\_t),\ file\_output);}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Received\ packet\ type\ "{}\ <<\ packet-\/>type\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}File\ size:\ "{}\ <<\ (long)packet-\/>total\_size\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Chunk\ size:\ "{}\ <<\ packet-\/>payload\_size\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00076}00076\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Chunk\ index:\ "{}\ <<\ packet-\/>seq\_index\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00077}00077\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ collected\_bytes\ +=\ packet-\/>payload\_size;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ PLOGD\ <<\ "{}Collected\ bytes:\ "{}\ <<\ collected\_bytes\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ total\_bytes\ =\ packet-\/>total\_size;}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ bzero(buffer,\ BUFFER\_SIZE);}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (file\_output\ !=\ NULL)\ \{}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ fclose(file\_output);}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ chars\_read\ =\ socket-\/>get\_message\_sync((uint8\_t\ *)buffer,\ socket-\/>socket\_fd);}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00086}00086\ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8cpp_source_l00087}00087\ \};}
+
+\end{DoxyCode}

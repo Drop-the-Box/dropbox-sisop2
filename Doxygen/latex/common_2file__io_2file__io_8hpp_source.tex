@@ -1,0 +1,66 @@
+\doxysection{file\+\_\+io.\+hpp}
+\hypertarget{common_2file__io_2file__io_8hpp_source}{}\label{common_2file__io_2file__io_8hpp_source}\index{src/common/file\_io/file\_io.hpp@{src/common/file\_io/file\_io.hpp}}
+\mbox{\hyperlink{common_2file__io_2file__io_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ FILE\_HANDLER\_HPP}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ FILE\_HANDLER\_HPP}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}../socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00011}00011\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00013}\mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08}{00013}}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08}{SYNC\_DIR\_TYPE}}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00014}\mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08af12637d7516a570d5309d5176a3a16c5}{00014}}\ \ \ \ \ \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08af12637d7516a570d5309d5176a3a16c5}{DIR\_SERVER}},}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08a345b52815435416eef0db1d14475ce3f}{DIR\_CLIENT}}}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00016}\mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08a345b52815435416eef0db1d14475ce3f}{00016}}\ \};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00018}\mbox{\hyperlink{class_file_metadata}{00018}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_file_metadata}{FileMetadata}}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00019}00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00020}\mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{00020}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00021}\mbox{\hyperlink{class_file_metadata_af34617761d3bf15ebd9499d4a73168a7}{00021}}\ \ \ \ \ off\_t\ \ \mbox{\hyperlink{class_file_metadata_af34617761d3bf15ebd9499d4a73168a7}{size}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00022}\mbox{\hyperlink{class_file_metadata_aeb961d37156b70a891bb431c35c78f6c}{00022}}\ \ \ \ \ time\_t\ \mbox{\hyperlink{class_file_metadata_aeb961d37156b70a891bb431c35c78f6c}{modified\_at}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00023}\mbox{\hyperlink{class_file_metadata_a4ee51f8c7e25ffb9c9e4dc48a431df2a}{00023}}\ \ \ \ \ time\_t\ \mbox{\hyperlink{class_file_metadata_a4ee51f8c7e25ffb9c9e4dc48a431df2a}{accessed\_at}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00024}\mbox{\hyperlink{class_file_metadata_adfc2090c73bccbb49dbee6a9b291b173}{00024}}\ \ \ \ \ time\_t\ \mbox{\hyperlink{class_file_metadata_adfc2090c73bccbb49dbee6a9b291b173}{stat\_changed\_at}};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{class_file_metadata}{FileMetadata}}(uint8\_t\ *bytes);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{class_file_metadata}{FileMetadata}}(\textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_file_metadata_a5d1b63c379e802be34be91cd454b73b5}{name}},\ \textcolor{keywordtype}{string}\ file\_path);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{class_file_metadata}{FileMetadata}}(\textcolor{keywordtype}{string}\ full\_path);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_file_metadata_a84cf10b8d22c085b235d0b1a67e816c6}{to\_bytes}}(uint8\_t\ **bytes);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \mbox{\hyperlink{class_file_metadata_a9fdba60be5fc6401ab4b37554a4e6506}{send}}(shared\_ptr<Socket>\ socket,\ \textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00031}00031\ \};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00033}\mbox{\hyperlink{class_file_handler}{00033}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_file_handler}{FileHandler}}\ \{}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00034}00034\ \ \ \ \ FILE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *file\_ptr;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file\_path;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00036}00036\ \ \ \ \ shared\_ptr<FileMetadata>\ metadata;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00037}00037\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ work\_dir;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00039}00039\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{class_file_handler}{FileHandler}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ work\_dir);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{class_file_handler_a1ce10cd0ad31b313a8d526fba6f1e676}{\string~FileHandler}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_a96f77d7db750a6b2de2cff1370040119}{open}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ file\_path);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_a433c4ffbf9c22fba56fad4ea00a9225c}{close}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00044}00044\ \ \ \ \ \textcolor{keyword}{static}\ vector<string>\ \mbox{\hyperlink{class_file_handler_a225fb8c6507571c95ce7041e2255a487}{list\_files}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ directory);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_a49ed1a95af9d098192d195fe3278a8ff}{send}}(shared\_ptr<Socket>\ socket,\ \textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_aa2fb9ba1c8f8a2da2cef776b49083651}{delete\_self}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_a08d651298f9dc8c97b78943681e0a324}{get\_digest}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_ad99bb6d7720c607bcf99d491f4cf379f}{listen\_file}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{long}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_a3a2a4660b476aa3c5bb9325bd0a57e32}{get\_size}}();}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00050}00050\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_a3a63215b8ffb2f5af27623a618e66a90}{get\_sync\_dir}}(\textcolor{keywordtype}{string}\ username,\ \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08}{SYNC\_DIR\_TYPE}}\ mode\ =\ \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08a345b52815435416eef0db1d14475ce3f}{DIR\_CLIENT}});}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00051}00051\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_a453387799b143ac5f79ca3d51eff6e7e}{get\_path\_metadata}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ path,\ \textcolor{keyword}{struct}\ stat\ *metadata);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00052}00052\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_handler_a3c37c407760daf99cf5a78f716742973}{path\_exists}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ path);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_file_handler_a55b291e17602732ad060b7bdf1edf8e9}{receive\_file}}(\textcolor{keywordtype}{string}\ work\_dir,\ shared\_ptr<FileMetadata>\ metadata,\ shared\_ptr<Socket>\ socket,\ \textcolor{keywordtype}{int}\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00055}00055\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ filename;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00057}00057\ \ \ \ \ ifstream\ file;}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00058}00058\ \};}
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{common_2file__io_2file__io_8hpp_source_l00060}00060\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ FILE\_HANDLER\_HPP}}
+
+\end{DoxyCode}

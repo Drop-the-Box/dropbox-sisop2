@@ -1,0 +1,71 @@
+\doxysection{models.\+cpp}
+\hypertarget{common_2eventhub_2models_8cpp_source}{}\label{common_2eventhub_2models_8cpp_source}\index{src/common/eventhub/models.cpp@{src/common/eventhub/models.cpp}}
+\mbox{\hyperlink{common_2eventhub_2models_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{server_2userland_2models_8hpp}{models.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}../vars.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00009}00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00011}\mbox{\hyperlink{class_event_aec0258dd01f7ad11b00ecd5afb24b11b}{00011}}\ \mbox{\hyperlink{class_event_aec0258dd01f7ad11b00ecd5afb24b11b}{Event::Event}}(uint8\_t\ *bytes)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00012}00012\ \ \ \ \ uint8\_t\ *cursor\ \ \ =\ bytes;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ uint16\_s\ =\ \textcolor{keyword}{sizeof}(uint16\_t);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00015}00015\ \ \ \ \ uint16\_t\ prop;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00016}00016\ \ \ \ \ memmove(\&prop,\ cursor,\ uint16\_s);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00017}00017\ \ \ \ \ this-\/>\mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}}\ =\ (\mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}{EventType}})ntohs(prop);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00018}00018\ \ \ \ \ cursor\ +=\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00020}00020\ \ \ \ \ memmove(\&prop,\ cursor,\ uint16\_s);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00021}00021\ \ \ \ \ uint16\_t\ payload\_size\ =\ ntohs(prop);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}Loaded\ event\ with\ size:\ "{}}\ <<\ payload\_size\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00023}00023\ \ \ \ \ cursor\ +=\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00025}00025\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_payload\_size\ =\ \mbox{\hyperlink{class_packet_a886ed6572ed89b66a370effdc305170b}{Packet::get\_max\_payload\_size}}()\ -\/\ 2\ *\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{if}\ (payload\_size\ >\ max\_payload\_size)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Buffer\ overflow:\ "{}}\ <<\ payload\_size\ -\/\ max\_payload\_size\ <<\ \textcolor{stringliteral}{"{}\ bigger\ than\ the\ buffer"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ payload\_size\ =\ max\_payload\_size;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00029}00029\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00030}00030\ \ \ \ \ unique\_ptr<uint8\_t>\ payload((uint8\_t\ *)calloc(payload\_size,\ \textcolor{keyword}{sizeof}(uint8\_t)));}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00031}00031\ \ \ \ \ memmove(payload.get(),\ cursor,\ payload\_size\ *\ \textcolor{keyword}{sizeof}(uint8\_t));}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00032}00032\ \ \ \ \ this-\/>\mbox{\hyperlink{class_event_a27fbdfdfc11e6cb9a1e4344f13dbe531}{message}}\ =\ string((\textcolor{keywordtype}{char}\ *)payload.get());}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00033}00033\ \}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00035}\mbox{\hyperlink{class_event_aa503af4d15ef54406d634fe699257daf}{00035}}\ \mbox{\hyperlink{class_event_aec0258dd01f7ad11b00ecd5afb24b11b}{Event::Event}}(\mbox{\hyperlink{common_2eventhub_2models_8hpp_a2628ea8d12e8b2563c32f05dc7fff6fa}{EventType}}\ type,\ \textcolor{keywordtype}{string}\ message)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00036}00036\ \ \ \ \ this-\/>type\ \ \ \ =\ \mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00037}00037\ \ \ \ \ this-\/>message\ =\ \mbox{\hyperlink{class_event_a27fbdfdfc11e6cb9a1e4344f13dbe531}{message}};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00038}00038\ \}}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00040}\mbox{\hyperlink{class_event_a0708137774ee69b5a8e3e2f9d1c70945}{00040}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_event_a0708137774ee69b5a8e3e2f9d1c70945}{Event::send}}(shared\_ptr<Socket>\ socket,\ \textcolor{keywordtype}{int}\ channel)\ \{}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00041}00041\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ message\_size\ =\ this-\/>\mbox{\hyperlink{class_event_a27fbdfdfc11e6cb9a1e4344f13dbe531}{message}}.size()\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00042}00042\ \ \ \ \ unique\_ptr<uint8\_t>\ message\_buf((uint8\_t\ *)calloc(message\_size,\ \textcolor{keyword}{sizeof}(uint8\_t)));}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00043}00043\ \ \ \ \ memmove(message\_buf.get(),\ this-\/>message.c\_str(),\ message\_size);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ packet\_size\ =\ \textcolor{keyword}{sizeof}(this-\/>\mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}});}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00046}00046\ \ \ \ \ packet\_size\ +=\ \textcolor{keyword}{sizeof}(uint16\_t);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00047}00047\ \ \ \ \ packet\_size\ +=\ message\_size\ *\ \textcolor{keyword}{sizeof}(uint8\_t);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00049}00049\ \ \ \ \ unique\_ptr<uint8\_t>\ buffer((uint8\_t\ *)calloc(packet\_size,\ \textcolor{keyword}{sizeof}(uint8\_t)));}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00051}00051\ \ \ \ \ uint8\_t\ *cursor\ \ \ =\ buffer.get();}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ uint16\_s\ =\ \textcolor{keyword}{sizeof}(uint16\_t);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00054}00054\ \ \ \ \ uint16\_t\ prop\ =\ htons(this-\/>\mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}});}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00055}00055\ \ \ \ \ memmove(cursor,\ \&prop,\ uint16\_s);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00056}00056\ \ \ \ \ cursor\ +=\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00058}00058\ \ \ \ \ prop\ =\ htons(message\_size);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00059}00059\ \ \ \ \ memmove(cursor,\ \&prop,\ uint16\_s);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00060}00060\ \ \ \ \ cursor\ +=\ uint16\_s;}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00062}00062\ \ \ \ \ memmove(cursor,\ message\_buf.get(),\ message\_size\ *\ \textcolor{keyword}{sizeof}(uint8\_t));}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00063}00063\ \ \ \ \ unique\_ptr<Packet>\ packet(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_packet}{Packet}}(\mbox{\hyperlink{socket_8hpp_a0a80a7bc045affcf10846075b88cbca0a2c195d5c97763ed383d825d7998d893e}{EventMsg}},\ 1,\ packet\_size,\ packet\_size,\ buffer.get()));}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00064}00064\ \ \ \ \ packet-\/>send(socket,\ channel);}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{common_2eventhub_2models_8cpp_source_l00066}00066\ \};}
+
+\end{DoxyCode}
