@@ -31,14 +31,17 @@ void ServerEventPublisher::loop() {
             map<string, Device *>::iterator dev_iter;
             for (dev_iter = user_devices.begin(); dev_iter != user_devices.end() && dev_iter->first != username; dev_iter++) {
                 Device *device = dev_iter->second;
-                map<int, shared_ptr<Connection>> connections = device->connections;
-                map<int, shared_ptr<Connection>>::iterator conn_it;
+                map<int, shared_ptr<Connection> > connections = device->connections;
+                map<int, shared_ptr<Connection> >::iterator conn_it;
                 for (conn_it = connections.begin(); conn_it != connections.end(); conn_it++) {
                     shared_ptr<Connection> connection = conn_it->second;
                     if (conn_it->second->session_type == FileExchange) {
                         ostringstream file_path;
                         file_path << "./srv_sync_dir" << username << metadata->name;
-                        const char *fpath = file_path.str().c_str();
+                        int path_size = file_path.str().length() + 1;
+                        char *fpath = (char *)malloc(path_size);
+                        memcpy(fpath, file_path.str().c_str(), path_size);
+                        PLOGW << "Notifying connection on channel " << connection->channel << " about file" << fpath;
                         write(connection->pipe_fd[1], fpath, strlen(fpath));
                     }
                 }
