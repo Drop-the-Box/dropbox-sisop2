@@ -37,7 +37,9 @@ void SessionManager::start() {
             channels.insert(channel);
             this->num_threads += 1;
             PLOGI << "Creating new Connection ..." << endl;
-            shared_ptr<Connection>    connection(new Connection(client_addr, *client_port, channel));
+            int pipe_fd[2];
+            pipe(pipe_fd);
+            shared_ptr<Connection> connection(new Connection(client_addr, *client_port, channel, pipe_fd));
 
             connection->get_conection_info();
             
