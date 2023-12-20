@@ -83,6 +83,7 @@ void *run_file_monitor(void *monitor) {
     Inotify* file_monitor = (Inotify *)monitor;
     while(true) {
         file_monitor->read_event();
+        usleep(1000);
     }
     return NULL;
 }
