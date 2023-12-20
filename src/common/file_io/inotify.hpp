@@ -20,9 +20,9 @@ class Inotify {
     const char        *folder_path;
     int                file_descriptor;
     int                watch_descriptor;
-    shared_ptr<Socket> socket;
 
 public:
+    shared_ptr<Socket> socket;
     Inotify(shared_ptr<Socket> socket, const char *folder_path);
     int  get_file_descriptor();
     int  get_watch_descriptor();

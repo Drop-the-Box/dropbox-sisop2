@@ -12,10 +12,12 @@
 #include "models.hpp"
 #include <plog/Log.h>
 
-Connection::Connection(char *address, int port, int channel) {
+
+Connection::Connection(char *address, int port, int channel, int *pipe_fd) {
     this->address = string(address);
     this->port    = port;
     this->channel = channel;
+    memcpy(this->pipe_fd, pipe_fd, 2*sizeof(int));
 }
 
 void Connection::set_thread_id(pthread_t *thread_id) {
