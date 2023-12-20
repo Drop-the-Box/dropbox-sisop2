@@ -148,7 +148,13 @@ Session::Session(shared_ptr<ServerContext> context) {
 }
 
 void Session::run() {
-    PLOGD << "Running session of type " << this->type << endl;
+    string session_type;
+    try {
+        session_type = session_type_map.at(this->type);
+        PLOGW << "Running session of type " << session_type << endl;
+    } catch (const exception &exc) {
+        // blabla
+    }
     switch (type) {
     case FileExchange: {
         unique_ptr<FileSync> file_sync(new FileSync(this->context));

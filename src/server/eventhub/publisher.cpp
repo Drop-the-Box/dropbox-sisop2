@@ -22,10 +22,10 @@ void ServerEventPublisher::loop() {
     ostringstream oss;
     oss << "./srv_sync_dir/" << this->context->device->username;
     unique_ptr<FileHandler> file_handler(new FileHandler(oss.str()));
-    // PLOGI << "------------- Connected to event publisher" << endl;
-    // PLOGI << "Publisher has event on channel " << channel << endl;
-    while (true) {
+    PLOGI << "------------- Connected to event publisher" << endl;
+    while (!socket->has_error(channel)) {
         shared_ptr<FileMetadata> metadata;
         file_handler->receive_file(oss.str(), metadata, socket, channel);
+        PLOGI << "Publisher has received a file on channel " << channel << endl;
     }
 }

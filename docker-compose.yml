@@ -9,6 +9,8 @@ services:
     command: bash -c "./scripts/run_server.sh"
     networks:
       - dtb
+    ports:
+      - 6999:6999
     volumes:
       - ./:/code
       - /code/.git

@@ -50,6 +50,19 @@ void Socket::init(
     struct timeval timeout;
     timeout.tv_sec  = 10;
     timeout.tv_usec = 0;
+    int keepalive = 1;
+
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_KEEPALIVE, &keepalive, sizeof (int))) {
+        PLOGE << "Cannot set socket as keepalive. Reason: " << strerror(errno) << endl;
+    }
+
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVBUF, &buffer_size, sizeof (int))) {
+        PLOGE << "Cannot set socket recv buffer size. Reason: " << strerror(errno) << endl;
+    }
+
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDBUF, &buffer_size, sizeof (int))) {
+        PLOGE << "Cannot set socket send buffer size. Reason: " << strerror(errno) << endl;
+    }
 
     if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof timeout) < 0) {
         PLOGE << "Cannot set socket recv timeout. Reason: " << strerror(errno) << endl;
