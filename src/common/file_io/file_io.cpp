@@ -114,7 +114,20 @@ size_t FileMetadata::to_bytes(uint8_t **bytes_ptr) {
     return packet_size;
 }
 
-FileHandler::FileHandler(const string file_path) {
+
+
+FileHandler::FileHandler(const string work_dir){
+    this->work_dir = work_dir;
+    this->file_ptr = NULL;
+    this->metadata = NULL;
+}
+
+FileHandler::~FileHandler() {
+    if (this->file_ptr != NULL)
+        this->close();
+}
+
+void FileHandler::open(const string file_path) {
     this->file_path = file_path;
     this->file_ptr  = fopen(file_path.c_str(), "rb");
     regex  rgx("^(.*\\/)([^\\/]+)$");
@@ -126,11 +139,6 @@ FileHandler::FileHandler(const string file_path) {
     // PLOGD << "name: " << filename << endl;
     shared_ptr<FileMetadata> file_metadata(new FileMetadata(filename, folder_path));
     this->metadata = file_metadata;
-}
-
-FileHandler::~FileHandler() {
-    if (this->file_ptr != NULL)
-        this->close();
 }
 
 void FileHandler::close() {
@@ -173,8 +181,7 @@ bool FileHandler::send(shared_ptr<Socket> socket, int channel) {
         while ((file_bytes_read = fread(file_buf, sizeof(uint8_t), file_buf_size, this->file_ptr)) > 0) {
             PLOGD << "Chunk index: " << seq_index << endl;
 
-            unique_ptr<Packet> packet(
-                new Packet(FileChunk, seq_index, file_size, file_bytes_read, file_buf));
+            unique_ptr<Packet> packet(new Packet(FileChunk, seq_index, file_size, file_bytes_read, file_buf));
 
             PLOGD << "Total file size: " << packet->total_size << endl;
 
@@ -259,3 +266,70 @@ string FileHandler::get_sync_dir(string username, SYNC_DIR_TYPE mode) {
     }
     return sync_dir.str();
 };
+
+void FileHandler::receive_file(string work_dir, shared_ptr<FileMetadata> metadata, shared_ptr<Socket> socket, int channel) {
+    char buffer[BUFFER_SIZE];
+    int  total_bytes = 0;
+    int  collected_bytes;
+    int  iteration;
+    PLOGI << "Waiting for file metadata" << endl;
+    int chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
+    PLOGI << "Received file metadata" << endl;
+    while (chars_read != 0) {
+        PLOGD << "Chars read: " << chars_read << endl;
+        collected_bytes = 0;
+        iteration       = 1;
+        chars_read      = 0;
+        if (chars_read < 0)
+            printf("ERROR reading from socket\n");
+        Packet *packet = new Packet((uint8_t *)buffer);
+        if (packet->type != FileMetadataMsg) {
+            PLOGE << "Invalid packet type. Expected file metadata, received: " << packet->type << endl;
+            break;
+        }
+        //unique_ptr<FileMetadata> metadata(new FileMetadata(packet->payload));
+        metadata = make_shared<FileMetadata>(packet->payload);
+        PLOGI << "Received file " << metadata->name << endl;
+        total_bytes = metadata->size;
+        printf("File size: %ld\n", (long)total_bytes);
+        ostringstream oss;
+        oss << work_dir << "/" << metadata->name;
+        string filepath = oss.str();
+        PLOGI << "Storing file in " << filepath.c_str() << endl;
+        FILE *file_output = fopen(filepath.c_str(), "wb");
+
+        while (collected_bytes < total_bytes) {
+            chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
+            PLOGD << "Chars read: " << chars_read << endl;
+            if (chars_read < 0) {
+                printf("ERROR reading from socket\n");
+                break;
+            }
+            PLOGD << "Iteration: " << iteration << endl;
+            iteration += 1;
+            unique_ptr<Packet> packet(new Packet((uint8_t *)buffer));
+            if (packet->type != FileChunk) {
+                PLOGE << "Invalid file chunk: " << endl;
+                PLOGD << "Packet type: " << packet->type << endl;
+                PLOGD << "Packet seq idx: " << packet->seq_index << endl;
+                PLOGD << "Packet total size: " << packet->total_size << endl;
+                PLOGD << "Packet payload size: " << packet->payload_size << endl;
+                PLOGD << "Packet payload: " << packet->payload << endl;
+                return;
+            }
+            fwrite(packet->payload, 1, packet->payload_size * sizeof(uint8_t), file_output);
+            PLOGD << "Received packet type " << packet->type << endl;
+            PLOGD << "File size: " << (long)packet->total_size << endl;
+            PLOGD << "Chunk size: " << packet->payload_size << endl;
+            PLOGD << "Chunk index: " << packet->seq_index << endl;
+            collected_bytes += packet->payload_size;
+            PLOGD << "Collected bytes: " << collected_bytes << endl;
+            total_bytes = packet->total_size;
+            bzero(buffer, BUFFER_SIZE);
+        }
+        if (file_output != NULL) {
+            fclose(file_output);
+        }
+        chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
+    }
+}

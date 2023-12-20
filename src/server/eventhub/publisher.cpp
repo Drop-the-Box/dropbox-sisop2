@@ -3,6 +3,7 @@
 #include "../file_io/file_io.hpp"
 #include "file_exchange.hpp"
 #include <iostream>
+#include <sstream>
 #include <memory>
 #include <plog/Log.h>
 #include <strings.h>
@@ -18,24 +19,13 @@ void ServerEventPublisher::loop() {
     shared_ptr<Socket> socket  = this->context->socket;
     int                channel = this->context->connection->channel;
     uint8_t            buffer[BUFFER_SIZE];
+    ostringstream oss;
+    oss << "./srv_sync_dir/" << this->context->device->username;
+    unique_ptr<FileHandler> file_handler(new FileHandler(oss.str()));
     // PLOGI << "------------- Connected to event publisher" << endl;
     // PLOGI << "Publisher has event on channel " << channel << endl;
     while (true) {
-        if (!context->socket->has_event(channel)) {
-            //PLOGW << "Publisher waiting on channel " << channel << "..." << endl;
-            sleep(1);
-        } else {
-            PLOGI << "Publisher received event on channel " << channel << endl;
-            int bytes = socket->receive(buffer, channel);
-            if (bytes < 0) {
-                PLOGE << "Error reading from socket" << endl;
-                return;
-            }
-            PLOGI << "Publisher received " << bytes << " bytes" << endl;
-            unique_ptr<ServerFileSync> file_sync(new ServerFileSync(context, socket));
-            PLOGI << "File sync loop" << endl;
-            file_sync->loop();
-            PLOGI << "End of file sync loop" << endl;
-        }
+        shared_ptr<FileMetadata> metadata;
+        file_handler->receive_file(oss.str(), metadata, socket, channel);
     }
 }

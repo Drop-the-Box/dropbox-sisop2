@@ -133,13 +133,16 @@ bool Socket::has_event(int channel) {
 
 int Socket::receive(uint8_t *buffer, int channel) {
     // if (!this->has_event(channel)) return -1;
-    // std::cout << "Receiving data on channel " << channel << "..." << std::endl;
+    PLOGI << "Receiving data on channel " << channel << "..." << endl;
     int error_code     = 0;
     int bytes_received = 0;
     int total_bytes    = 0;
     while (total_bytes < BUFFER_SIZE) {
+        PLOGI << "total_bytes: " << total_bytes << endl;
         bytes_received = ::recv(channel, buffer + total_bytes, BUFFER_SIZE - total_bytes, 0);
+        PLOGE << "bytes_received: " << bytes_received << endl;
         if (bytes_received == -1) {
+            sleep(3);
             continue;
         }
         PLOGD << "Received data on channel " << channel << ": " << bytes_received << " bytes"
@@ -150,10 +153,12 @@ int Socket::receive(uint8_t *buffer, int channel) {
             PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(error_code) << std::endl;
         }
         if (bytes_received == 0) {
+            PLOGW << "Bytes received is 0." << endl;
             return bytes_received;
         }
         total_bytes += bytes_received;
     }
+    PLOGI << "Received " << total_bytes << " bytes on channel " << channel << std::endl;
     return total_bytes;
 }
 
@@ -190,6 +195,7 @@ bool Socket::is_connected(int channel) {
 // }
 
 int Socket::send(uint8_t *bytes, size_t size, int channel) {
+    int error_code     = 0;
     PLOGI << "Sending data on channel " << channel << "..." << std::endl;
     if (this->has_error(channel)) {
         PLOGI << "Channel " << channel << " has error." << std::endl;
@@ -201,6 +207,11 @@ int Socket::send(uint8_t *bytes, size_t size, int channel) {
         PLOGI << "Channel " << channel << " is connected." << std::endl;
         result = ::send(channel, bytes, BUFFER_SIZE, 0);
         PLOGI << "Channel " << channel << " sent " << result << " bytes." << std::endl;
+        if (error_code == EAGAIN || error_code == EWOULDBLOCK) {
+            PLOGE << "Socket error on channel " << channel << ": " << ::strerror(error_code) << std::endl;
+        } else if (error_code) {
+            PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(error_code) << std::endl;
+        }
     }
     return result;
 };
@@ -230,8 +241,10 @@ int Socket::get_message_sync(uint8_t *buffer, int channel) {
         usleep(1000);
     }
     // while(payload_size == -1){
+    PLOGI << "in get_message_sync 4" << endl;
     payload_size = this->receive(buffer, channel);
     // }
+    PLOGI << "in get_message_sync 5" << endl;
     return payload_size;
 }
 

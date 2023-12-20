@@ -34,10 +34,12 @@ class FileHandler {
     FILE                    *file_ptr;
     string                   file_path;
     shared_ptr<FileMetadata> metadata;
+    string                  work_dir;
 
 public:
-    FileHandler(const string filename);
+    FileHandler(const string work_dir);
     ~FileHandler();
+    void                  open(const string file_path);
     void                  close();
     static vector<string> list_files(const string directory);
     bool                  send(shared_ptr<Socket> socket, int channel);
@@ -48,6 +50,7 @@ public:
     static string         get_sync_dir(string username, SYNC_DIR_TYPE mode = DIR_CLIENT);
     static bool           get_path_metadata(const string path, struct stat *metadata);
     static bool           path_exists(const string path);
+    void receive_file(string work_dir, shared_ptr<FileMetadata> metadata, shared_ptr<Socket> socket, int channel);
 
 private:
     string   filename;

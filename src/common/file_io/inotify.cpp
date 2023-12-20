@@ -30,6 +30,8 @@ void Inotify::read_event() {
     char   buffer[BUFFER_LEN];
     string full_file_path;
     int    length = read(this->file_descriptor, buffer, BUFFER_LEN);
+
+    unique_ptr<FileHandler> file_handler(new FileHandler(this->folder_path));
     if (length < 0) {
         PLOGE << "Failed to read" << endl;
     }
@@ -39,8 +41,8 @@ void Inotify::read_event() {
         if (event->mask & IN_CREATE) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was created." << endl;
-            FileHandler fileHandler(full_file_path);
-            if (fileHandler.send(this->socket, this->socket->socket_fd)) {
+            file_handler->open(full_file_path);
+            if (file_handler->send(this->socket, this->socket->socket_fd)) {
                 PLOGI << "File " << full_file_path << " sent successfully." << endl;
             } else {
                 PLOGE << "Error sending file " << full_file_path << "." << endl;
@@ -48,8 +50,8 @@ void Inotify::read_event() {
         } else if (event->mask & IN_MODIFY) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was modified." << endl;
-            FileHandler fileHandler(full_file_path);
-            if (fileHandler.send(this->socket, this->socket->socket_fd)) {
+            file_handler->open(full_file_path);
+            if (file_handler->send(this->socket, this->socket->socket_fd)) {
                 PLOGI << "File " << full_file_path << " sent successfully." << endl;
             } else {
                 PLOGE << "Error sending file " << full_file_path << "." << endl;
@@ -57,7 +59,8 @@ void Inotify::read_event() {
         } else if (event->mask & IN_DELETE) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was deleted." << endl;
-            FileHandler fileHandler(full_file_path);
+            // file_handler->open(full_file_path);
+            // if (fileHandler->send(this->socket, this->socket->socket_fd)) {
             // ver função de deletar arquivo no servidor
         }
     }

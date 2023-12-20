@@ -22,13 +22,15 @@ void FileSync::sync_all() {
     vector<string> files    = FileHandler::list_files(sync_dir);
 
     vector<string>::iterator filename;
+    unique_ptr<FileHandler> file_handler(new FileHandler(sync_dir));
+    
     for (filename = files.begin(); filename != files.end(); filename++) {
         ostringstream oss;
         oss << sync_dir << "/" << *filename;
         string filepath = oss.str();
         PLOGD << "File: " << filepath << endl;
-        unique_ptr<FileHandler> file(new FileHandler(filepath));
-        file->send(context->socket, context->connection->channel);
+        file_handler->open(filepath);
+        file_handler->send(context->socket, context->connection->channel);
     }
     PLOGI << "End of filesync server loop" << endl;
 }
