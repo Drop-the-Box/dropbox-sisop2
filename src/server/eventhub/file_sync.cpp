@@ -32,7 +32,7 @@ void FileSync::sync_all() {
         file_handler->open(filepath);
         file_handler->send(context->socket, context->connection->channel);
     }
-    PLOGI << "End of filesync server loop" << endl;
+    PLOGI << "End of filesync cycle" << endl;
 }
 
 void FileSync::loop() {

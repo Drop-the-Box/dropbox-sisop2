@@ -1,7 +1,6 @@
 #include "publisher.hpp"
 #include "../../common/vars.hpp"
 #include "../file_io/file_io.hpp"
-#include "file_exchange.hpp"
 #include <iostream>
 #include <sstream>
 #include <memory>
@@ -24,8 +23,10 @@ void ServerEventPublisher::loop() {
     unique_ptr<FileHandler> file_handler(new FileHandler(oss.str()));
     PLOGI << "------------- Connected to event publisher" << endl;
     while (!socket->has_error(channel)) {
-        shared_ptr<FileMetadata> metadata;
-        file_handler->receive_file(oss.str(), metadata, socket, channel);
-        PLOGI << "Publisher has received a file on channel " << channel << endl;
+        if(context->socket->has_event(channel)) {
+            shared_ptr<FileMetadata> metadata;
+            file_handler->receive_file(oss.str(), metadata, socket, channel);
+            PLOGI << "Publisher has received a file on channel " << channel << endl;
+        }
     }
 }

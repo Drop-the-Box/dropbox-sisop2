@@ -52,9 +52,9 @@ void Socket::init(
     timeout.tv_usec = 0;
     int keepalive = 1;
 
-    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_KEEPALIVE, &keepalive, sizeof (int))) {
-        PLOGE << "Cannot set socket as keepalive. Reason: " << strerror(errno) << endl;
-    }
+    // if (setsockopt(this->socket_fd, SOL_SOCKET, SO_KEEPALIVE, &keepalive, sizeof (int))) {
+    //     PLOGE << "Cannot set socket as keepalive. Reason: " << strerror(errno) << endl;
+    // }
 
     if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVBUF, &buffer_size, sizeof (int))) {
         PLOGE << "Cannot set socket recv buffer size. Reason: " << strerror(errno) << endl;
@@ -64,12 +64,16 @@ void Socket::init(
         PLOGE << "Cannot set socket send buffer size. Reason: " << strerror(errno) << endl;
     }
 
-    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof timeout) < 0) {
-        PLOGE << "Cannot set socket recv timeout. Reason: " << strerror(errno) << endl;
-    }
+    // if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof timeout) < 0) {
+    //     PLOGE << "Cannot set socket recv timeout. Reason: " << strerror(errno) << endl;
+    // }
 
-    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof timeout) < 0) {
-        PLOGE << "Cannot set socket send timeout. Reason: " << strerror(errno) << endl;
+    // if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof timeout) < 0) {
+    //     PLOGE << "Cannot set socket send timeout. Reason: " << strerror(errno) << endl;
+    // }
+
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_REUSEADDR, &keepalive, sizeof(int))) {
+        PLOGE << "ERR reuseaddr" << endl;
     }
 
     this->server_address.sin_family      = AF_INET;
@@ -147,23 +151,20 @@ bool Socket::has_event(int channel) {
 int Socket::receive(uint8_t *buffer, int channel) {
     // if (!this->has_event(channel)) return -1;
     PLOGI << "Receiving data on channel " << channel << "..." << endl;
-    int error_code     = 0;
     int bytes_received = 0;
     int total_bytes    = 0;
     while (total_bytes < BUFFER_SIZE) {
-        PLOGI << "total_bytes: " << total_bytes << endl;
-        bytes_received = ::recv(channel, buffer + total_bytes, BUFFER_SIZE - total_bytes, 0);
-        PLOGE << "bytes_received: " << bytes_received << endl;
-        if (bytes_received == -1) {
-            sleep(3);
-            continue;
-        }
-        PLOGD << "Received data on channel " << channel << ": " << bytes_received << " bytes"
-              << "\n\n";
-        if (error_code == EAGAIN || error_code == EWOULDBLOCK) {
-            PLOGE << "Socket error on channel " << channel << ": " << ::strerror(error_code) << std::endl;
-        } else if (error_code) {
-            PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(error_code) << std::endl;
+        // PLOGI << "total_bytes: " << total_bytes << endl;
+        bytes_received = ::read(channel, buffer + total_bytes, BUFFER_SIZE - total_bytes);
+        // PLOGE << "bytes_received: " << bytes_received << endl;
+        if (bytes_received > 0) {
+            PLOGD << "Received data on channel " << channel << ": " << bytes_received << " bytes"
+                << "\n\n";
+        } else if (errno == EAGAIN || errno == EWOULDBLOCK) {
+            PLOGE << "Socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
+        } else if (errno) {
+            PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
+            return -1;
         }
         if (bytes_received == 0) {
             PLOGW << "Bytes received is 0." << endl;
@@ -208,7 +209,6 @@ bool Socket::is_connected(int channel) {
 // }
 
 int Socket::send(uint8_t *bytes, size_t size, int channel) {
-    int error_code     = 0;
     PLOGI << "Sending data on channel " << channel << "..." << std::endl;
     if (this->has_error(channel)) {
         PLOGI << "Channel " << channel << " has error." << std::endl;
@@ -218,12 +218,14 @@ int Socket::send(uint8_t *bytes, size_t size, int channel) {
     int result = -1;
     if (this->is_connected(channel)) {
         PLOGI << "Channel " << channel << " is connected." << std::endl;
-        result = ::send(channel, bytes, BUFFER_SIZE, 0);
-        PLOGI << "Channel " << channel << " sent " << result << " bytes." << std::endl;
-        if (error_code == EAGAIN || error_code == EWOULDBLOCK) {
-            PLOGE << "Socket error on channel " << channel << ": " << ::strerror(error_code) << std::endl;
-        } else if (error_code) {
-            PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(error_code) << std::endl;
+        result = ::write(channel, bytes, BUFFER_SIZE);
+        if (result != -1) {
+            PLOGI << "Channel " << channel << " sent " << result << " bytes." << std::endl;
+        } else if (errno == EAGAIN || errno == EWOULDBLOCK) {
+            PLOGE << "Socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
+        } else if (errno) {
+            PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
+            throw;
         }
     }
     return result;
@@ -253,11 +255,12 @@ int Socket::get_message_sync(uint8_t *buffer, int channel) {
             return 0;
         usleep(1000);
     }
-    // while(payload_size == -1){
-    PLOGI << "in get_message_sync 4" << endl;
     payload_size = this->receive(buffer, channel);
-    // }
-    PLOGI << "in get_message_sync 5" << endl;
+    if (payload_size == -1) {
+
+        throw;
+    }
+
     return payload_size;
 }
 
@@ -319,7 +322,7 @@ size_t Packet::to_bytes(uint8_t **bytes_ptr) {
     packet_size += uint16_s;
     packet_size += this->payload_size;
 
-    *bytes_ptr      = (uint8_t *)calloc(packet_size, sizeof(uint8_t));
+    *bytes_ptr      = (uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t));
     uint8_t *cursor = *bytes_ptr;
 
     uint16_t prop = htons(this->type);

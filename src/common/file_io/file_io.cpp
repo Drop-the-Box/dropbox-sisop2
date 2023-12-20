@@ -273,7 +273,7 @@ void FileHandler::receive_file(string work_dir, shared_ptr<FileMetadata> metadat
     int  collected_bytes;
     int  iteration;
     PLOGI << "Waiting for file metadata" << endl;
-    int chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
+    int chars_read = socket->get_message_sync((uint8_t *)buffer, channel);
     PLOGI << "Received file metadata" << endl;
     while (chars_read != 0) {
         PLOGD << "Chars read: " << chars_read << endl;
@@ -299,7 +299,7 @@ void FileHandler::receive_file(string work_dir, shared_ptr<FileMetadata> metadat
         FILE *file_output = fopen(filepath.c_str(), "wb");
 
         while (collected_bytes < total_bytes) {
-            chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
+            chars_read = socket->get_message_sync((uint8_t *)buffer, channel);
             PLOGD << "Chars read: " << chars_read << endl;
             if (chars_read < 0) {
                 printf("ERROR reading from socket\n");
@@ -330,6 +330,6 @@ void FileHandler::receive_file(string work_dir, shared_ptr<FileMetadata> metadat
         if (file_output != NULL) {
             fclose(file_output);
         }
-        chars_read = socket->get_message_sync((uint8_t *)buffer, socket->socket_fd);
+        chars_read = socket->get_message_sync((uint8_t *)buffer, channel);
     }
 }

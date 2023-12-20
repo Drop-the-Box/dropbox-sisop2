@@ -40,7 +40,7 @@ services:
     stdin_open: true
     tty: true
     deploy:
-      replicas: 3
+      replicas: 1
     depends_on:
       - server
 networks:
