@@ -1,0 +1,67 @@
+\doxysection{Severity.\+h}
+\hypertarget{_severity_8h_source}{}\label{_severity_8h_source}\index{src/include/plog/Severity.h@{src/include/plog/Severity.h}}
+\mbox{\hyperlink{_severity_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <cctype>}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00004}00004\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplog}{plog}}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00005}00005\ \{}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00006}\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{00006}}\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{Severity}}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00007}00007\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00008}\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a970bc7d9a88862a306201468ad8b4b6d}{00008}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a970bc7d9a88862a306201468ad8b4b6d}{none}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00009}\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a87c879d34029ab027d8940169dcad463}{00009}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a87c879d34029ab027d8940169dcad463}{fatal}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00010}\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1679ce0724a66a99dc188e41876ade78}{00010}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1679ce0724a66a99dc188e41876ade78}{error}}\ =\ 2,}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00011}\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1bf20988ef5019ca3d136d315c2e8c4e}{00011}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1bf20988ef5019ca3d136d315c2e8c4e}{warning}}\ =\ 3,}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00012}\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a53cec741b1a2186167465e39fdd9ff72}{00012}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a53cec741b1a2186167465e39fdd9ff72}{info}}\ =\ 4,}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00013}\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a241dcd076455366730559fad843d2ee3}{00013}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a241dcd076455366730559fad843d2ee3}{debug}}\ =\ 5,}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00014}00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a3b6e929f6b4fcc90142944d9438aca7c}{verbose}}\ =\ 6}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00015}\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a3b6e929f6b4fcc90142944d9438aca7c}{00015}}\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00017}00017\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00018}00018\ \textcolor{preprocessor}{\#\ \ \ pragma\ warning(suppress:\ 26812)\ }\textcolor{comment}{//\ \ Prefer\ 'enum\ class'\ over\ 'enum'}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00019}00019\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00020}\mbox{\hyperlink{namespaceplog_ac8ec2b4a7be2114ffdee50c3b863eb8a}{00020}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespaceplog_ac8ec2b4a7be2114ffdee50c3b863eb8a}{severityToString}}(\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{Severity}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{severity}})}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00021}00021\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{classplog_1_1_console_appender}{severity}})}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a87c879d34029ab027d8940169dcad463}{fatal}}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FATAL"{}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1679ce0724a66a99dc188e41876ade78}{error}}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ERROR"{}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1bf20988ef5019ca3d136d315c2e8c4e}{warning}}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WARN"{}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a53cec741b1a2186167465e39fdd9ff72}{info}}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}INFO"{}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a241dcd076455366730559fad843d2ee3}{debug}}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DEBUG"{}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a3b6e929f6b4fcc90142944d9438aca7c}{verbose}}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VERB"{}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NONE"{}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00041}\mbox{\hyperlink{namespaceplog_a067a65a53e69845e6840411d6eaae767}{00041}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{Severity}}\ \mbox{\hyperlink{namespaceplog_a067a65a53e69845e6840411d6eaae767}{severityFromString}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}})}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00042}00042\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (std::toupper(\mbox{\hyperlink{classplog_1_1_console_appender}{str}}[0]))}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'F'}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a87c879d34029ab027d8940169dcad463}{fatal}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'E'}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1679ce0724a66a99dc188e41876ade78}{error}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'W'}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1bf20988ef5019ca3d136d315c2e8c4e}{warning}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'I'}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a53cec741b1a2186167465e39fdd9ff72}{info}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'D'}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a241dcd076455366730559fad843d2ee3}{debug}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'V'}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a3b6e929f6b4fcc90142944d9438aca7c}{verbose}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a970bc7d9a88862a306201468ad8b4b6d}{none}};}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00060}00060\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_severity_8h_source_l00061}00061\ \}}
+
+\end{DoxyCode}

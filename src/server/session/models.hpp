@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <string>
 
+
 using namespace std;
 
 class UserStore;
@@ -18,11 +19,13 @@ public:
     int         port;
     pthread_t  *thread_id;
     int         channel;
+    int         pipe_fd[2];
 
-    Connection(char *address, int port, int channel);
+    Connection(char *address, int port, int channel, int *pipe_fd);
     void   set_thread_id(pthread_t *thread_id);
     string get_full_address();
     void   set_session_type(SessionType session_type);
+    void   get_conection_info();
 };
 
 #endif

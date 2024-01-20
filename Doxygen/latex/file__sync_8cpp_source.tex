@@ -1,0 +1,56 @@
+\doxysection{file\+\_\+sync.\+cpp}
+\hypertarget{file__sync_8cpp_source}{}\label{file__sync_8cpp_source}\index{src/server/eventhub/file\_sync.cpp@{src/server/eventhub/file\_sync.cpp}}
+\mbox{\hyperlink{file__sync_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}../../common/vars.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{file__sync_8hpp}{file\_sync.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00011}00011\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00013}\mbox{\hyperlink{class_file_sync_a560da8b2601d711d4547ebb681e557f5}{00013}}\ \mbox{\hyperlink{class_file_sync_a560da8b2601d711d4547ebb681e557f5}{FileSync::FileSync}}(shared\_ptr<ServerContext>\ context)\ \{}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00014}00014\ \ \ \ \ this-\/>context\ =\ context;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00017}\mbox{\hyperlink{class_file_sync_a624cc7098a3554dfae3a49c0294cc6b8}{00017}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_file_sync_a624cc7098a3554dfae3a49c0294cc6b8}{FileSync::sync\_all}}()\ \{}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Connected\ to\ filesync"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username\ =\ context-\/>device-\/>username;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ sync\_dir\ =\ \mbox{\hyperlink{class_file_handler_a3a63215b8ffb2f5af27623a618e66a90}{FileHandler::get\_sync\_dir}}(username,\ \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08af12637d7516a570d5309d5176a3a16c5}{DIR\_SERVER}});}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00022}00022\ \ \ \ \ vector<string>\ files\ \ \ \ =\ \mbox{\hyperlink{class_file_handler_a225fb8c6507571c95ce7041e2255a487}{FileHandler::list\_files}}(sync\_dir);}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00024}00024\ \ \ \ \ vector<string>::iterator\ filename;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00025}00025\ \ \ \ \ unique\_ptr<FileHandler>\ file\_handler(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_file_handler}{FileHandler}}(sync\_dir));}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00026}00026\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (filename\ =\ files.begin();\ filename\ !=\ files.end();\ filename++)\ \{}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ oss\ <<\ sync\_dir\ <<\ \textcolor{stringliteral}{"{}/"{}}\ <<\ *filename;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ filepath\ =\ oss.str();}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a2559ecf87f9e6b5c0adb606d1024e881}{PLOGD}}\ <<\ \textcolor{stringliteral}{"{}File:\ "{}}\ <<\ filepath\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ file\_handler-\/>open(filepath);}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ file\_handler-\/>send(context-\/>socket,\ context-\/>connection-\/>channel);}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00035}00035\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}End\ of\ filesync\ cycle"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00038}\mbox{\hyperlink{class_file_sync_ad54fa4692fd325b6cf17b2d5d24a7b77}{00038}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_file_sync_ad54fa4692fd325b6cf17b2d5d24a7b77}{FileSync::loop}}()\ \{}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00039}00039\ \ \ \ \ this-\/>\mbox{\hyperlink{class_file_sync_a624cc7098a3554dfae3a49c0294cc6b8}{sync\_all}}();}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00040}00040\ \ \ \ \ shared\_ptr<Socket>\ \ socket\ \ =\ this-\/>context-\/>socket;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ channel\ =\ this-\/>context-\/>connection-\/>channel;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00042}00042\ \ \ \ \ shared\_ptr<uint8\_t>\ buffer((uint8\_t\ *)calloc(\mbox{\hyperlink{vars_8hpp_a6b20d41d6252e9871430c242cb1a56e7}{BUFFER\_SIZE}},\ \textcolor{keyword}{sizeof}(uint8\_t)));}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00043}00043\ \ \ \ \ close(context-\/>connection-\/>pipe\_fd[1]);}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00044}00044\ \ \ \ \ read(context-\/>connection-\/>pipe\_fd[0],\ buffer.get(),\ \mbox{\hyperlink{vars_8hpp_a6b20d41d6252e9871430c242cb1a56e7}{BUFFER\_SIZE}}\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00045}00045\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Received\ filename\ "{}}\ <<\ buffer\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00046}00046\ \ \ \ \ \textcolor{comment}{//\ while\ (context-\/>socket-\/>get\_message\_sync(buffer.get(),\ context-\/>connection-\/>channel)\ !=\ 0)\ \{}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00047}00047\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ PLOGI\ <<\ "{}Filesync\ waiting\ on\ channel\ "{}\ <<\ channel\ <<\ "{}..."{}\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ sleep(1);}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{file__sync_8cpp_source_l00050}00050\ \}}
+
+\end{DoxyCode}

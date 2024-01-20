@@ -1,0 +1,438 @@
+\doxysection{Record.\+h}
+\hypertarget{_record_8h_source}{}\label{_record_8h_source}\index{src/include/plog/Record.h@{src/include/plog/Record.h}}
+\mbox{\hyperlink{_record_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <cstdarg>}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_severity_8h}{plog/Severity.h}}>}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_util_8h}{plog/Util.h}}>}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00006}00006\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus\_cli}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <vcclr.h>}\ \ \textcolor{comment}{//\ For\ PtrToStringChars}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00008}00008\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00010}00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplog}{plog}}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00012}\mbox{\hyperlink{namespaceplog_1_1detail}{00012}}\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00013}00013\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00014}00014\ \textcolor{preprocessor}{\#if\ !defined(\_MSC\_VER)\ ||\ \_MSC\_VER\ >\ 1400\ }\textcolor{comment}{//\ MSVC\ 2005\ doesn't\ understand\ \`{}enableIf`,\ so\ drop\ all\ \`{}meta`}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00015}\mbox{\hyperlink{namespaceplog_1_1detail_1_1meta}{00015}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{namespace\ }meta}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00016}00016\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00018}\mbox{\hyperlink{namespaceplog_1_1detail_1_1meta_a21faefe27a72dffd4c3cfcc9b968510a}{00018}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classplog_1_1_console_appender}{T}}\&\ \mbox{\hyperlink{namespaceplog_1_1detail_1_1meta_a21faefe27a72dffd4c3cfcc9b968510a}{declval}}()}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00020}00020\ \textcolor{preprocessor}{\#ifdef\ \_\_INTEL\_COMPILER}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00021}00021\ \textcolor{preprocessor}{\#\ \ \ \ pragma\ warning(suppress:\ 327)\ }\textcolor{comment}{//\ NULL\ reference\ is\ not\ allowed}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00022}00022\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{reinterpret\_cast<}\mbox{\hyperlink{classplog_1_1_console_appender}{T}}*\textcolor{keyword}{>}(0);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{bool}\ B,\ \textcolor{keyword}{class}\ T\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00027}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{00027}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{enableIf}}\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00030}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if_3_01true_00_01_t_01_4_a4cf37935da91e50a37d730841c1c7616}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{enableIf}}<\mbox{\hyperlink{classplog_1_1_console_appender}{true}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{T}}>\ \{\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{classplog_1_1_console_appender}{T}}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if_3_01true_00_01_t_01_4_a4cf37935da91e50a37d730841c1c7616}{type}};\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00032}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_no_af3efc9bfa66b83d33d39cf05e0d63814}{00032}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_no}{No}}\ \ \{\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_no_af3efc9bfa66b83d33d39cf05e0d63814}{a}}[1];\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00033}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes_a4d94fb2cfb920c46edb49243f1682bd3}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes}{Yes}}\ \{\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes_a4d94fb2cfb920c46edb49243f1682bd3}{a}}[2];\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ From,\ \textcolor{keyword}{class}\ To>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00036}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible}{isConvertible}}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \`{}+\ sizeof(U*)`\ is\ required\ for\ GCC\ 4.5-\/4.7}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ U>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00040}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_aef0c8839c8f24cef70fb89e6abade36b}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{classplog_1_1_console_appender}{enableIf<!!(sizeof(static\_cast<To>}}(meta::declval<U>()))\ +\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classplog_1_1_console_appender}{U}}*)),\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes}{Yes}}>::type\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_aef0c8839c8f24cef70fb89e6abade36b}{test}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ U>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00043}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_a9619803cc872fda2fb753781cac652ed}{00043}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_no}{No}}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_a9619803cc872fda2fb753781cac652ed}{test}}(...);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00045}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_a428919df509be96c0860d15909195233ae4cd5c6e4ad3233fd76712d19a312e60}{00045}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ \{\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_a428919df509be96c0860d15909195233ae4cd5c6e4ad3233fd76712d19a312e60}{value}}\ =\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classplog_1_1_console_appender}{test<From>}}(0))\ ==\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes}{Yes}})\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00049}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_n_string}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_n_string}{isConvertibleToNString}}\ :\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible}{isConvertible}}<T,\ util::nstring>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00052}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_string}{00052}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_string}{isConvertibleToString}}\ :\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible}{isConvertible}}<T,\ std::string>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00055}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container}{00055}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container}{isContainer}}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ U>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{meta::enableIf}}<!!(\textcolor{keyword}{sizeof}(}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00059}00059\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)\ \&\&\ \_MSC\_VER\ <\ 1700\ }\textcolor{comment}{//\ MSVC\ 2010\ doesn't\ understand\ \`{}typename\ T::const\_iterator`}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ meta::declval<U>().begin())\ +\ \textcolor{keyword}{sizeof}(meta::declval<U>().end()}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00061}00061\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ U::const\_iterator}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00063}00063\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00064}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container_ae5fcebf4aca601fcf29e8b7e4d91a775}{00064}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )),\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes}{Yes}}>::type\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container_ae5fcebf4aca601fcf29e8b7e4d91a775}{test}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ U>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00067}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container_a8cc19495a6d99fd44f443a6cdf3ccc1b}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_no}{No}}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container_a8cc19495a6d99fd44f443a6cdf3ccc1b}{test}}(...);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00069}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container_adbc9ecff2119a46e85b9458ffa0ff66da0726c9d3aea18111a4f90fa928911289}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ \{\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container_adbc9ecff2119a46e85b9458ffa0ff66da0726c9d3aea18111a4f90fa928911289}{value}}\ =\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classplog_1_1_console_appender}{test<T>}}(0))\ ==\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes}{Yes}})\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Detects\ \`{}std::filesystem::path`\ and\ \`{}boost::filesystem::path`.\ They\ look\ like\ containers}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ but\ we\ don't\ want\ to\ treat\ them\ as\ containers,\ so\ we\ use\ this\ detector\ to\ filter\ them\ out.}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00075}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path}{00075}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path}{isFilesystemPath}}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ U>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00078}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path_ab8327bb577a4b225bd083cc23c344311}{00078}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{meta::enableIf<!!(sizeof(meta::declval<U>}}().preferred\_separator)),\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes}{Yes}}>::type\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path_ab8327bb577a4b225bd083cc23c344311}{test}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ U>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00081}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path_ad7ab2fec8f703fa69993e8ddc76c87fb}{00081}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_no}{No}}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path_ad7ab2fec8f703fa69993e8ddc76c87fb}{test}}(...);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00083}\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path_a99d6436cce15c4070146df25fdbceb21aee9b155013939d377dccc4607f4dc40d}{00083}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ \{\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path_a99d6436cce15c4070146df25fdbceb21aee9b155013939d377dccc4607f4dc40d}{value}}\ =\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classplog_1_1_console_appender}{test<T>}}(0))\ ==\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes}{Yes}})\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00086}00086\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Stream\ output\ operators\ as\ free\ functions}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00091}00091\ \textcolor{preprocessor}{\#if\ PLOG\_ENABLE\_WCHAR\_INPUT}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{wchar\_t}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}\ ?\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}\ :\ \mbox{\hyperlink{classplog_1_1_console_appender}{L}}\textcolor{stringliteral}{"{}(null)"{}};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00096}00096\ \textcolor{preprocessor}{\#\ \ \ ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00097}00097\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ if\ PLOG\_CHAR\_IS\_UTF8}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ std::operator<<(\mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ util::toNarrow(\mbox{\hyperlink{classplog_1_1_console_appender}{data}},\ codePage::kUTF8));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00099}00099\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ std::operator<<(\mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}});}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00101}00101\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00102}00102\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ std::operator<<(\mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ util::toNarrow(\mbox{\hyperlink{classplog_1_1_console_appender}{data}}));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00104}00104\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ stream,\ \textcolor{keywordtype}{wchar\_t}*\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ plog::detail::operator<<(stream,\ const\_cast<const\ wchar\_t*>(data));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ stream,\ \textcolor{keyword}{const}\ std::wstring\&\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{plog::detail::operator<<}}(stream,\ data.c\_str());}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00116}00116\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00118}\mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{00118}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}\ ?\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}\ :\ \textcolor{stringliteral}{"{}(null)"{}};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00122}00122\ \textcolor{preprocessor}{\#if\ defined(\_WIN32)\ \&\&\ defined(\_\_BORLANDC\_\_)}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00123}00123\ \textcolor{preprocessor}{\#\ \ \ if\ PLOG\_CHAR\_IS\_UTF8}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00125}00125\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ util::toWide(\mbox{\hyperlink{classplog_1_1_console_appender}{data}});}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00127}00127\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00128}00128\ \textcolor{preprocessor}{\#elif\ defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00129}00129\ \textcolor{preprocessor}{\#\ \ \ if\ PLOG\_CHAR\_IS\_UTF8}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ std::operator<<(\mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}});}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00131}00131\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ std::operator<<(\mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ util::toWide(\mbox{\hyperlink{classplog_1_1_console_appender}{data}}));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00133}00133\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00134}00134\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ std::operator<<(\mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}});}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00136}00136\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00139}\mbox{\hyperlink{namespaceplog_1_1detail_a431755f073dd384b2ac4a1c26a6db424}{00139}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ plog::detail::operator<<(stream,\ const\_cast<const\ char*>(\mbox{\hyperlink{classplog_1_1_console_appender}{data}}));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00144}\mbox{\hyperlink{namespaceplog_1_1detail_a08e29e2f233136bb39e2ae4347eb76aa}{00144}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{plog::detail::operator<<}}(\mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}.c\_str());}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00149}00149\ \textcolor{preprocessor}{\#ifdef\ \_\_cpp\_char8\_t}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char8\_t}*\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00152}00152\ \textcolor{preprocessor}{\#\ \ \ if\ PLOG\_CHAR\_IS\_UTF8}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ plog::detail::operator<<(stream,\ reinterpret\_cast<const\ char*>(\mbox{\hyperlink{classplog_1_1_console_appender}{data}}));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00154}00154\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ plog::detail::operator<<(stream,\ util::toWide(reinterpret\_cast<const\ char*>(\mbox{\hyperlink{classplog_1_1_console_appender}{data}}),\ codePage::kUTF8));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00156}00156\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00158}00158\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\_\_cpp\_char8\_t}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ \`{}std::pair`}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T1,\ \textcolor{keyword}{class}\ T2>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00162}\mbox{\hyperlink{namespaceplog_1_1detail_a3edd903fe5b72c3a95db30d64f3146f6}{00162}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \textcolor{keyword}{const}\ std::pair<T1,\ T2>\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}.first;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ \textcolor{stringliteral}{"{}:"{}};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}.second;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00169}00169\ \textcolor{preprocessor}{\#if\ defined(\_\_clang\_\_)\ ||\ !defined(\_\_GNUC\_\_)\ ||\ (\_\_GNUC\_\_\ *\ 100\ +\ \_\_GNUC\_MINOR\_\_)\ >=\ 405\ }\textcolor{comment}{//\ skip\ for\ GCC\ <\ 4.5\ due\ to\ https://gcc.gnu.org/bugzilla/show\_bug.cgi?id=38600}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00170}00170\ \textcolor{preprocessor}{\#if\ !defined(\_MSC\_VER)\ ||\ \_MSC\_VER\ >\ 1400\ }\textcolor{comment}{//\ MSVC\ 2005\ doesn't\ understand\ \`{}enableIf`,\ so\ drop\ all\ \`{}meta`}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ data\ that\ can\ be\ casted\ to\ \`{}std::basic\_string`.}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00173}\mbox{\hyperlink{namespaceplog_1_1detail_a493b8959a322fad2a809a4521b6d9a24}{00173}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{meta::enableIf<meta::isConvertibleToNString<T>::value}},\ \textcolor{keywordtype}{void}>::type\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{T}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ plog::detail::operator<<(stream,\ static\_cast<util::nstring>(\mbox{\hyperlink{classplog_1_1_console_appender}{data}}));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ std\ containers}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ meta::enableIf<meta::isContainer<T>::value\ \&\&}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ !\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_a428919df509be96c0860d15909195233ae4cd5c6e4ad3233fd76712d19a312e60}{meta::isConvertibleToNString<T>::value}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ !\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_a428919df509be96c0860d15909195233ae4cd5c6e4ad3233fd76712d19a312e60}{meta::isConvertibleToString<T>::value}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00183}\mbox{\hyperlink{namespaceplog_1_1detail_a74e144f404aaf34f846ed48a3fa5923e}{00183}}\ \ \ \ \ \ \ \ \ \ \ \ \ !\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path}{meta::isFilesystemPath<T>::value}},\ \textcolor{keywordtype}{void}>::type\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_console_appender}{T}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ \textcolor{stringliteral}{"{}["{}};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{typename}\ T::const\_iterator\ \mbox{\hyperlink{classplog_1_1_console_appender}{it}}\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}.begin();\ \mbox{\hyperlink{classplog_1_1_console_appender}{it}}\ !=\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}.end();)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ *\mbox{\hyperlink{classplog_1_1_console_appender}{it}};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (++\mbox{\hyperlink{classplog_1_1_console_appender}{it}}\ ==\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}}.end())}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ \textcolor{stringliteral}{"{},\ "{}};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}}\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00201}00201\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00202}00202\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00203}00203\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00204}00204\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus\_cli}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util::nostringstream}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{stream}},\ System::String\string^\ \mbox{\hyperlink{classplog_1_1_console_appender}{data}})}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ cli::pin\_ptr<const\ System::Char>\ \mbox{\hyperlink{classplog_1_1_console_appender}{ptr}}\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{PtrToStringChars}}(\mbox{\hyperlink{classplog_1_1_console_appender}{data}});}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ plog::detail::operator<<(stream,\ static\_cast<const\ wchar\_t*>(\mbox{\hyperlink{classplog_1_1_console_appender}{ptr}}));}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00210}00210\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00212}00212\ \textcolor{preprocessor}{\#if\ defined(\_WIN32)\ \&\&\ (!defined(\_MSC\_VER)\ ||\ \_MSC\_VER\ >\ 1400)\ }\textcolor{comment}{//\ MSVC\ 2005\ doesn't\ understand\ \`{}enableIf`,\ so\ drop\ all\ \`{}meta`}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \textcolor{keyword}{namespace\ }meta}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{bool}\ Value>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }valueType\ \{\ \textcolor{keyword}{enum}\ \{\ value\ =\ Value\ \};\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ Stream>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ No\ \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{operator<<}}(Stream\&,\ \textcolor{keyword}{const}\ T\&);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ Stream>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }isStreamable\ :\ valueType<sizeof(operator<<(meta::declval<Stream>(),\ meta::declval<const\ T>()))\ !=\ sizeof(No)>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ template<class\ Stream>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ struct\ isStreamable<std::ios\_base\&\ PLOG\_CDECL\ (std::ios\_base\&),\ Stream>\ :\ valueType<true>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ template<class\ Stream,\ size\_t\ N>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ struct\ isStreamable<wchar\_t[N],\ Stream>\ :\ valueType<false>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ template<class\ Stream,\ size\_t\ N>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ struct\ isStreamable<const\ wchar\_t[N],\ Stream>\ :\ valueType<false>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ meta\ doesn't\ work\ well\ for\ deleted\ functions\ and\ C++20\ has\ \`{}operator<<(std::ostream\&,\ const\ wchar\_t*)\ =\ delete`\ so\ exlicitly\ define\ it}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ template<>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ struct\ isStreamable<const\ wchar\_t*,\ std::ostream>\ :\ valueType<false>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00237}00237\ \#\ \ \ ifdef\ \_\_cpp\_char8\_t}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ meta\ doesn't\ work\ well\ for\ deleted\ functions\ and\ C++20\ has\ \`{}operator<<(std::ostream\&,\ const\ char8\_t*)\ =\ delete`\ so\ exlicitly\ define\ it}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ template<class\ Stream,\ size\_t\ N>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ struct\ isStreamable<char8\_t[N],\ Stream>\ :\ valueType<false>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ template<class\ Stream>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ struct\ isStreamable<const\ char8\_t*,\ Stream>\ :\ valueType<false>\ \{\};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00244}00244\ \#\ \ \ endif\ \textcolor{comment}{//\_\_cpp\_char8\_t}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ template<class\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ inline\ typename\ meta::enableIf<meta::isStreamable<T,\ std::ostream>::value\ \&\&\ !meta::isStreamable<T,\ std::wostream>::value,\ void>::type\ operator<<(std::wostringstream\&\ stream,\ const\ T\&\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ std::ostringstream\ ss;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ ss\ <<\ data;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ stream\ <<\ ss.str();}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00254}00254\ \#endif}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00255}00255\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00257}\mbox{\hyperlink{classplog_1_1_record}{00257}}\ \ \ \ \ class\ Record}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00258}00258\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00259}00259\ \ \ \ \ public:}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00260}\mbox{\hyperlink{classplog_1_1_record_a42ce41ac28de481988fd1011b841be12}{00260}}\ \ \ \ \ \ \ \ \ Record(Severity\ severity,\ const\ char*\ func,\ size\_t\ line,\ const\ char*\ file,\ const\ void*\ object,\ int\ instanceId)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ :\ m\_severity(severity),\ m\_tid(util::gettid()),\ m\_object(object),\ m\_line(line),\ m\_func(func),\ m\_file(file),\ m\_instanceId(instanceId)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ util::ftime(\&m\_time);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00266}\mbox{\hyperlink{classplog_1_1_record_a75170639d4291fc30546d425fd56d249}{00266}}\ \ \ \ \ \ \ \ \ Record\&\ ref()}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Stream\ output\ operators}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00274}\mbox{\hyperlink{classplog_1_1_record_a83c92b66b178e5a790df094f67c41a6f}{00274}}\ \ \ \ \ \ \ \ \ Record\&\ operator<<(char\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ char\ str[]\ =\ \{\ data,\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this\ <<\ str;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00279}00279\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00280}00280\ \#if\ PLOG\_ENABLE\_WCHAR\_INPUT}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ Record\&\ operator<<(wchar\_t\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ wchar\_t\ str[]\ =\ \{\ data,\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this\ <<\ str;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00286}00286\ \#endif}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00287}00287\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00288}\mbox{\hyperlink{classplog_1_1_record_ac9118d6e182e78e42ec4c69c2825e8ef}{00288}}\ \ \ \ \ \ \ \ \ Record\&\ operator<<(util::nostream\&\ (PLOG\_CDECL\ *data)(util::nostream\&))}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ m\_message\ <<\ data;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00294}00294\ \#ifdef\ QT\_VERSION}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ Record\&\ operator<<(const\ QString\&\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00297}00297\ \#\ \ \ if\ PLOG\_CHAR\_IS\_UTF8}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this\ <<\ data.toStdString();}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00299}00299\ \#\ \ \ else}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this\ <<\ data.toStdWString();}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00301}00301\ \#\ \ \ endif}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00304}00304\ \#\ \ \ if\ QT\_VERSION\ <\ 0x060000}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00305}00305\ \ \ \ \ \ \ \ \ Record\&\ operator<<(const\ QStringRef\&\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this\ <<\ data.toString();}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00309}00309\ \#\ \ \ endif}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00310}00310\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00311}00311\ \#\ \ \ ifdef\ QSTRINGVIEW\_H}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ Record\&\ operator<<(QStringView\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this\ <<\ data.toString();}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00316}00316\ \#\ \ \ endif}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00317}00317\ \#endif}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00318}00318\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00319}00319\ \ \ \ \ \ \ \ \ template<typename\ T>}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00320}\mbox{\hyperlink{classplog_1_1_record_a00a92aae6055161af933e9730f8217d1}{00320}}\ \ \ \ \ \ \ \ \ Record\&\ operator<<(const\ T\&\ data)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ using\ namespace\ plog::detail;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00323}00323\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ m\_message\ <<\ data;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00327}00327\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00328}00328\ \#ifndef\ \_\_cplusplus\_cli}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00329}\mbox{\hyperlink{classplog_1_1_record_a6559ffc26581083e3ab68f8d8d3c8ed9}{00329}}\ \ \ \ \ \ \ \ \ Record\&\ printf(const\ char*\ format,\ ...)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ using\ namespace\ util;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ char*\ str\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ va\_list\ ap;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ va\_start(ap,\ format);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ int\ len\ =\ vasprintf(\&str,\ format,\ ap);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ static\_cast<void>(len);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ va\_end(ap);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00340}00340\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ *this\ <<\ str;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ free(str);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00343}00343\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00345}00345\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00347}00347\ \#ifdef\ \_WIN32}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00348}00348\ \ \ \ \ \ \ \ \ Record\&\ printf(const\ wchar\_t*\ format,\ ...)}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00349}00349\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ using\ namespace\ util;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00351}00351\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ wchar\_t*\ str\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ va\_list\ ap;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00354}00354\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ va\_start(ap,\ format);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ int\ len\ =\ vaswprintf(\&str,\ format,\ ap);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ static\_cast<void>(len);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ va\_end(ap);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ *this\ <<\ str;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ free(str);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ return\ *this;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00365}00365\ \#endif}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00366}00366\ \#endif\ \textcolor{comment}{//\_\_cplusplus\_cli}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00367}00367\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00369}00369\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00371}\mbox{\hyperlink{classplog_1_1_record_ae209db8c07831c35a515035d3d731ba2}{00371}}\ \ \ \ \ \ \ \ \ virtual\ const\ util::Time\&\ getTime()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00372}00372\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_time;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00374}00374\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00375}00375\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00376}\mbox{\hyperlink{classplog_1_1_record_ae4dc669ba3fe44a922f7b0f0c7f8a0da}{00376}}\ \ \ \ \ \ \ \ \ virtual\ Severity\ getSeverity()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00377}00377\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_severity;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00379}00379\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00380}00380\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00381}\mbox{\hyperlink{classplog_1_1_record_a1eb389624fef0f4d27f307510cfd82ef}{00381}}\ \ \ \ \ \ \ \ \ virtual\ unsigned\ int\ getTid()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00382}00382\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_tid;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00384}00384\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00385}00385\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00386}\mbox{\hyperlink{classplog_1_1_record_ac0441ee0b7915657d4885aa0d3f2a941}{00386}}\ \ \ \ \ \ \ \ \ virtual\ const\ void*\ getObject()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00387}00387\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_object;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00389}00389\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00390}00390\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00391}\mbox{\hyperlink{classplog_1_1_record_ab5c1e137116536fe49e9f50bb441cb8b}{00391}}\ \ \ \ \ \ \ \ \ virtual\ size\_t\ getLine()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00392}00392\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_line;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00394}00394\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00396}\mbox{\hyperlink{classplog_1_1_record_a0da4d70ff45932bafaa28927eff554fe}{00396}}\ \ \ \ \ \ \ \ \ virtual\ const\ util::nchar*\ getMessage()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00397}00397\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ m\_messageStr\ =\ m\_message.str();}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_messageStr.c\_str();}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00400}00400\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00401}00401\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00402}\mbox{\hyperlink{classplog_1_1_record_a5da59bd45e3b983076987ffca2f16b25}{00402}}\ \ \ \ \ \ \ \ \ virtual\ const\ char*\ getFunc()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00403}00403\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ m\_funcStr\ =\ util::processFuncName(m\_func);}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_funcStr.c\_str();}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00406}00406\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00407}00407\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00408}\mbox{\hyperlink{classplog_1_1_record_aed55bd27308b2293927630ad54e61138}{00408}}\ \ \ \ \ \ \ \ \ virtual\ const\ char*\ getFile()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00409}00409\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_file;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00411}00411\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00412}00412\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00413}\mbox{\hyperlink{classplog_1_1_record_a7f8e9024b9eec97bef296f26ac017899}{00413}}\ \ \ \ \ \ \ \ \ virtual\ \string~Record()\ \textcolor{comment}{//\ virtual\ destructor\ to\ satisfy\ -\/Wnon-\/virtual-\/dtor\ warning}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00414}00414\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00415}00415\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00417}\mbox{\hyperlink{classplog_1_1_record_ae458a3abd76950e8130e6fc60001bb25}{00417}}\ \ \ \ \ \ \ \ \ virtual\ int\ getInstanceId()\ const}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00418}00418\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ return\ m\_instanceId;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00420}00420\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00421}00421\ }
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00422}00422\ \ \ \ \ private:}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00423}00423\ \ \ \ \ \ \ \ \ util::Time\ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_time;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00424}00424\ \ \ \ \ \ \ \ \ const\ Severity\ \ \ \ \ \ \ \ \ \ m\_severity;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00425}00425\ \ \ \ \ \ \ \ \ const\ unsigned\ int\ \ \ \ \ \ m\_tid;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00426}00426\ \ \ \ \ \ \ \ \ const\ void*\ const\ \ \ \ \ \ \ m\_object;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00427}00427\ \ \ \ \ \ \ \ \ const\ size\_t\ \ \ \ \ \ \ \ \ \ \ \ m\_line;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00428}00428\ \ \ \ \ \ \ \ \ util::nostringstream\ \ \ \ m\_message;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00429}00429\ \ \ \ \ \ \ \ \ const\ char*\ const\ \ \ \ \ \ \ m\_func;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00430}00430\ \ \ \ \ \ \ \ \ const\ char*\ const\ \ \ \ \ \ \ m\_file;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00431}00431\ \ \ \ \ \ \ \ \ const\ int\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_instanceId;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00432}00432\ \ \ \ \ \ \ \ \ mutable\ std::string\ \ \ \ \ m\_funcStr;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00433}00433\ \ \ \ \ \ \ \ \ mutable\ util::nstring\ \ \ m\_messageStr;}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00434}00434\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_record_8h_source_l00435}00435\ \}}
+
+\end{DoxyCode}

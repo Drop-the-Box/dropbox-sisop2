@@ -9,6 +9,8 @@ services:
     command: bash -c "./scripts/run_server.sh"
     networks:
       - dtb
+    ports:
+      - 6999:6999
     volumes:
       - ./:/code
       - /code/.git
@@ -38,7 +40,7 @@ services:
     stdin_open: true
     tty: true
     deploy:
-      replicas: 3
+      replicas: 1
     depends_on:
       - server
 networks:

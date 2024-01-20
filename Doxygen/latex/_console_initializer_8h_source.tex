@@ -1,0 +1,27 @@
+\doxysection{Console\+Initializer.\+h}
+\hypertarget{_console_initializer_8h_source}{}\label{_console_initializer_8h_source}\index{src/include/plog/Initializers/ConsoleInitializer.h@{src/include/plog/Initializers/ConsoleInitializer.h}}
+\mbox{\hyperlink{_console_initializer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_color_console_appender_8h}{plog/Appenders/ColorConsoleAppender.h}}>}}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_init_8h}{plog/Init.h}}>}}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00005}00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplog}{plog}}}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00006}00006\ \{}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00008}00008\ \ \ \ \ \textcolor{comment}{//\ ColorConsoleAppender\ with\ any\ Formatter}}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Formatter,\ \textcolor{keywordtype}{int}\ instanceId>}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00011}\mbox{\hyperlink{namespaceplog_a2e5f7d3b1c215af58b0a9842066f1476}{00011}}\ \ \ \ \ \mbox{\hyperlink{_util_8h_a2c3b71932c85110f788ece8a0697ef3f}{PLOG\_LINKAGE\_HIDDEN}}\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classplog_1_1_console_appender}{Logger<instanceId>}}\&\ \mbox{\hyperlink{namespaceplog_a2a5d0e6e4aef59555ac731272e6cde97}{init}}(\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{Severity}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{maxSeverity}},\ \mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7}{OutputStream}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{outputStream}})}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00012}00012\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classplog_1_1_console_appender}{ColorConsoleAppender<Formatter>}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{appender}}(\mbox{\hyperlink{classplog_1_1_console_appender}{outputStream}});}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classplog_1_1_console_appender}{init<instanceId>}}(\mbox{\hyperlink{classplog_1_1_console_appender}{maxSeverity}},\ \&\mbox{\hyperlink{classplog_1_1_console_appender}{appender}});}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00015}00015\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Formatter>}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00018}\mbox{\hyperlink{namespaceplog_a5e9ab7deaee8f2c65a928f64dec8f63f}{00018}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classplog_1_1_console_appender}{Logger<PLOG\_DEFAULT\_INSTANCE\_ID>}}\&\ \mbox{\hyperlink{namespaceplog_a2a5d0e6e4aef59555ac731272e6cde97}{init}}(\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{Severity}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{maxSeverity}},\ \mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7}{OutputStream}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{outputStream}})}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00019}00019\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classplog_1_1_console_appender}{init<Formatter,\ PLOG\_DEFAULT\_INSTANCE\_ID>}}(\mbox{\hyperlink{classplog_1_1_console_appender}{maxSeverity}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{outputStream}});}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00021}00021\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_console_initializer_8h_source_l00022}00022\ \}}
+
+\end{DoxyCode}

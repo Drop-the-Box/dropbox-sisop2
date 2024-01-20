@@ -1,0 +1,199 @@
+\doxysection{File\+Handler Class Reference}
+\hypertarget{class_file_handler}{}\label{class_file_handler}\index{FileHandler@{FileHandler}}
+
+
+{\ttfamily \#include $<$file\+\_\+io.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_file_handler_a85c4c37e48f96acac4b702b23f7e8dd0}{File\+Handler}} (const string work\+\_\+dir)
+\item 
+\mbox{\hyperlink{class_file_handler_a1ce10cd0ad31b313a8d526fba6f1e676}{\texorpdfstring{$\sim$}{\string~}\+File\+Handler}} ()
+\item 
+void \mbox{\hyperlink{class_file_handler_a96f77d7db750a6b2de2cff1370040119}{open}} (const string file\+\_\+path)
+\item 
+void \mbox{\hyperlink{class_file_handler_a433c4ffbf9c22fba56fad4ea00a9225c}{close}} ()
+\item 
+bool \mbox{\hyperlink{class_file_handler_a49ed1a95af9d098192d195fe3278a8ff}{send}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$ socket, int channel)
+\item 
+bool \mbox{\hyperlink{class_file_handler_aa2fb9ba1c8f8a2da2cef776b49083651}{delete\+\_\+self}} ()
+\item 
+string \mbox{\hyperlink{class_file_handler_a08d651298f9dc8c97b78943681e0a324}{get\+\_\+digest}} ()
+\item 
+void \mbox{\hyperlink{class_file_handler_ad99bb6d7720c607bcf99d491f4cf379f}{listen\+\_\+file}} ()
+\item 
+long \mbox{\hyperlink{class_file_handler_a3a2a4660b476aa3c5bb9325bd0a57e32}{get\+\_\+size}} ()
+\item 
+void \mbox{\hyperlink{class_file_handler_a55b291e17602732ad060b7bdf1edf8e9}{receive\+\_\+file}} (string work\+\_\+dir, shared\+\_\+ptr$<$ \mbox{\hyperlink{class_file_metadata}{File\+Metadata}} $>$ metadata, shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$ socket, int channel)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static vector$<$ string $>$ \mbox{\hyperlink{class_file_handler_a225fb8c6507571c95ce7041e2255a487}{list\+\_\+files}} (const string directory)
+\item 
+static string \mbox{\hyperlink{class_file_handler_a3a63215b8ffb2f5af27623a618e66a90}{get\+\_\+sync\+\_\+dir}} (string username, \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08}{SYNC\+\_\+\+DIR\+\_\+\+TYPE}} mode=\mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08a345b52815435416eef0db1d14475ce3f}{DIR\+\_\+\+CLIENT}})
+\item 
+static bool \mbox{\hyperlink{class_file_handler_a453387799b143ac5f79ca3d51eff6e7e}{get\+\_\+path\+\_\+metadata}} (const string path, struct stat \texorpdfstring{$\ast$}{*}metadata)
+\item 
+static bool \mbox{\hyperlink{class_file_handler_a3c37c407760daf99cf5a78f716742973}{path\+\_\+exists}} (const string path)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source_l00033}{33}} of file \mbox{\hyperlink{common_2file__io_2file__io_8hpp_source}{file\+\_\+io.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_file_handler_a85c4c37e48f96acac4b702b23f7e8dd0}\label{class_file_handler_a85c4c37e48f96acac4b702b23f7e8dd0} 
+\index{FileHandler@{FileHandler}!FileHandler@{FileHandler}}
+\index{FileHandler@{FileHandler}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{FileHandler()}{FileHandler()}}
+{\footnotesize\ttfamily File\+Handler\+::\+File\+Handler (\begin{DoxyParamCaption}\item[{const string}]{work\+\_\+dir }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00119}{119}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a1ce10cd0ad31b313a8d526fba6f1e676}\label{class_file_handler_a1ce10cd0ad31b313a8d526fba6f1e676} 
+\index{FileHandler@{FileHandler}!````~FileHandler@{\texorpdfstring{$\sim$}{\string~}FileHandler}}
+\index{````~FileHandler@{\texorpdfstring{$\sim$}{\string~}FileHandler}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}FileHandler()}{\string~FileHandler()}}
+{\footnotesize\ttfamily File\+Handler\+::\texorpdfstring{$\sim$}{\string~}\+File\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00125}{125}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_file_handler_a433c4ffbf9c22fba56fad4ea00a9225c}\label{class_file_handler_a433c4ffbf9c22fba56fad4ea00a9225c} 
+\index{FileHandler@{FileHandler}!close@{close}}
+\index{close@{close}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void File\+Handler\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00144}{144}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_aa2fb9ba1c8f8a2da2cef776b49083651}\label{class_file_handler_aa2fb9ba1c8f8a2da2cef776b49083651} 
+\index{FileHandler@{FileHandler}!delete\_self@{delete\_self}}
+\index{delete\_self@{delete\_self}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{delete\_self()}{delete\_self()}}
+{\footnotesize\ttfamily bool File\+Handler\+::delete\+\_\+self (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00209}{209}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a08d651298f9dc8c97b78943681e0a324}\label{class_file_handler_a08d651298f9dc8c97b78943681e0a324} 
+\index{FileHandler@{FileHandler}!get\_digest@{get\_digest}}
+\index{get\_digest@{get\_digest}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{get\_digest()}{get\_digest()}}
+{\footnotesize\ttfamily string File\+Handler\+::get\+\_\+digest (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00238}{238}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a453387799b143ac5f79ca3d51eff6e7e}\label{class_file_handler_a453387799b143ac5f79ca3d51eff6e7e} 
+\index{FileHandler@{FileHandler}!get\_path\_metadata@{get\_path\_metadata}}
+\index{get\_path\_metadata@{get\_path\_metadata}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{get\_path\_metadata()}{get\_path\_metadata()}}
+{\footnotesize\ttfamily bool File\+Handler\+::get\+\_\+path\+\_\+metadata (\begin{DoxyParamCaption}\item[{const string}]{path,  }\item[{struct stat \texorpdfstring{$\ast$}{*}}]{metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00229}{229}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a3a2a4660b476aa3c5bb9325bd0a57e32}\label{class_file_handler_a3a2a4660b476aa3c5bb9325bd0a57e32} 
+\index{FileHandler@{FileHandler}!get\_size@{get\_size}}
+\index{get\_size@{get\_size}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{get\_size()}{get\_size()}}
+{\footnotesize\ttfamily long File\+Handler\+::get\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00221}{221}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a3a63215b8ffb2f5af27623a618e66a90}\label{class_file_handler_a3a63215b8ffb2f5af27623a618e66a90} 
+\index{FileHandler@{FileHandler}!get\_sync\_dir@{get\_sync\_dir}}
+\index{get\_sync\_dir@{get\_sync\_dir}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{get\_sync\_dir()}{get\_sync\_dir()}}
+{\footnotesize\ttfamily string File\+Handler\+::get\+\_\+sync\+\_\+dir (\begin{DoxyParamCaption}\item[{string}]{username,  }\item[{\mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08}{SYNC\+\_\+\+DIR\+\_\+\+TYPE}}}]{mode = {\ttfamily \mbox{\hyperlink{common_2file__io_2file__io_8hpp_a86b7683f6e5dbb6a6b837d7685eb7a08a345b52815435416eef0db1d14475ce3f}{DIR\+\_\+\+CLIENT}}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00247}{247}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a225fb8c6507571c95ce7041e2255a487}\label{class_file_handler_a225fb8c6507571c95ce7041e2255a487} 
+\index{FileHandler@{FileHandler}!list\_files@{list\_files}}
+\index{list\_files@{list\_files}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{list\_files()}{list\_files()}}
+{\footnotesize\ttfamily std\+::vector$<$ string $>$ File\+Handler\+::list\+\_\+files (\begin{DoxyParamCaption}\item[{const string}]{directory }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00148}{148}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_ad99bb6d7720c607bcf99d491f4cf379f}\label{class_file_handler_ad99bb6d7720c607bcf99d491f4cf379f} 
+\index{FileHandler@{FileHandler}!listen\_file@{listen\_file}}
+\index{listen\_file@{listen\_file}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{listen\_file()}{listen\_file()}}
+{\footnotesize\ttfamily void File\+Handler\+::listen\+\_\+file (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00243}{243}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a96f77d7db750a6b2de2cff1370040119}\label{class_file_handler_a96f77d7db750a6b2de2cff1370040119} 
+\index{FileHandler@{FileHandler}!open@{open}}
+\index{open@{open}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void File\+Handler\+::open (\begin{DoxyParamCaption}\item[{const string}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00130}{130}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a3c37c407760daf99cf5a78f716742973}\label{class_file_handler_a3c37c407760daf99cf5a78f716742973} 
+\index{FileHandler@{FileHandler}!path\_exists@{path\_exists}}
+\index{path\_exists@{path\_exists}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{path\_exists()}{path\_exists()}}
+{\footnotesize\ttfamily bool File\+Handler\+::path\+\_\+exists (\begin{DoxyParamCaption}\item[{const string}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00233}{233}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a55b291e17602732ad060b7bdf1edf8e9}\label{class_file_handler_a55b291e17602732ad060b7bdf1edf8e9} 
+\index{FileHandler@{FileHandler}!receive\_file@{receive\_file}}
+\index{receive\_file@{receive\_file}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{receive\_file()}{receive\_file()}}
+{\footnotesize\ttfamily void File\+Handler\+::receive\+\_\+file (\begin{DoxyParamCaption}\item[{string}]{work\+\_\+dir,  }\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{class_file_metadata}{File\+Metadata}} $>$}]{metadata,  }\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$}]{socket,  }\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00270}{270}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+\Hypertarget{class_file_handler_a49ed1a95af9d098192d195fe3278a8ff}\label{class_file_handler_a49ed1a95af9d098192d195fe3278a8ff} 
+\index{FileHandler@{FileHandler}!send@{send}}
+\index{send@{send}!FileHandler@{FileHandler}}
+\doxysubsubsection{\texorpdfstring{send()}{send()}}
+{\footnotesize\ttfamily bool File\+Handler\+::send (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$}]{socket,  }\item[{int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source_l00167}{167}} of file \mbox{\hyperlink{common_2file__io_2file__io_8cpp_source}{file\+\_\+io.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/common/file\+\_\+io/\mbox{\hyperlink{common_2file__io_2file__io_8hpp}{file\+\_\+io.\+hpp}}\item 
+src/common/file\+\_\+io/\mbox{\hyperlink{common_2file__io_2file__io_8cpp}{file\+\_\+io.\+cpp}}\end{DoxyCompactItemize}

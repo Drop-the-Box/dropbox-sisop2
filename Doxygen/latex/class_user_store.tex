@@ -1,0 +1,148 @@
+\doxysection{User\+Store Class Reference}
+\hypertarget{class_user_store}{}\label{class_user_store}\index{UserStore@{UserStore}}
+
+
+{\ttfamily \#include $<$models.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_user_store_a446e1354d30a1ccaa9a5edc0161d00db}{User\+Store}} ()
+\item 
+\mbox{\hyperlink{class_user_store_a0b3234b7497e9dc2e864081cb9d60fe8}{\texorpdfstring{$\sim$}{\string~}\+User\+Store}} ()
+\item 
+map$<$ string, \mbox{\hyperlink{class_device}{Device}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_user_store_a0a9621fe4df531e0784c2acdf9d4b084}{get\+\_\+user\+\_\+devices}} (const string username)
+\item 
+vector$<$ string $>$ \mbox{\hyperlink{class_user_store_a9762e61997a7780a74504fd508d1a8ab}{get\+\_\+connected\+\_\+users}} ()
+\item 
+void \mbox{\hyperlink{class_user_store_a775e74f2c57862f38f9bcecca906d890}{get\+\_\+user\+\_\+devices}} ()
+\item 
+bool \mbox{\hyperlink{class_user_store_aec5ebcf2af0925d5f80bae114e952dc0}{add\+\_\+user}} (const string username)
+\item 
+bool \mbox{\hyperlink{class_user_store_a595e832c5000b2d069e5107b03bbf666}{register\+\_\+device}} (const string username, shared\+\_\+ptr$<$ \mbox{\hyperlink{class_server_context}{Server\+Context}} $>$ context)
+\item 
+bool \mbox{\hyperlink{class_user_store_ae26d60edb2f05ac0f0efe30d860baa73}{register\+\_\+connection}} (const string username, shared\+\_\+ptr$<$ \mbox{\hyperlink{class_server_context}{Server\+Context}} $>$ context)
+\item 
+bool \mbox{\hyperlink{class_user_store_afa7505e0b42b61350d8c613cffed34ae}{unregister\+\_\+connection}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{class_server_context}{Server\+Context}} $>$ context)
+\item 
+\mbox{\hyperlink{class_device}{Device}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_user_store_a85033710c3dd62c19723a6c1d4aa4edb}{get\+\_\+device}} (const string username, const string address)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8hpp_source_l00034}{34}} of file \mbox{\hyperlink{server_2userland_2models_8hpp_source}{models.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_user_store_a446e1354d30a1ccaa9a5edc0161d00db}\label{class_user_store_a446e1354d30a1ccaa9a5edc0161d00db} 
+\index{UserStore@{UserStore}!UserStore@{UserStore}}
+\index{UserStore@{UserStore}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{UserStore()}{UserStore()}}
+{\footnotesize\ttfamily User\+Store\+::\+User\+Store (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_user_store_a0b3234b7497e9dc2e864081cb9d60fe8}\label{class_user_store_a0b3234b7497e9dc2e864081cb9d60fe8} 
+\index{UserStore@{UserStore}!````~UserStore@{\texorpdfstring{$\sim$}{\string~}UserStore}}
+\index{````~UserStore@{\texorpdfstring{$\sim$}{\string~}UserStore}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}UserStore()}{\string~UserStore()}}
+{\footnotesize\ttfamily User\+Store\+::\texorpdfstring{$\sim$}{\string~}\+User\+Store (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_user_store_aec5ebcf2af0925d5f80bae114e952dc0}\label{class_user_store_aec5ebcf2af0925d5f80bae114e952dc0} 
+\index{UserStore@{UserStore}!add\_user@{add\_user}}
+\index{add\_user@{add\_user}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{add\_user()}{add\_user()}}
+{\footnotesize\ttfamily bool User\+Store\+::add\+\_\+user (\begin{DoxyParamCaption}\item[{const string}]{username }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_user_store_a9762e61997a7780a74504fd508d1a8ab}\label{class_user_store_a9762e61997a7780a74504fd508d1a8ab} 
+\index{UserStore@{UserStore}!get\_connected\_users@{get\_connected\_users}}
+\index{get\_connected\_users@{get\_connected\_users}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{get\_connected\_users()}{get\_connected\_users()}}
+{\footnotesize\ttfamily vector$<$ string $>$ User\+Store\+::get\+\_\+connected\+\_\+users (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00149}{149}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_user_store_a85033710c3dd62c19723a6c1d4aa4edb}\label{class_user_store_a85033710c3dd62c19723a6c1d4aa4edb} 
+\index{UserStore@{UserStore}!get\_device@{get\_device}}
+\index{get\_device@{get\_device}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{get\_device()}{get\_device()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_device}{Device}} \texorpdfstring{$\ast$}{*} User\+Store\+::get\+\_\+device (\begin{DoxyParamCaption}\item[{const string}]{username,  }\item[{const string}]{address }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00140}{140}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_user_store_a775e74f2c57862f38f9bcecca906d890}\label{class_user_store_a775e74f2c57862f38f9bcecca906d890} 
+\index{UserStore@{UserStore}!get\_user\_devices@{get\_user\_devices}}
+\index{get\_user\_devices@{get\_user\_devices}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{get\_user\_devices()}{get\_user\_devices()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void User\+Store\+::get\+\_\+user\+\_\+devices (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00159}{159}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_user_store_a0a9621fe4df531e0784c2acdf9d4b084}\label{class_user_store_a0a9621fe4df531e0784c2acdf9d4b084} 
+\index{UserStore@{UserStore}!get\_user\_devices@{get\_user\_devices}}
+\index{get\_user\_devices@{get\_user\_devices}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{get\_user\_devices()}{get\_user\_devices()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily map$<$ string, \mbox{\hyperlink{class_device}{Device}} \texorpdfstring{$\ast$}{*} $>$ User\+Store\+::get\+\_\+user\+\_\+devices (\begin{DoxyParamCaption}\item[{const string}]{username }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00131}{131}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_user_store_ae26d60edb2f05ac0f0efe30d860baa73}\label{class_user_store_ae26d60edb2f05ac0f0efe30d860baa73} 
+\index{UserStore@{UserStore}!register\_connection@{register\_connection}}
+\index{register\_connection@{register\_connection}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{register\_connection()}{register\_connection()}}
+{\footnotesize\ttfamily bool User\+Store\+::register\+\_\+connection (\begin{DoxyParamCaption}\item[{const string}]{username,  }\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{class_server_context}{Server\+Context}} $>$}]{context }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00076}{76}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_user_store_a595e832c5000b2d069e5107b03bbf666}\label{class_user_store_a595e832c5000b2d069e5107b03bbf666} 
+\index{UserStore@{UserStore}!register\_device@{register\_device}}
+\index{register\_device@{register\_device}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{register\_device()}{register\_device()}}
+{\footnotesize\ttfamily bool User\+Store\+::register\+\_\+device (\begin{DoxyParamCaption}\item[{const string}]{username,  }\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{class_server_context}{Server\+Context}} $>$}]{context }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00043}{43}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+\Hypertarget{class_user_store_afa7505e0b42b61350d8c613cffed34ae}\label{class_user_store_afa7505e0b42b61350d8c613cffed34ae} 
+\index{UserStore@{UserStore}!unregister\_connection@{unregister\_connection}}
+\index{unregister\_connection@{unregister\_connection}!UserStore@{UserStore}}
+\doxysubsubsection{\texorpdfstring{unregister\_connection()}{unregister\_connection()}}
+{\footnotesize\ttfamily bool User\+Store\+::unregister\+\_\+connection (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{class_server_context}{Server\+Context}} $>$}]{context }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2userland_2models_8cpp_source_l00104}{104}} of file \mbox{\hyperlink{server_2userland_2models_8cpp_source}{models.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/server/userland/\mbox{\hyperlink{server_2userland_2models_8hpp}{models.\+hpp}}\item 
+src/server/userland/\mbox{\hyperlink{server_2userland_2models_8cpp}{models.\+cpp}}\end{DoxyCompactItemize}

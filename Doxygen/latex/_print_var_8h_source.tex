@@ -1,0 +1,30 @@
+\doxysection{Print\+Var.\+h}
+\hypertarget{_print_var_8h_source}{}\label{_print_var_8h_source}\index{src/include/plog/Helpers/PrintVar.h@{src/include/plog/Helpers/PrintVar.h}}
+\mbox{\hyperlink{_print_var_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00003}\mbox{\hyperlink{_print_var_8h_af5a931034b1ece5a89c6db09dc0ed842}{00003}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_1(a1)\ \#a1\ "{}:\ "{}\ <<\ a1}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00004}\mbox{\hyperlink{_print_var_8h_af1e9a53ddb8fe6e9c02ad0e64e92ea9a}{00004}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_2(a1,\ a2)\ PLOG\_IMPL\_PRINT\_VAR\_1(a1)\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a2)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00005}\mbox{\hyperlink{_print_var_8h_a64d4e355e5976f1a199b3b85781c93cc}{00005}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_3(a1,\ a2,\ a3)\ PLOG\_IMPL\_PRINT\_VAR\_2(a1,\ a2)\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a3)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00006}\mbox{\hyperlink{_print_var_8h_a30547a1b6bb4059571230c61d9d85568}{00006}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_4(a1,\ a2,\ a3,\ a4)\ PLOG\_IMPL\_PRINT\_VAR\_3(a1,\ a2,\ a3)\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a4)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00007}\mbox{\hyperlink{_print_var_8h_a03487bece07ba16e2a1a614daebec3f9}{00007}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_5(a1,\ a2,\ a3,\ a4,\ a5)\ PLOG\_IMPL\_PRINT\_VAR\_4(a1,\ a2,\ a3,\ a4)\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a5)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00008}\mbox{\hyperlink{_print_var_8h_ae6deddaed54beecd53e5c4149aa1e254}{00008}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_6(a1,\ a2,\ a3,\ a4,\ a5,\ a6)\ PLOG\_IMPL\_PRINT\_VAR\_5(a1,\ a2,\ a3,\ a4,\ a5)\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a6)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00009}\mbox{\hyperlink{_print_var_8h_af949bedd0cc94e100c7a762b45ee25b3}{00009}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_7(a1,\ a2,\ a3,\ a4,\ a5,\ a6,\ a7)\ PLOG\_IMPL\_PRINT\_VAR\_6(a1,\ a2,\ a3,\ a4,\ a5,\ a6)\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a7)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00010}\mbox{\hyperlink{_print_var_8h_a525339a2546a43b442294d95e3a5956a}{00010}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_8(a1,\ a2,\ a3,\ a4,\ a5,\ a6,\ a7,\ a8)\ PLOG\_IMPL\_PRINT\_VAR\_7(a1,\ a2,\ a3,\ a4,\ a5,\ a6,\ a7)\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a8)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00011}\mbox{\hyperlink{_print_var_8h_a22a6c6e4312c64fbdb4c987eeea12714}{00011}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_9(a1,\ a2,\ a3,\ a4,\ a5,\ a6,\ a7,\ a8,\ a9)\ PLOG\_IMPL\_PRINT\_VAR\_8(a1,\ a2,\ a3,\ a4,\ a5,\ a6,\ a7,\ a8)\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a9)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00012}\mbox{\hyperlink{_print_var_8h_a27e5e9e8457e9d4066acc9edba4c32c4}{00012}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_TAIL(a)\ <<\ "{},\ "{}\ PLOG\_IMPL\_PRINT\_VAR\_1(a)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00014}\mbox{\hyperlink{_print_var_8h_ab9c3da20f549cb9dea93047a73c3c7d1}{00014}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_EXPAND(x)\ x}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00016}00016\ \textcolor{preprocessor}{\#ifdef\ \_\_GNUC\_\_}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00017}00017\ \textcolor{preprocessor}{\#pragma\ GCC\ system\_header\ }\textcolor{comment}{//\ disable\ warning:\ variadic\ macros\ are\ a\ C99\ feature}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00018}00018\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00020}\mbox{\hyperlink{_print_var_8h_a847ef16feeed17af0c9c76d5b0a7aa70}{00020}}\ \textcolor{preprocessor}{\#define\ PLOG\_IMPL\_PRINT\_VAR\_GET\_MACRO(x1,\ x2,\ x3,\ x4,\ x5,\ x6,\ x7,\ x8,\ x9,\ NAME,\ ...)\ NAME}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00022}\mbox{\hyperlink{_print_var_8h_a0b4713546c1af1c86d4f8edeba06e767}{00022}}\ \textcolor{preprocessor}{\#define\ PLOG\_PRINT\_VAR(...)\ PLOG\_IMPL\_PRINT\_VAR\_EXPAND(PLOG\_IMPL\_PRINT\_VAR\_GET\_MACRO(\_\_VA\_ARGS\_\_,\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00023}00023\ \textcolor{preprocessor}{\ \ \ \ PLOG\_IMPL\_PRINT\_VAR\_9,\ PLOG\_IMPL\_PRINT\_VAR\_8,\ PLOG\_IMPL\_PRINT\_VAR\_7,\ PLOG\_IMPL\_PRINT\_VAR\_6,\ PLOG\_IMPL\_PRINT\_VAR\_5,\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_print_var_8h_source_l00024}00024\ \textcolor{preprocessor}{\ \ \ \ PLOG\_IMPL\_PRINT\_VAR\_4,\ PLOG\_IMPL\_PRINT\_VAR\_3,\ PLOG\_IMPL\_PRINT\_VAR\_2,\ PLOG\_IMPL\_PRINT\_VAR\_1,\ UNUSED)(\_\_VA\_ARGS\_\_))}}
+
+\end{DoxyCode}

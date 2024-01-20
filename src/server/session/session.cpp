@@ -36,7 +36,13 @@ void SessionManager::start() {
             PLOGD << "Connected to " << client_addr << ":" << *client_port << " on channel " << channel << endl;
             channels.insert(channel);
             this->num_threads += 1;
-            shared_ptr<Connection>    connection(new Connection(client_addr, *client_port, channel));
+            PLOGI << "Creating new Connection ..." << endl;
+            int pipe_fd[2];
+            pipe(pipe_fd);
+            shared_ptr<Connection> connection(new Connection(client_addr, *client_port, channel, pipe_fd));
+
+            connection->get_conection_info();
+            
             shared_ptr<ServerContext> context(new ServerContext(socket, connection, storage));
             this->create_session(channel, context);
         }
@@ -144,7 +150,13 @@ Session::Session(shared_ptr<ServerContext> context) {
 }
 
 void Session::run() {
-    PLOGD << "Running session of type " << this->type << endl;
+    string session_type;
+    try {
+        session_type = session_type_map.at(this->type);
+        PLOGW << "Running session of type " << session_type << endl;
+    } catch (const exception &exc) {
+        // blabla
+    }
     switch (type) {
     case FileExchange: {
         unique_ptr<FileSync> file_sync(new FileSync(this->context));

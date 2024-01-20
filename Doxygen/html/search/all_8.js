@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['iappender_0',['IAppender',['../classplog_1_1_i_appender.html',1,'plog']]],
+  ['iappender_2eh_1',['IAppender.h',['../_i_appender_8h.html',1,'']]],
+  ['if_5fplog_2',['IF_PLOG',['../_log_8h.html#a95c08338c3351eab96bd11809eed5cbb',1,'Log.h']]],
+  ['if_5fplog_5f_3',['IF_PLOG_',['../_log_8h.html#a4870c52da6e54e44590a0f291294b132',1,'Log.h']]],
+  ['info_4',['info',['../namespaceplog.html#aedf8d68ce41dbf94f1f150faa06b50f0a53cec741b1a2186167465e39fdd9ff72',1,'plog']]],
+  ['init_5',['init',['../namespaceplog.html#a5e9ab7deaee8f2c65a928f64dec8f63f',1,'plog::init(Severity maxSeverity, OutputStream outputStream)'],['../namespaceplog.html#a2e5f7d3b1c215af58b0a9842066f1476',1,'plog::init(Severity maxSeverity, OutputStream outputStream)'],['../namespaceplog.html#a4abd7b96fae41ac2611e4a0e050fbacb',1,'plog::init(Severity maxSeverity=none, IAppender *appender=NULL)'],['../namespaceplog.html#a2a5d0e6e4aef59555ac731272e6cde97',1,'plog::init(Severity maxSeverity=none, IAppender *appender=NULL)'],['../namespaceplog.html#a2801a9df03849bf352ab611407592961',1,'plog::init(Severity maxSeverity, const util::nchar *fileName, size_t maxFileSize=0, int maxFiles=0)'],['../namespaceplog.html#ac87e4ed7ff6bb30a5c53c3bf6ff6e100',1,'plog::init(Severity maxSeverity, const util::nchar *fileName, size_t maxFileSize=0, int maxFiles=0)'],['../namespaceplog.html#a0c2ecda5b9215f5909d204c18af4d886',1,'plog::init(Severity maxSeverity, const util::nchar *fileName, size_t maxFileSize=0, int maxFiles=0)'],['../namespaceplog.html#aeb6d133b63a4d2664e703c4a9cedb3b5',1,'plog::init(Severity maxSeverity, const util::nchar *fileName, size_t maxFileSize=0, int maxFiles=0)']]],
+  ['init_2eh_6',['Init.h',['../_init_8h.html',1,'']]],
+  ['inotify_7',['inotify',['../class_inotify.html',1,'Inotify'],['../class_inotify.html#abe231fbe0223f0732b7bd5d830caf4fb',1,'Inotify::Inotify()']]],
+  ['inotify_2ecpp_8',['inotify.cpp',['../inotify_8cpp.html',1,'']]],
+  ['inotify_2ehpp_9',['inotify.hpp',['../inotify_8hpp.html',1,'']]],
+  ['inquirer_10',['inquirer',['../classalx_1_1_inquirer.html',1,'alx::Inquirer'],['../classalx_1_1_inquirer.html#a95b8c006a7c6b41bafdf105dc16d6052',1,'alx::Inquirer::Inquirer()']]],
+  ['inquirer_2eh_11',['inquirer.h',['../inquirer_8h.html',1,'']]],
+  ['integer_12',['integer',['../namespacealx.html#a2c68239c0c3e39038e6efa017bcfd42fa157db7df530023575515d366c9b672e8',1,'alx']]],
+  ['interrupt_13',['interrupt',['../class_session_manager.html#a7fdfea5a69ab1f94af97916d51e07c7c',1,'SessionManager::interrupt'],['../class_socket.html#af742590287facc103c02f7d8dc00bea1',1,'Socket::interrupt'],['../client_2session_2session_8cpp.html#abeedec982d6cd374d8f100e3688de085',1,'interrupt:&#160;session.cpp'],['../server_2main_8cpp.html#abeedec982d6cd374d8f100e3688de085',1,'interrupt:&#160;main.cpp']]],
+  ['is_5fconnected_14',['is_connected',['../class_socket.html#ac285e227cb6c9bd82c1b1419364e26e9',1,'Socket']]],
+  ['iscontainer_15',['isContainer',['../structplog_1_1detail_1_1meta_1_1is_container.html',1,'plog::detail::meta']]],
+  ['isconvertible_16',['isConvertible',['../structplog_1_1detail_1_1meta_1_1is_convertible.html',1,'plog::detail::meta']]],
+  ['isconvertible_3c_20t_2c_20std_3a_3astring_20_3e_17',['isConvertible&lt; T, std::string &gt;',['../structplog_1_1detail_1_1meta_1_1is_convertible.html',1,'plog::detail::meta']]],
+  ['isconvertible_3c_20t_2c_20util_3a_3anstring_20_3e_18',['isConvertible&lt; T, util::nstring &gt;',['../structplog_1_1detail_1_1meta_1_1is_convertible.html',1,'plog::detail::meta']]],
+  ['isconvertibletonstring_19',['isConvertibleToNString',['../structplog_1_1detail_1_1meta_1_1is_convertible_to_n_string.html',1,'plog::detail::meta']]],
+  ['isconvertibletostring_20',['isConvertibleToString',['../structplog_1_1detail_1_1meta_1_1is_convertible_to_string.html',1,'plog::detail::meta']]],
+  ['isfilesystempath_21',['isFilesystemPath',['../structplog_1_1detail_1_1meta_1_1is_filesystem_path.html',1,'plog::detail::meta']]]
+];

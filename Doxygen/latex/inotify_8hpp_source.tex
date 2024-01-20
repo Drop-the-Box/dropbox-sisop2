@@ -1,0 +1,38 @@
+\doxysection{inotify.\+hpp}
+\hypertarget{inotify_8hpp_source}{}\label{inotify_8hpp_source}\index{src/common/file\_io/inotify.hpp@{src/common/file\_io/inotify.hpp}}
+\mbox{\hyperlink{inotify_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ INOTIFY\_H}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ INOTIFY\_H}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00003}00003\ \textcolor{comment}{//\ usar\ sempre\ snake\ case\ para\ nomear\ as\ variaveis}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../../common/file\_io/file\_io.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../../common/socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <sys/inotify.h>}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00014}00014\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00016}\mbox{\hyperlink{inotify_8hpp_a228783873815e02b069a286af4512aba}{00016}}\ \textcolor{preprocessor}{\#define\ EVENT\_SIZE\ (sizeof(struct\ inotify\_event))}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00017}\mbox{\hyperlink{inotify_8hpp_a46130dc86f2322714bba26960b64e7bb}{00017}}\ \textcolor{preprocessor}{\#define\ BUFFER\_LEN\ (1024\ *\ (EVENT\_SIZE\ +\ 16))}}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00019}\mbox{\hyperlink{class_inotify}{00019}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_inotify}{Inotify}}\ \{}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00020}00020\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \ \ \ \ \ \ \ *folder\_path;}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file\_descriptor;}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ watch\_descriptor;}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00024}00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00025}\mbox{\hyperlink{class_inotify_a566797cbd1def9731d84940139f30ef8}{00025}}\ \ \ \ \ shared\_ptr<Socket>\ \mbox{\hyperlink{class_inotify_a566797cbd1def9731d84940139f30ef8}{socket}};}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{class_inotify}{Inotify}}(shared\_ptr<Socket>\ \mbox{\hyperlink{class_inotify_a566797cbd1def9731d84940139f30ef8}{socket}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *folder\_path);}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \mbox{\hyperlink{class_inotify_a283f5a2c1129008b56e6feb9722eeb3d}{get\_file\_descriptor}}();}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00028}00028\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \mbox{\hyperlink{class_inotify_a6b6c2652b0f6552b5beb7de45d8677a8}{get\_watch\_descriptor}}();}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_inotify_a44d298bba6b112553ecd26cb34e49f55}{read\_event}}();}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_inotify_a9a7e33ebef0f021ae1f80c51a7aa8c47}{closeInotify}}();}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00031}00031\ \};}
+\DoxyCodeLine{\Hypertarget{inotify_8hpp_source_l00032}00032\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

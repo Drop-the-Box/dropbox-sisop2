@@ -1,0 +1,80 @@
+\doxysection{src/server/main.cpp File Reference}
+\hypertarget{server_2main_8cpp}{}\label{server_2main_8cpp}\index{src/server/main.cpp@{src/server/main.cpp}}
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$plog/\+Appenders/\+Color\+Console\+Appender.\+h$>$}\newline
+{\ttfamily \#include $<$plog/\+Formatters/\+Txt\+Formatter.\+h$>$}\newline
+{\ttfamily \#include $<$plog/\+Init.\+h$>$}\newline
+{\ttfamily \#include $<$plog/\+Log.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include "{}../common/socket\+\_\+io/socket.\+hpp"{}}\newline
+{\ttfamily \#include "{}../common/vars.\+hpp"{}}\newline
+{\ttfamily \#include "{}session/session.\+hpp"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{server_2main_8cpp_a3dfdb78c2c134ab1928430a5aab1d617}{stop\+\_\+execution}} (int signal)
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{server_2main_8cpp_a7c05ff22bef6f2f5c49430606981e3a7}{get\+\_\+ip}} ()
+\item 
+int \mbox{\hyperlink{server_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{server_2main_8cpp_abeedec982d6cd374d8f100e3688de085}{interrupt}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{server_2main_8cpp_a7c05ff22bef6f2f5c49430606981e3a7}\label{server_2main_8cpp_a7c05ff22bef6f2f5c49430606981e3a7} 
+\index{main.cpp@{main.cpp}!get\_ip@{get\_ip}}
+\index{get\_ip@{get\_ip}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_ip()}{get\_ip()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} get\+\_\+ip (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2main_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{server_2main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{server_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{server_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97} 
+\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2main_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{server_2main_8cpp_source}{main.\+cpp}}.
+
+\Hypertarget{server_2main_8cpp_a3dfdb78c2c134ab1928430a5aab1d617}\label{server_2main_8cpp_a3dfdb78c2c134ab1928430a5aab1d617} 
+\index{main.cpp@{main.cpp}!stop\_execution@{stop\_execution}}
+\index{stop\_execution@{stop\_execution}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{stop\_execution()}{stop\_execution()}}
+{\footnotesize\ttfamily void stop\+\_\+execution (\begin{DoxyParamCaption}\item[{int}]{signal }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2main_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{server_2main_8cpp_source}{main.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{server_2main_8cpp_abeedec982d6cd374d8f100e3688de085}\label{server_2main_8cpp_abeedec982d6cd374d8f100e3688de085} 
+\index{main.cpp@{main.cpp}!interrupt@{interrupt}}
+\index{interrupt@{interrupt}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{interrupt}{interrupt}}
+{\footnotesize\ttfamily bool interrupt = false}
+
+
+
+Definition at line \mbox{\hyperlink{server_2main_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{server_2main_8cpp_source}{main.\+cpp}}.
+

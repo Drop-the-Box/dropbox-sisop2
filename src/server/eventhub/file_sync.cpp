@@ -22,15 +22,17 @@ void FileSync::sync_all() {
     vector<string> files    = FileHandler::list_files(sync_dir);
 
     vector<string>::iterator filename;
+    unique_ptr<FileHandler> file_handler(new FileHandler(sync_dir));
+    
     for (filename = files.begin(); filename != files.end(); filename++) {
         ostringstream oss;
         oss << sync_dir << "/" << *filename;
         string filepath = oss.str();
         PLOGD << "File: " << filepath << endl;
-        unique_ptr<FileHandler> file(new FileHandler(filepath));
-        file->send(context->socket, context->connection->channel);
+        file_handler->open(filepath);
+        file_handler->send(context->socket, context->connection->channel);
     }
-    PLOGI << "End of filesync server loop" << endl;
+    PLOGI << "End of filesync cycle" << endl;
 }
 
 void FileSync::loop() {
@@ -38,8 +40,11 @@ void FileSync::loop() {
     shared_ptr<Socket>  socket  = this->context->socket;
     int                 channel = this->context->connection->channel;
     shared_ptr<uint8_t> buffer((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
-    while (context->socket->get_message_sync(buffer.get(), context->connection->channel) != 0) {
-        PLOGI << "Filesync waiting on channel " << channel << "..." << endl;
-        sleep(1);
-    }
+    close(context->connection->pipe_fd[1]);
+    read(context->connection->pipe_fd[0], buffer.get(), BUFFER_SIZE - 1);
+    PLOGI << "Received filename " << buffer << endl;
+    // while (context->socket->get_message_sync(buffer.get(), context->connection->channel) != 0) {
+    //     PLOGI << "Filesync waiting on channel " << channel << "..." << endl;
+    //     sleep(1);
+    // }
 }

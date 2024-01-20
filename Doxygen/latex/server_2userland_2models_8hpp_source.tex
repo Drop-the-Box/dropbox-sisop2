@@ -1,0 +1,59 @@
+\doxysection{models.\+hpp}
+\hypertarget{server_2userland_2models_8hpp_source}{}\label{server_2userland_2models_8hpp_source}\index{src/server/userland/models.hpp@{src/server/userland/models.hpp}}
+\mbox{\hyperlink{server_2userland_2models_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ ULAND\_MODELS\_H}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ ULAND\_MODELS\_H}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <semaphore.h>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}../../common/socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}../session/models.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00010}00010\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00012}00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_session}{Session}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00014}\mbox{\hyperlink{class_device}{00014}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_device}{Device}}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00015}00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00016}\mbox{\hyperlink{class_device_aba662586b8dbc399e49afa93fa8e7200}{00016}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_device_aba662586b8dbc399e49afa93fa8e7200}{address}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00017}\mbox{\hyperlink{class_device_ae7dee2d174c7b93addad886f285549e5}{00017}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_device_ae7dee2d174c7b93addad886f285549e5}{username}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00018}\mbox{\hyperlink{class_device_ab63b76dbdca9ce4b4c25cb30d3c4155c}{00018}}\ \ \ \ \ map<int,\ shared\_ptr<Connection>>\ \mbox{\hyperlink{class_device_ab63b76dbdca9ce4b4c25cb30d3c4155c}{connections}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{class_device}{Device}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_device_ae7dee2d174c7b93addad886f285549e5}{username}},\ shared\_ptr<Connection>\ connection);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00021}00021\ \};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00023}\mbox{\hyperlink{class_server_context}{00023}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_server_context}{ServerContext}}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00024}00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00025}\mbox{\hyperlink{class_server_context_ac5d8af25d24334335e76ac47dd7e3320}{00025}}\ \ \ \ \ \mbox{\hyperlink{class_device}{Device}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{class_server_context_ac5d8af25d24334335e76ac47dd7e3320}{device}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00026}\mbox{\hyperlink{class_server_context_ae5bf69223ebcc1d94da909a89a875902}{00026}}\ \ \ \ \ shared\_ptr<Connection>\ \mbox{\hyperlink{class_server_context_ae5bf69223ebcc1d94da909a89a875902}{connection}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00027}\mbox{\hyperlink{class_server_context_a09470c09b8e14aec518e02fa0c10d295}{00027}}\ \ \ \ \ shared\_ptr<UserStore>\ \ \mbox{\hyperlink{class_server_context_a09470c09b8e14aec518e02fa0c10d295}{storage}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00028}\mbox{\hyperlink{class_server_context_a61d9a744a48cd075b6c09939aaf45a6b}{00028}}\ \ \ \ \ shared\_ptr<Socket>\ \ \ \ \ \mbox{\hyperlink{class_server_context_a61d9a744a48cd075b6c09939aaf45a6b}{socket}};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{class_server_context}{ServerContext}}(shared\_ptr<Socket>\ \mbox{\hyperlink{class_server_context_a61d9a744a48cd075b6c09939aaf45a6b}{socket}},\ shared\_ptr<Connection>\ \mbox{\hyperlink{class_server_context_ae5bf69223ebcc1d94da909a89a875902}{connection}},\ shared\_ptr<UserStore>);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00031}00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_context_abdf67fc70077f2e264b352f6b4c5f114}{set\_device}}(\mbox{\hyperlink{class_device}{Device}}\ *\mbox{\hyperlink{class_server_context_ac5d8af25d24334335e76ac47dd7e3320}{device}});}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00032}00032\ \};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00034}\mbox{\hyperlink{class_user_store}{00034}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_user_store}{UserStore}}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00035}00035\ \ \ \ \ map<string,\ vector<shared\_ptr<Session>>>\ users\_sessions;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00036}00036\ \ \ \ \ map<string,\ map<string,\ Device\ *>>\ \ \ \ \ \ \ users\_devices;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00037}00037\ \ \ \ \ sem\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ devices\_lock;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00038}00038\ \ \ \ \ sem\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ files\_lock;}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00040}00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{class_user_store_a446e1354d30a1ccaa9a5edc0161d00db}{UserStore}}();}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00042}00042\ \ \ \ \ \mbox{\hyperlink{class_user_store_a0b3234b7497e9dc2e864081cb9d60fe8}{\string~UserStore}}();}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00043}00043\ \ \ \ \ map<string,\ Device\ *>\ \mbox{\hyperlink{class_user_store_a775e74f2c57862f38f9bcecca906d890}{get\_user\_devices}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00044}00044\ \ \ \ \ vector<string>\ \ \ \ \ \ \ \ \mbox{\hyperlink{class_user_store_a9762e61997a7780a74504fd508d1a8ab}{get\_connected\_users}}();}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_user_store_a775e74f2c57862f38f9bcecca906d890}{get\_user\_devices}}();}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_user_store_aec5ebcf2af0925d5f80bae114e952dc0}{add\_user}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_user_store_a595e832c5000b2d069e5107b03bbf666}{register\_device}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username,\ shared\_ptr<ServerContext>\ context);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_user_store_ae26d60edb2f05ac0f0efe30d860baa73}{register\_connection}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username,\ shared\_ptr<ServerContext>\ context);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_user_store_afa7505e0b42b61350d8c613cffed34ae}{unregister\_connection}}(shared\_ptr<ServerContext>\ context);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00050}00050\ \ \ \ \ \mbox{\hyperlink{class_device}{Device}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{class_user_store_a85033710c3dd62c19723a6c1d4aa4edb}{get\_device}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ username,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ address);}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00051}00051\ \};}
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{server_2userland_2models_8hpp_source_l00053}00053\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

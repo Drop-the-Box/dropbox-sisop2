@@ -10,9 +10,10 @@ void ClientSubscriber::loop() {
     int count   = 0;
     int channel = this->socket->socket_fd;
     while (!*socket->interrupt) {
-        count++;
+        //count++;
         // PLOG_INFO << "Subscriber loop count: " << count << endl;
-        // PLOG_INFO << "Subscriber channel: " << channel << endl;
+        // PLOGI << "Subscriber channel: " << channel << endl;
+        // sleep(5);
         // std::this_thread::sleep_for(std::chrono::seconds(5));
     }
 };

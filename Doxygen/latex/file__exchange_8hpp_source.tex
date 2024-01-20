@@ -1,0 +1,26 @@
+\doxysection{file\+\_\+exchange.\+hpp}
+\hypertarget{file__exchange_8hpp_source}{}\label{file__exchange_8hpp_source}\index{src/client/eventhub/file\_exchange.hpp@{src/client/eventhub/file\_exchange.hpp}}
+\mbox{\hyperlink{file__exchange_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ CLIENT\_FILEX\_H}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ CLIENT\_FILEX\_H}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../../common/file\_io/file\_io.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../../common/socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}../session/session.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00009}\mbox{\hyperlink{class_client_file_sync}{00009}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_client_file_sync}{ClientFileSync}}\ \{}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00010}00010\ \ \ \ \ shared\_ptr<ClientContext>\ context;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00011}00011\ \ \ \ \ shared\_ptr<Socket>\ \ \ \ \ \ \ \ socket;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00012}00012\ \ \ \ \ shared\_ptr<FileHandler>\ \ \ file\_handler;}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00014}00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{class_client_file_sync}{ClientFileSync}}(shared\_ptr<ClientContext>\ context,\ shared\_ptr<Socket>\ socket);}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_client_file_sync_a200aba01fcbb1c8145eb3c057c5ad6a6}{loop}}();}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00017}\mbox{\hyperlink{class_client_file_sync_a405f419bf1aef312c3f8970f02081140}{00017}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_client_file_sync_a405f419bf1aef312c3f8970f02081140}{get\_event}}();}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00018}00018\ \};}
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{file__exchange_8hpp_source_l00020}00020\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,340 @@
+\doxysection{inquirer.\+h}
+\hypertarget{inquirer_8h_source}{}\label{inquirer_8h_source}\index{src/include/cpp-\/inquirer/inquirer.h@{src/include/cpp-\/inquirer/inquirer.h}}
+\mbox{\hyperlink{inquirer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00001}00001\ \textcolor{comment}{//\ Copyright\ ©\ 2023\ Donatas\ Mockus}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00002}00002\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00003}00003\ \textcolor{comment}{//\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy\ of\ this\ software\ and\ associated}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00004}00004\ \textcolor{comment}{//\ documentation\ files\ (the\ “Software”),\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ }}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00005}00005\ \textcolor{comment}{//\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell\ copies\ of\ the\ Software,\ and}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00006}00006\ \textcolor{comment}{//\ to\ permit\ persons\ to\ whom\ the\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00007}00007\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00008}00008\ \textcolor{comment}{//\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all\ copies\ or\ substantial\ portions\ of}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00009}00009\ \textcolor{comment}{//\ the\ Software.}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00010}00010\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00011}00011\ \textcolor{comment}{//\ THE\ SOFTWARE\ IS\ PROVIDED\ “AS\ IS”,\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00012}00012\ \textcolor{comment}{//\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00013}00013\ \textcolor{comment}{//\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00014}00014\ \textcolor{comment}{//\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00017}00017\ \textcolor{preprocessor}{\#ifndef\ CPP\_INQUIRER\_SRC\_INQUIRER\_H}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00018}00018\ \textcolor{preprocessor}{\#define\ CPP\_INQUIRER\_SRC\_INQUIRER\_H}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ <regex>}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00025}00025\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00027}00027\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00028}00028\ \textcolor{preprocessor}{\ \ \ \ \#include\ <conio.h>}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00029}00029\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00032}\mbox{\hyperlink{namespacealx}{00032}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacealx}{alx}}\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00033}00033\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classalx_1_1_inquirer}{Inquirer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00035}\mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42f}{00035}}\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42f}{Type}}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00036}00036\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00037}00037\ \ \ \ \ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa1cb251ec0d568de6a929b520c4aed8d1}{text}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00038}00038\ \ \ \ \ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa157db7df530023575515d366c9b672e8}{integer}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00039}00039\ \ \ \ \ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fabdaa3c20a3e3851599514f7c6be5f62f}{decimal}}\ =\ 2,}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa6bf80f7828eef303f66ac6014b4b4930}{yesNo}}\ =\ 3,}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fad0cf705f201ddc526f49ba2e62392e21}{confirm}}\ =\ 4,}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00042}00042\ \ \ \ \ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa93da65a9fd0004d9477aeac024e08e15}{options}}\ =\ 5,}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00043}00043\ \ \ \ \ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa44c5b763d21e9a3ed8cad56977bfd75c}{regex}}\ =\ 6}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00044}00044\ \};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00046}\mbox{\hyperlink{classalx_1_1_question}{00046}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classalx_1_1_question}{Question}}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00047}00047\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00048}00048\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00049}\mbox{\hyperlink{classalx_1_1_question_a030fd4a9dc23b602949e7d4b083eddc6}{00049}}\ \ \ \ \ \mbox{\hyperlink{classalx_1_1_question_a030fd4a9dc23b602949e7d4b083eddc6}{Question}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classalx_1_1_question}{Question}}\&\ q)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00050}00050\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ m\_key\ =\ q.m\_key;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ m\_question\ =\ q.m\_question;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ m\_answer\ =\ q.m\_answer;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ m\_type\ =\ q.m\_type;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_type\ ==\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa93da65a9fd0004d9477aeac024e08e15}{Type::options}})}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ m\_options\ =\ q.m\_options;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (m\_type\ ==\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa44c5b763d21e9a3ed8cad56977bfd75c}{Type::regex}})}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ m\_regex\ =\ q.m\_regex;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00059}00059\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00061}\mbox{\hyperlink{classalx_1_1_question_a9be16e06aa79ec6bca88ff6aeb977ec7}{00061}}\ \ \ \ \ \mbox{\hyperlink{classalx_1_1_question_a9be16e06aa79ec6bca88ff6aeb977ec7}{Question}}(std::string\ key,\ std::string\ question,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42f}{Type}}\ type\ =\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa1cb251ec0d568de6a929b520c4aed8d1}{Type::text}})}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ :\ m\_key(std::move(key)),}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ m\_question(std::move(question)),}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ m\_type(type)\ \{\}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00066}\mbox{\hyperlink{classalx_1_1_question_af345f86f1f6bb2662bf93d3425fa61bc}{00066}}\ \ \ \ \ \mbox{\hyperlink{classalx_1_1_question_af345f86f1f6bb2662bf93d3425fa61bc}{Question}}(std::string\ key,\ std::string\ question,\ std::vector<std::string>\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa93da65a9fd0004d9477aeac024e08e15}{options}})}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ :\ m\_key(std::move(key)),}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ m\_question(std::move(question)),}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ m\_type(\mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42f}{Type}}::\mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa93da65a9fd0004d9477aeac024e08e15}{options}}),}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ m\_options(std::move(\mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa93da65a9fd0004d9477aeac024e08e15}{options}}))}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00071}00071\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_options.empty())}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Must\ have\ one\ or\ more\ options"{}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00074}00074\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00076}\mbox{\hyperlink{classalx_1_1_question_ab1a7790289bbbf9095f66130f1649cf7}{00076}}\ \ \ \ \ \mbox{\hyperlink{classalx_1_1_question_ab1a7790289bbbf9095f66130f1649cf7}{Question}}(std::string\ key,\ std::string\ question,\ std::string\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa44c5b763d21e9a3ed8cad56977bfd75c}{regex}})}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ :\ m\_key(std::move(key)),}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ m\_question(std::move(question)),}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ m\_type(\mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42f}{Type}}::\mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa44c5b763d21e9a3ed8cad56977bfd75c}{regex}}),}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ m\_regex(std::move(\mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa44c5b763d21e9a3ed8cad56977bfd75c}{regex}}))\ \{\}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00082}\mbox{\hyperlink{classalx_1_1_question_aa3d2ad886debc55b0e204cb2cc49883f}{00082}}\ \ \ \ \ \mbox{\hyperlink{classalx_1_1_question_aa3d2ad886debc55b0e204cb2cc49883f}{\string~Question}}()\ \{\}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00084}00084\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00085}00085\ \ \ \ \ \textcolor{keyword}{friend}\ \mbox{\hyperlink{classalx_1_1_inquirer}{Inquirer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00086}00086\ \ \ \ \ std::string\ m\_key;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00087}00087\ \ \ \ \ std::string\ m\_question;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00088}00088\ \ \ \ \ std::string\ m\_answer;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00089}00089\ \ \ \ \ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42f}{Type}}\ m\_type;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00090}00090\ \ \ \ \ std::vector<std::string>\ m\_options;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00091}00091\ \ \ \ \ std::string\ m\_regex;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00092}00092\ \};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00094}\mbox{\hyperlink{classalx_1_1_inquirer}{00094}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classalx_1_1_inquirer}{Inquirer}}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00095}00095\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00096}00096\ \ \ \ \ std::vector<std::pair<std::string,\ Question>>\ m\_questions;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00097}00097\ \ \ \ \ std::string\ m\_title;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00099}00099\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00100}\mbox{\hyperlink{classalx_1_1_inquirer_a95b8c006a7c6b41bafdf105dc16d6052}{00100}}\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classalx_1_1_inquirer_a95b8c006a7c6b41bafdf105dc16d6052}{Inquirer}}(std::string\ title)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ :\ m\_title(std::move(title))\ \{\}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00103}\mbox{\hyperlink{classalx_1_1_inquirer_a55eceb4e83f54afd791fc08d4c62e114}{00103}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classalx_1_1_inquirer_a55eceb4e83f54afd791fc08d4c62e114}{add\_question}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classalx_1_1_question}{Question}}\&\ question)\ \{\ m\_questions.emplace\_back(question.m\_key,\ question);\ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00105}\mbox{\hyperlink{classalx_1_1_inquirer_a9bd5cb88e80290eb1546150f9358b78b}{00105}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classalx_1_1_inquirer_a9bd5cb88e80290eb1546150f9358b78b}{ask}}()}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00106}00106\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_title.empty())}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[34m>\(\backslash\)033[0m\ "{}}\ <<\ m\_title\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ question\ :\ m\_questions)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ q\ =\ question.second;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ printQuestion\ =\ [\&](\textcolor{keyword}{const}\ std::string\&\ append\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1m\(\backslash\)033[34m?\(\backslash\)033[0m\ \(\backslash\)033[1m"{}}\ <<\ q.m\_question\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m\ "{}}\ <<\ append;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ takeInput\ =\ [](std::string\&\ destination)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[34m"{}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::getline(std::cin,\ destination);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (q.m\_type)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fad0cf705f201ddc526f49ba2e62392e21}{Type::confirm}}:\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion(\textcolor{stringliteral}{"{}(y/N)\ "{}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}}\ ==\ \textcolor{stringliteral}{"{}y"{}}\ ||\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}}\ ==\ \textcolor{stringliteral}{"{}Y"{}}\ ||\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}}\ ==\ \textcolor{stringliteral}{"{}n"{}}\ ||\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}}\ ==\ \textcolor{stringliteral}{"{}N"{}}))\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion(\textcolor{stringliteral}{"{}(y/N)\ "{}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.m\_answer\ =\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa1cb251ec0d568de6a929b520c4aed8d1}{Type::text}}:}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(q.m\_answer);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa157db7df530023575515d366c9b672e8}{Type::integer}}:\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!is\_integer(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}}))\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.m\_answer\ =\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fabdaa3c20a3e3851599514f7c6be5f62f}{Type::decimal}}:\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!is\_decimal(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}}))\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.m\_answer\ =\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa6bf80f7828eef303f66ac6014b4b4930}{Type::yesNo}}:\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ yes\ =\ \textcolor{stringliteral}{"{}\(\backslash\)033[34myes\(\backslash\)033[0m\ no\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ no\ =\ \textcolor{stringliteral}{"{}yes\ \(\backslash\)033[34mno\(\backslash\)033[0m\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::flush;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion(yes);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ position\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ key\ =\ getch();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key\ ==\ Inquirer::keySx)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ position\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion(yes);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key\ ==\ Inquirer::keyDx)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ position\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion(no);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key\ ==\ Inquirer::keyEnter)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.m\_answer\ =\ position\ ?\ \textcolor{stringliteral}{"{}yes"{}}\ :\ \textcolor{stringliteral}{"{}no"{}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa93da65a9fd0004d9477aeac024e08e15}{Type::options}}:\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ selectedIndex\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ printOptions\ =\ [\&]()\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ q.m\_options.size();\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ selectedIndex)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[34m>\ "{}}\ <<\ q.m\_options.at(i)\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ "{}}\ <<\ q.m\_options.at(i)\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printOptions();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ key\ =\ getch();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key\ ==\ Inquirer::keyDw)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ selectedIndex\ =\ wrap\_int(selectedIndex\ +\ 1,\ 0,\ q.m\_options.size()\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(q.m\_options.size()\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printOptions();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key\ ==\ Inquirer::keyUp)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ selectedIndex\ =\ wrap\_int(selectedIndex\ -\/\ 1,\ 0,\ q.m\_options.size()\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(q.m\_options.size()\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printOptions();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key\ ==\ Inquirer::keyEnter)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.m\_answer\ =\ q.m\_options.at(selectedIndex);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(q.m\_options.size()\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion(\textcolor{stringliteral}{"{}\(\backslash\)033[34m"{}}\ +\ q.m\_options.at(selectedIndex)\ +\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespacealx_a2c68239c0c3e39038e6efa017bcfd42fa44c5b763d21e9a3ed8cad56977bfd75c}{Type::regex}}:\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!std::regex\_match(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}},\ std::regex(q.m\_regex)))\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ erase\_lines(2);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printQuestion();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ takeInput(\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}});}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.m\_answer\ =\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00239}00239\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00241}\mbox{\hyperlink{classalx_1_1_inquirer_a6d482764697973a8d9c84ce3b3c47006}{00241}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classalx_1_1_inquirer_a6d482764697973a8d9c84ce3b3c47006}{print\_questions}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00242}00242\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ q\ :\ m\_questions)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ q.second.m\_question\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(q.second.m\_type)\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00246}00246\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00248}\mbox{\hyperlink{classalx_1_1_inquirer_aeb3184c14daeb81780b37fae7c13488b}{00248}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classalx_1_1_inquirer_aeb3184c14daeb81780b37fae7c13488b}{print\_answers}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00249}00249\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ q\ :\ m\_questions)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ q.second.m\_question\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ q.second.m\_answer\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00252}00252\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00254}\mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{00254}}\ \ \ \ \ std::string\ \mbox{\hyperlink{classalx_1_1_inquirer_aef24979120e8f7d2e91cf793f85774a9}{answer}}(\textcolor{keyword}{const}\ std::string\&\ key)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00255}00255\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00256}00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ question\ :\ m\_questions)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (question.first\ ==\ key)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ question.second.m\_answer;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00259}00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00260}00260\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00262}00262\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00263}00263\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keyDw\ =\ 80;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keyUp\ =\ 72;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keySx\ =\ 75;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keyDx\ =\ 77;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keyEnter\ =\ 13;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00269}00269\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keyUp\ =\ 65;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keyDw\ =\ 66;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keySx\ =\ 68;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keyDx\ =\ 67;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ keyEnter\ =\ 13;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00275}00275\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00277}00277\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ erase\_lines(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ count\ =\ 1)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00278}00278\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00281}00281\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)x1b[2K"{}};\ \textcolor{comment}{//\ Delete\ current\ line}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ count;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)x1b[1A"{}}\ \textcolor{comment}{//\ Move\ cursor\ one\ line\ up}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\(\backslash\)x1b[2K"{}};\ \textcolor{comment}{//\ Delete\ current\ line}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{charliteral}{'\(\backslash\)r'};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00288}00288\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00290}00290\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ is\_integer(\textcolor{keyword}{const}\ std::string\&\ \textcolor{keywordtype}{string})}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00291}00291\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{string}.empty()\ ||\ ((!isdigit(\textcolor{keywordtype}{string}[0]))\ \&\&\ (\textcolor{keywordtype}{string}[0]\ !=\ \textcolor{charliteral}{'-\/'})\ \&\&\ (\textcolor{keywordtype}{string}[0]\ !=\ \textcolor{charliteral}{'+'})))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ p;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ strtol(\textcolor{keywordtype}{string}.c\_str(),\ \&p,\ 10);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (*p\ ==\ 0);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00296}00296\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00297}00297\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00298}00298\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ is\_decimal(\textcolor{keyword}{const}\ std::string\&\ \textcolor{keywordtype}{string})}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00299}00299\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{string}.empty()\ ||\ ((!isdigit(\textcolor{keywordtype}{string}[0]))\ \&\&\ (\textcolor{keywordtype}{string}[0]\ !=\ \textcolor{charliteral}{'-\/'})\ \&\&\ (\textcolor{keywordtype}{string}[0]\ !=\ \textcolor{charliteral}{'+'})))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ p;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ strtod(\textcolor{keywordtype}{string}.c\_str(),\ \&p);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (*p\ ==\ 0);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00304}00304\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00306}00306\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ wrap\_int(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ k,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ lowerBound,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ upperBound)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00307}00307\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ range\_size\ =\ upperBound\ -\/\ lowerBound\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (k\ <\ lowerBound)}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ k\ +=\ range\_size\ *\ ((lowerBound\ -\/\ k)\ /\ range\_size\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00312}00312\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lowerBound\ +\ (k\ -\/\ lowerBound)\ \%\ range\_size;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00314}00314\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00315}00315\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00316}00316\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ getch()}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00317}00317\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ c;\ \textcolor{comment}{//\ This\ function\ should\ return\ the\ keystroke\ without\ allowing\ it\ to\ echo\ on\ screen}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00320}00320\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ \_getch();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00322}00322\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ system(\textcolor{stringliteral}{"{}stty\ raw"{}});\ \ \ \ \textcolor{comment}{//\ Raw\ input\ -\/\ wait\ for\ only\ a\ single\ keystroke}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ system(\textcolor{stringliteral}{"{}stty\ -\/echo"{}});\ \ \textcolor{comment}{//\ Echo\ off}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ getchar();}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ system(\textcolor{stringliteral}{"{}stty\ cooked"{}});\ \textcolor{comment}{//\ Cooked\ input\ -\/\ reset}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ system(\textcolor{stringliteral}{"{}stty\ echo"{}});\ \ \ \textcolor{comment}{//\ Echo\ on\ -\/\ Reset}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00328}00328\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00329}00329\ }
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00331}00331\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00332}00332\ \};}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00333}00333\ \}}
+\DoxyCodeLine{\Hypertarget{inquirer_8h_source_l00334}00334\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CPP\_INQUIRER\_SRC\_INQUIRER\_H}}
+
+\end{DoxyCode}

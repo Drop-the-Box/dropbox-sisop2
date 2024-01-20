@@ -1,0 +1,27 @@
+\doxysection{subscriber.\+hpp}
+\hypertarget{server_2eventhub_2subscriber_8hpp_source}{}\label{server_2eventhub_2subscriber_8hpp_source}\index{src/server/eventhub/subscriber.hpp@{src/server/eventhub/subscriber.hpp}}
+\mbox{\hyperlink{server_2eventhub_2subscriber_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SUBSCRIBER\_H}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SUBSCRIBER\_H}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../../common/socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../session/models.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}../userland/models.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00010}00010\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00012}\mbox{\hyperlink{class_server_event_subscriber}{00012}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_server_event_subscriber}{ServerEventSubscriber}}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00013}00013\ \ \ \ \ shared\_ptr<ServerContext>\ context;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00015}00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00016}00016\ \ \ \ \ \mbox{\hyperlink{class_server_event_subscriber}{ServerEventSubscriber}}(shared\_ptr<ServerContext>\ context);}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_event_subscriber_a3e710c24f9051840f469586583ea455a}{loop}}();}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00018}\mbox{\hyperlink{class_server_event_subscriber_a2d213bec3217250ba81e3048c64d7d55}{00018}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_event_subscriber_a2d213bec3217250ba81e3048c64d7d55}{get\_event}}();}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00019}00019\ \};}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2subscriber_8hpp_source_l00021}00021\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

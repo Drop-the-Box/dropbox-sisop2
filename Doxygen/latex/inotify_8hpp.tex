@@ -1,0 +1,46 @@
+\doxysection{src/common/file\+\_\+io/inotify.hpp File Reference}
+\hypertarget{inotify_8hpp}{}\label{inotify_8hpp}\index{src/common/file\_io/inotify.hpp@{src/common/file\_io/inotify.hpp}}
+{\ttfamily \#include "{}../../common/file\+\_\+io/file\+\_\+io.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../common/socket\+\_\+io/socket.\+hpp"{}}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$plog/\+Log.\+h$>$}\newline
+{\ttfamily \#include $<$sys/inotify.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_inotify}{Inotify}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{inotify_8hpp_a228783873815e02b069a286af4512aba}{EVENT\+\_\+\+SIZE}}~(sizeof(struct inotify\+\_\+event))
+\item 
+\#define \mbox{\hyperlink{inotify_8hpp_a46130dc86f2322714bba26960b64e7bb}{BUFFER\+\_\+\+LEN}}~(1024 \texorpdfstring{$\ast$}{*} (\mbox{\hyperlink{inotify_8hpp_a228783873815e02b069a286af4512aba}{EVENT\+\_\+\+SIZE}} + 16))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{inotify_8hpp_a46130dc86f2322714bba26960b64e7bb}\label{inotify_8hpp_a46130dc86f2322714bba26960b64e7bb} 
+\index{inotify.hpp@{inotify.hpp}!BUFFER\_LEN@{BUFFER\_LEN}}
+\index{BUFFER\_LEN@{BUFFER\_LEN}!inotify.hpp@{inotify.hpp}}
+\doxysubsubsection{\texorpdfstring{BUFFER\_LEN}{BUFFER\_LEN}}
+{\footnotesize\ttfamily \#define BUFFER\+\_\+\+LEN~(1024 \texorpdfstring{$\ast$}{*} (\mbox{\hyperlink{inotify_8hpp_a228783873815e02b069a286af4512aba}{EVENT\+\_\+\+SIZE}} + 16))}
+
+
+
+Definition at line \mbox{\hyperlink{inotify_8hpp_source_l00017}{17}} of file \mbox{\hyperlink{inotify_8hpp_source}{inotify.\+hpp}}.
+
+\Hypertarget{inotify_8hpp_a228783873815e02b069a286af4512aba}\label{inotify_8hpp_a228783873815e02b069a286af4512aba} 
+\index{inotify.hpp@{inotify.hpp}!EVENT\_SIZE@{EVENT\_SIZE}}
+\index{EVENT\_SIZE@{EVENT\_SIZE}!inotify.hpp@{inotify.hpp}}
+\doxysubsubsection{\texorpdfstring{EVENT\_SIZE}{EVENT\_SIZE}}
+{\footnotesize\ttfamily \#define EVENT\+\_\+\+SIZE~(sizeof(struct inotify\+\_\+event))}
+
+
+
+Definition at line \mbox{\hyperlink{inotify_8hpp_source_l00016}{16}} of file \mbox{\hyperlink{inotify_8hpp_source}{inotify.\+hpp}}.
+

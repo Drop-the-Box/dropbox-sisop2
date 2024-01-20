@@ -1,0 +1,37 @@
+\doxysection{models.\+hpp}
+\hypertarget{server_2session_2models_8hpp_source}{}\label{server_2session_2models_8hpp_source}\index{src/server/session/models.hpp@{src/server/session/models.hpp}}
+\mbox{\hyperlink{server_2session_2models_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SESSION\_SRV\_MODELS\_H}}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SESSION\_SRV\_MODELS\_H}}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../../common/session/models.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <arpa/inet.h>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00011}00011\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00013}00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_user_store}{UserStore}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00015}\mbox{\hyperlink{class_connection}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_connection}{Connection}}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00016}00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00017}\mbox{\hyperlink{class_connection_afd9f8f02e0d6dd3cd6400e15577bb78a}{00017}}\ \ \ \ \ \mbox{\hyperlink{common_2session_2models_8hpp_a0695685c902e6c161ea20c244f605044}{SessionType}}\ \mbox{\hyperlink{class_connection_afd9f8f02e0d6dd3cd6400e15577bb78a}{session\_type}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00018}\mbox{\hyperlink{class_connection_a86b59e0d16d67add8ecbf3f65ebcebac}{00018}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \mbox{\hyperlink{class_connection_a86b59e0d16d67add8ecbf3f65ebcebac}{address}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00019}\mbox{\hyperlink{class_connection_acd71bb5bf1dc3825ed387d81e7a29e71}{00019}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_connection_acd71bb5bf1dc3825ed387d81e7a29e71}{port}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00020}\mbox{\hyperlink{class_connection_a00f7ca166180cda07bd7634cd33d3494}{00020}}\ \ \ \ \ pthread\_t\ \ *\mbox{\hyperlink{class_connection_a00f7ca166180cda07bd7634cd33d3494}{thread\_id}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00021}\mbox{\hyperlink{class_connection_a85f9cc03b57850bd5224ed0a794bcac8}{00021}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_connection_a85f9cc03b57850bd5224ed0a794bcac8}{channel}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00022}\mbox{\hyperlink{class_connection_aca28f54be1a50cea556cd8976ea62c7c}{00022}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_connection_aca28f54be1a50cea556cd8976ea62c7c}{pipe\_fd}}[2];}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{class_connection}{Connection}}(\textcolor{keywordtype}{char}\ *\mbox{\hyperlink{class_connection_a86b59e0d16d67add8ecbf3f65ebcebac}{address}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_connection_acd71bb5bf1dc3825ed387d81e7a29e71}{port}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_connection_a85f9cc03b57850bd5224ed0a794bcac8}{channel}},\ \textcolor{keywordtype}{int}\ *\mbox{\hyperlink{class_connection_aca28f54be1a50cea556cd8976ea62c7c}{pipe\_fd}});}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00025}00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \mbox{\hyperlink{class_connection_a741aa39e70f602ec0513918a6f603b6b}{set\_thread\_id}}(pthread\_t\ *\mbox{\hyperlink{class_connection_a00f7ca166180cda07bd7634cd33d3494}{thread\_id}});}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_connection_a9b9f9fb8c8c9a2e76a600097281ad955}{get\_full\_address}}();}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \mbox{\hyperlink{class_connection_a6d1fbd2641df1d098acfb76bd4a47f8a}{set\_session\_type}}(\mbox{\hyperlink{common_2session_2models_8hpp_a0695685c902e6c161ea20c244f605044}{SessionType}}\ \mbox{\hyperlink{class_connection_afd9f8f02e0d6dd3cd6400e15577bb78a}{session\_type}});}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00028}00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \mbox{\hyperlink{class_connection_aba401bc6b9a5c870913edd89dd49db1c}{get\_conection\_info}}();}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00029}00029\ \};}
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2models_8hpp_source_l00031}00031\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

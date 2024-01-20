@@ -1,0 +1,54 @@
+\doxysection{src/include/plog/\+Record.h File Reference}
+\hypertarget{_record_8h}{}\label{_record_8h}\index{src/include/plog/Record.h@{src/include/plog/Record.h}}
+{\ttfamily \#include $<$cstdarg$>$}\newline
+{\ttfamily \#include $<$plog/\+Severity.\+h$>$}\newline
+{\ttfamily \#include $<$plog/\+Util.\+h$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{plog\+::detail\+::meta\+::enable\+If$<$ B, T $>$}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if_3_01true_00_01_t_01_4}{plog\+::detail\+::meta\+::enable\+If$<$ true, T $>$}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_no}{plog\+::detail\+::meta\+::\+No}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1_yes}{plog\+::detail\+::meta\+::\+Yes}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible}{plog\+::detail\+::meta\+::is\+Convertible$<$ From, To $>$}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_n_string}{plog\+::detail\+::meta\+::is\+Convertible\+To\+NString$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_string}{plog\+::detail\+::meta\+::is\+Convertible\+To\+String$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container}{plog\+::detail\+::meta\+::is\+Container$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path}{plog\+::detail\+::meta\+::is\+Filesystem\+Path$<$ T $>$}}
+\item 
+class \mbox{\hyperlink{classplog_1_1_record}{plog\+::\+Record}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceplog}{plog}}
+\item 
+namespace \mbox{\hyperlink{namespaceplog_1_1detail}{plog\+::detail}}
+\item 
+namespace \mbox{\hyperlink{namespaceplog_1_1detail_1_1meta}{plog\+::detail\+::meta}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{T}} $>$ }\\\mbox{\hyperlink{classplog_1_1_console_appender}{T}} \& \mbox{\hyperlink{namespaceplog_1_1detail_1_1meta_a21faefe27a72dffd4c3cfcc9b968510a}{plog\+::detail\+::meta\+::declval}} ()
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1detail_aeb7dc559b329e509c4b6ce44b81faf32}{plog\+::detail\+::operator$<$$<$}} (\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util\+::nostringstream}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{stream}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{data}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1detail_a431755f073dd384b2ac4a1c26a6db424}{plog\+::detail\+::operator$<$$<$}} (\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util\+::nostringstream}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{stream}}, \mbox{\hyperlink{classplog_1_1_console_appender}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplog_1_1_console_appender}{data}})
+\item 
+\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1detail_a08e29e2f233136bb39e2ae4347eb76aa}{plog\+::detail\+::operator$<$$<$}} (\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util\+::nostringstream}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{stream}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} std\+::string \&\mbox{\hyperlink{classplog_1_1_console_appender}{data}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{T1}} , \mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{T2}} $>$ }\\\mbox{\hyperlink{classplog_1_1_console_appender}{void}} \mbox{\hyperlink{namespaceplog_1_1detail_a3edd903fe5b72c3a95db30d64f3146f6}{plog\+::detail\+::operator$<$$<$}} (\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util\+::nostringstream}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{stream}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} std\+::pair$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{T1}}, \mbox{\hyperlink{classplog_1_1_console_appender}{T2}} $>$ \&\mbox{\hyperlink{classplog_1_1_console_appender}{data}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{T}} $>$ }\\\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{meta\+::enable\+If}}$<$ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_n_string}{meta\+::is\+Convertible\+To\+NString}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{T}} $>$\+::value, \mbox{\hyperlink{classplog_1_1_console_appender}{void}} $>$\+::type \mbox{\hyperlink{namespaceplog_1_1detail_a493b8959a322fad2a809a4521b6d9a24}{plog\+::detail\+::operator$<$$<$}} (\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util\+::nostringstream}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{stream}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{T}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{data}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classplog_1_1_console_appender}{class}} \mbox{\hyperlink{classplog_1_1_console_appender}{T}} $>$ }\\\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1enable_if}{meta\+::enable\+If}}$<$ \mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_container}{meta\+::is\+Container}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{T}} $>$\+::value \&\&!\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_n_string}{meta\+::is\+Convertible\+To\+NString}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{T}} $>$\+::value \&\&!\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_convertible_to_string}{meta\+::is\+Convertible\+To\+String}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{T}} $>$\+::value \&\&!\mbox{\hyperlink{structplog_1_1detail_1_1meta_1_1is_filesystem_path}{meta\+::is\+Filesystem\+Path}}$<$ \mbox{\hyperlink{classplog_1_1_console_appender}{T}} $>$\+::value, \mbox{\hyperlink{classplog_1_1_console_appender}{void}} $>$\+::type \mbox{\hyperlink{namespaceplog_1_1detail_a74e144f404aaf34f846ed48a3fa5923e}{plog\+::detail\+::operator$<$$<$}} (\mbox{\hyperlink{namespaceplog_1_1util_a742fa17b01754458ba40d9c739eba963}{util\+::nostringstream}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{stream}}, \mbox{\hyperlink{classplog_1_1_console_appender}{const}} \mbox{\hyperlink{classplog_1_1_console_appender}{T}} \&\mbox{\hyperlink{classplog_1_1_console_appender}{data}})
+\end{DoxyCompactItemize}

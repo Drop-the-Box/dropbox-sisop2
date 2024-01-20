@@ -1,0 +1,59 @@
+\doxysection{publisher.\+cpp}
+\hypertarget{server_2eventhub_2publisher_8cpp_source}{}\label{server_2eventhub_2publisher_8cpp_source}\index{src/server/eventhub/publisher.cpp@{src/server/eventhub/publisher.cpp}}
+\mbox{\hyperlink{server_2eventhub_2publisher_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{server_2eventhub_2publisher_8hpp}{publisher.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}../../common/vars.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}../file\_io/file\_io.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <strings.h>}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <sys/stat.h>}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00011}00011\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00013}\mbox{\hyperlink{class_server_event_publisher_aec9ece459d640200c929cf6d0bfa6d6a}{00013}}\ \mbox{\hyperlink{class_server_event_publisher_aec9ece459d640200c929cf6d0bfa6d6a}{ServerEventPublisher::ServerEventPublisher}}(shared\_ptr<ServerContext>\ context)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00014}00014\ \ \ \ \ this-\/>context\ =\ context;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00017}\mbox{\hyperlink{class_server_event_publisher_a074261b47f8d3526cff88f716efd56a8}{00017}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_event_publisher_a074261b47f8d3526cff88f716efd56a8}{ServerEventPublisher::loop}}()\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00018}00018\ \ \ \ \ shared\_ptr<Socket>\ socket\ \ =\ this-\/>context-\/>socket;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ channel\ =\ this-\/>context-\/>connection-\/>channel;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00020}00020\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ buffer[\mbox{\hyperlink{vars_8hpp_a6b20d41d6252e9871430c242cb1a56e7}{BUFFER\_SIZE}}];}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{string}\ username\ =\ this-\/>context-\/>device-\/>username;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00022}00022\ \ \ \ \ ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00023}00023\ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}./srv\_sync\_dir/"{}}\ <<\ username;\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00024}00024\ \ \ \ \ unique\_ptr<FileHandler>\ file\_handler(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_file_handler}{FileHandler}}(oss.str()));}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Connected\ to\ event\ publisher"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{while}\ (!socket-\/>has\_error(channel))\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(context-\/>socket-\/>has\_event(channel))\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ shared\_ptr<FileMetadata>\ metadata;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ file\_handler-\/>receive\_file(oss.str(),\ metadata,\ socket,\ channel);}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ map<string,\ Device\ *>\ user\_devices\ =\ context-\/>storage-\/>get\_user\_devices(username);}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ map<string,\ Device\ *>::iterator\ dev\_iter;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (dev\_iter\ =\ user\_devices.begin();\ dev\_iter\ !=\ user\_devices.end()\ \&\&\ dev\_iter-\/>first\ !=\ username;\ dev\_iter++)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_device}{Device}}\ *device\ =\ dev\_iter-\/>second;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map<int,\ shared\_ptr<Connection>\ >\ connections\ =\ device-\/>\mbox{\hyperlink{class_device_ab63b76dbdca9ce4b4c25cb30d3c4155c}{connections}};}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map<int,\ shared\_ptr<Connection>\ >::iterator\ conn\_it;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (conn\_it\ =\ connections.begin();\ conn\_it\ !=\ connections.end();\ conn\_it++)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shared\_ptr<Connection>\ connection\ =\ conn\_it-\/>second;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (conn\_it-\/>second-\/>session\_type\ ==\ \mbox{\hyperlink{common_2session_2models_8hpp_a0695685c902e6c161ea20c244f605044a587203ddb75ac52624bf9a167bcf185c}{FileExchange}})\ \{}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ostringstream\ file\_path;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file\_path\ <<\ \textcolor{stringliteral}{"{}./srv\_sync\_dir"{}}\ <<\ username\ <<\ metadata-\/>name;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ path\_size\ =\ file\_path.str().length()\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *fpath\ =\ (\textcolor{keywordtype}{char}\ *)malloc(path\_size);}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(fpath,\ file\_path.str().c\_str(),\ path\_size);}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_ae403865d6fd28caf42ffc670004442e1}{PLOGW}}\ <<\ \textcolor{stringliteral}{"{}Notifying\ connection\ on\ channel\ "{}}\ <<\ connection-\/>channel\ <<\ \textcolor{stringliteral}{"{}\ about\ file"{}}\ <<\ fpath;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ write(connection-\/>pipe\_fd[1],\ fpath,\ strlen(fpath));}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a8851c6d69a98df1a762e06b7907acf02}{PLOGI}}\ <<\ \textcolor{stringliteral}{"{}Publisher\ has\ received\ a\ file\ on\ channel\ "{}}\ <<\ channel\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00052}00052\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2eventhub_2publisher_8cpp_source_l00053}00053\ \}}
+
+\end{DoxyCode}

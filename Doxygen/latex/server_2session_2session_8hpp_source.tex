@@ -1,0 +1,54 @@
+\doxysection{session.\+hpp}
+\hypertarget{server_2session_2session_8hpp_source}{}\label{server_2session_2session_8hpp_source}\index{src/server/session/session.hpp@{src/server/session/session.hpp}}
+\mbox{\hyperlink{server_2session_2session_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SESSION\_H}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SESSION\_H}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}../../common/session/models.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}../../common/socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}../userland/models.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{server_2userland_2models_8hpp}{models.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00015}00015\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00017}\mbox{\hyperlink{server_2session_2session_8hpp_a8fc96cee4177a369a99de7026ebeba81}{00017}}\ \textcolor{preprocessor}{\#define\ MAX\_REQUESTS\ 10}}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00019}\mbox{\hyperlink{class_session_manager}{00019}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_session_manager}{SessionManager}}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00020}00020\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_threads;}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ channels[\mbox{\hyperlink{server_2session_2session_8hpp_a8fc96cee4177a369a99de7026ebeba81}{MAX\_REQUESTS}}];}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00022}00022\ \ \ \ \ shared\_ptr<Socket>\ \ socket;}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00023}00023\ \ \ \ \ map<int,\ pthread\_t>\ thread\_pool;}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ *handle\_session(\textcolor{keywordtype}{void}\ *args);}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ create\_session(\textcolor{keywordtype}{int}\ channel,\ shared\_ptr<ServerContext>\ context);}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00028}00028\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00029}\mbox{\hyperlink{class_session_manager_a7fdfea5a69ab1f94af97916d51e07c7c}{00029}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ *\mbox{\hyperlink{class_session_manager_a7fdfea5a69ab1f94af97916d51e07c7c}{interrupt}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00031}00031\ \ \ \ \ \mbox{\hyperlink{class_session_manager}{SessionManager}}(shared\_ptr<Socket>\ socket);}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00032}00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_session_manager_aa6c70f265d59bd65e15b9aa9d68e3b72}{start}}();}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00033}\mbox{\hyperlink{class_session_manager_a6f6ec4cd1bc8bc92878aa78b95512acc}{00033}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_session_manager_a6f6ec4cd1bc8bc92878aa78b95512acc}{stop}}(\textcolor{keywordtype}{int}\ signal);}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00034}00034\ \};}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00036}\mbox{\hyperlink{class_session}{00036}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_session}{Session}}\ \{}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00037}00037\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00038}\mbox{\hyperlink{class_session_ab9ce76ca6ff5655d356c255d08cae7fc}{00038}}\ \ \ \ \ shared\_ptr<ServerContext>\ \mbox{\hyperlink{class_session_ab9ce76ca6ff5655d356c255d08cae7fc}{context}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00039}\mbox{\hyperlink{class_session_abb053d80afabddfb40079dc19a907b01}{00039}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_session_abb053d80afabddfb40079dc19a907b01}{channel}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00040}\mbox{\hyperlink{class_session_a731c5a2defb6984f3a19940add461d3c}{00040}}\ \ \ \ \ \mbox{\hyperlink{common_2session_2models_8hpp_a0695685c902e6c161ea20c244f605044}{SessionType}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_session_a731c5a2defb6984f3a19940add461d3c}{type}};}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00042}00042\ \ \ \ \ \mbox{\hyperlink{class_session}{Session}}(shared\_ptr<ServerContext>);}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_session_a85e5aa1b44382e57df85fa611af057de}{setup}}();}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00044}00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_session_a373987ee33c3e34612b56eb6f21bee42}{run}}();}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_session_a7b3a0a6f5f206540cdaa88fb9058fdec}{teardown}}();}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00046}00046\ \};}
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{server_2session_2session_8hpp_source_l00048}00048\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

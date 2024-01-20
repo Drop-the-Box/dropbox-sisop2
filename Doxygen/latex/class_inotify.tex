@@ -1,0 +1,106 @@
+\doxysection{Inotify Class Reference}
+\hypertarget{class_inotify}{}\label{class_inotify}\index{Inotify@{Inotify}}
+
+
+{\ttfamily \#include $<$inotify.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_inotify_abe231fbe0223f0732b7bd5d830caf4fb}{Inotify}} (shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$ \mbox{\hyperlink{class_inotify_a566797cbd1def9731d84940139f30ef8}{socket}}, const char \texorpdfstring{$\ast$}{*}folder\+\_\+path)
+\item 
+int \mbox{\hyperlink{class_inotify_a283f5a2c1129008b56e6feb9722eeb3d}{get\+\_\+file\+\_\+descriptor}} ()
+\item 
+int \mbox{\hyperlink{class_inotify_a6b6c2652b0f6552b5beb7de45d8677a8}{get\+\_\+watch\+\_\+descriptor}} ()
+\item 
+void \mbox{\hyperlink{class_inotify_a44d298bba6b112553ecd26cb34e49f55}{read\+\_\+event}} ()
+\item 
+void \mbox{\hyperlink{class_inotify_a9a7e33ebef0f021ae1f80c51a7aa8c47}{close\+Inotify}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$ \mbox{\hyperlink{class_inotify_a566797cbd1def9731d84940139f30ef8}{socket}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{inotify_8hpp_source_l00019}{19}} of file \mbox{\hyperlink{inotify_8hpp_source}{inotify.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_inotify_abe231fbe0223f0732b7bd5d830caf4fb}\label{class_inotify_abe231fbe0223f0732b7bd5d830caf4fb} 
+\index{Inotify@{Inotify}!Inotify@{Inotify}}
+\index{Inotify@{Inotify}!Inotify@{Inotify}}
+\doxysubsubsection{\texorpdfstring{Inotify()}{Inotify()}}
+{\footnotesize\ttfamily Inotify\+::\+Inotify (\begin{DoxyParamCaption}\item[{shared\+\_\+ptr$<$ \mbox{\hyperlink{class_socket}{Socket}} $>$}]{socket,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{folder\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{inotify_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{inotify_8cpp_source}{inotify.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_inotify_a9a7e33ebef0f021ae1f80c51a7aa8c47}\label{class_inotify_a9a7e33ebef0f021ae1f80c51a7aa8c47} 
+\index{Inotify@{Inotify}!closeInotify@{closeInotify}}
+\index{closeInotify@{closeInotify}!Inotify@{Inotify}}
+\doxysubsubsection{\texorpdfstring{closeInotify()}{closeInotify()}}
+{\footnotesize\ttfamily void Inotify\+::close\+Inotify (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{inotify_8cpp_source_l00070}{70}} of file \mbox{\hyperlink{inotify_8cpp_source}{inotify.\+cpp}}.
+
+\Hypertarget{class_inotify_a283f5a2c1129008b56e6feb9722eeb3d}\label{class_inotify_a283f5a2c1129008b56e6feb9722eeb3d} 
+\index{Inotify@{Inotify}!get\_file\_descriptor@{get\_file\_descriptor}}
+\index{get\_file\_descriptor@{get\_file\_descriptor}!Inotify@{Inotify}}
+\doxysubsubsection{\texorpdfstring{get\_file\_descriptor()}{get\_file\_descriptor()}}
+{\footnotesize\ttfamily int Inotify\+::get\+\_\+file\+\_\+descriptor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{inotify_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{inotify_8cpp_source}{inotify.\+cpp}}.
+
+\Hypertarget{class_inotify_a6b6c2652b0f6552b5beb7de45d8677a8}\label{class_inotify_a6b6c2652b0f6552b5beb7de45d8677a8} 
+\index{Inotify@{Inotify}!get\_watch\_descriptor@{get\_watch\_descriptor}}
+\index{get\_watch\_descriptor@{get\_watch\_descriptor}!Inotify@{Inotify}}
+\doxysubsubsection{\texorpdfstring{get\_watch\_descriptor()}{get\_watch\_descriptor()}}
+{\footnotesize\ttfamily int Inotify\+::get\+\_\+watch\+\_\+descriptor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{inotify_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{inotify_8cpp_source}{inotify.\+cpp}}.
+
+\Hypertarget{class_inotify_a44d298bba6b112553ecd26cb34e49f55}\label{class_inotify_a44d298bba6b112553ecd26cb34e49f55} 
+\index{Inotify@{Inotify}!read\_event@{read\_event}}
+\index{read\_event@{read\_event}!Inotify@{Inotify}}
+\doxysubsubsection{\texorpdfstring{read\_event()}{read\_event()}}
+{\footnotesize\ttfamily void Inotify\+::read\+\_\+event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{inotify_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{inotify_8cpp_source}{inotify.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_inotify_a566797cbd1def9731d84940139f30ef8}\label{class_inotify_a566797cbd1def9731d84940139f30ef8} 
+\index{Inotify@{Inotify}!socket@{socket}}
+\index{socket@{socket}!Inotify@{Inotify}}
+\doxysubsubsection{\texorpdfstring{socket}{socket}}
+{\footnotesize\ttfamily shared\+\_\+ptr$<$\mbox{\hyperlink{class_socket}{Socket}}$>$ Inotify\+::socket}
+
+
+
+Definition at line \mbox{\hyperlink{inotify_8hpp_source_l00025}{25}} of file \mbox{\hyperlink{inotify_8hpp_source}{inotify.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/common/file\+\_\+io/\mbox{\hyperlink{inotify_8hpp}{inotify.\+hpp}}\item 
+src/common/file\+\_\+io/\mbox{\hyperlink{inotify_8cpp}{inotify.\+cpp}}\end{DoxyCompactItemize}

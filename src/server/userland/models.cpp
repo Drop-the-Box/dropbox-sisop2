@@ -159,8 +159,7 @@ vector<string> UserStore::get_connected_users() {
 void UserStore::get_user_devices() {
 }
 
-ServerContext::ServerContext(
-    shared_ptr<Socket> socket, shared_ptr<Connection> connection, shared_ptr<UserStore> storage) {
+ServerContext::ServerContext(shared_ptr<Socket> socket, shared_ptr<Connection> connection, shared_ptr<UserStore> storage) {
     this->socket     = socket;
     this->connection = connection;
     this->storage    = storage;

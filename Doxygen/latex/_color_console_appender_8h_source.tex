@@ -1,0 +1,114 @@
+\doxysection{Color\+Console\+Appender.\+h}
+\hypertarget{_color_console_appender_8h_source}{}\label{_color_console_appender_8h_source}\index{src/include/plog/Appenders/ColorConsoleAppender.h@{src/include/plog/Appenders/ColorConsoleAppender.h}}
+\mbox{\hyperlink{_color_console_appender_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_console_appender_8h}{plog/Appenders/ConsoleAppender.h}}>}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_win_api_8h}{plog/WinApi.h}}>}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00005}00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplog}{plog}}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00006}00006\ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00007}00007\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Formatter>}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00008}\mbox{\hyperlink{classplog_1_1_color_console_appender}{00008}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{_util_8h_a2c3b71932c85110f788ece8a0697ef3f}{PLOG\_LINKAGE\_HIDDEN}}\ \mbox{\hyperlink{classplog_1_1_color_console_appender}{ColorConsoleAppender}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classplog_1_1_console_appender}{ConsoleAppender}}<Formatter>}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00009}00009\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00011}00011\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00012}00012\ \textcolor{preprocessor}{\#\ \ \ ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00013}00013\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ pragma\ warning(suppress:\ 26812)\ }\textcolor{comment}{//\ \ Prefer\ 'enum\ class'\ over\ 'enum'}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00014}00014\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00015}00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_color_console_appender}{ColorConsoleAppender}}(\mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7}{OutputStream}}\ outStream\ =\ \mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7a717168b1e207b95e7422bb622597a355}{streamStdOut}})}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{classplog_1_1_console_appender}{ConsoleAppender<Formatter>}}(\mbox{\hyperlink{classplog_1_1_console_appender}{outStream}})}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{classplog_1_1_console_appender}{m\_originalAttr}}()}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>m\_isatty)}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{CONSOLE\_SCREEN\_BUFFER\_INFO}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{csbiInfo}};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{GetConsoleScreenBufferInfo}}(this-\/>\mbox{\hyperlink{classplog_1_1_console_appender}{m\_outputHandle}},\ \&\mbox{\hyperlink{classplog_1_1_console_appender}{csbiInfo}});}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{m\_originalAttr}}\ =\ \mbox{\hyperlink{classplog_1_1_console_appender}{csbiInfo}}.wAttributes;}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00027}00027\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00028}\mbox{\hyperlink{classplog_1_1_color_console_appender_a82d93044fb29361006c2641bf0c2e2a3}{00028}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_color_console_appender_a82d93044fb29361006c2641bf0c2e2a3}{ColorConsoleAppender}}(\mbox{\hyperlink{namespaceplog_a33351a70d3aa985291596008e03da4a7}{OutputStream}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{outStream}}\ =\ streamStdOut)}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{classplog_1_1_console_appender}{ConsoleAppender}}<\mbox{\hyperlink{classplog_1_1_console_appender}{Formatter}}>(\mbox{\hyperlink{classplog_1_1_console_appender}{outStream}})}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \{\}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00031}00031\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00033}\mbox{\hyperlink{classplog_1_1_color_console_appender_a9172e80a1c9c64594a15db85ba183612}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplog_1_1_color_console_appender_a9172e80a1c9c64594a15db85ba183612}{write}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classplog_1_1_record}{Record}}\&\ \mbox{\hyperlink{classplog_1_1_console_appender}{record}})\ \mbox{\hyperlink{_util_8h_ab77de78ebb3bd909fca08605acd16591}{PLOG\_OVERRIDE}}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplog_1_1util_a6006c27fd4b0e374593ae75b8f88076f}{util::nstring}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{str}}\ =\ Formatter::format(\mbox{\hyperlink{classplog_1_1_console_appender}{record}});}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1util_1_1_mutex_lock}{util::MutexLock}}\ lock(this-\/>m\_mutex);}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ setColor(\mbox{\hyperlink{classplog_1_1_console_appender}{record}}.getSeverity());}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>writestr(\mbox{\hyperlink{classplog_1_1_console_appender}{str}});}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ resetColor();}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00044}\mbox{\hyperlink{classplog_1_1_color_console_appender_a22e2f22c6022d069630d6628a7401716}{00044}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplog_1_1_color_console_appender_a22e2f22c6022d069630d6628a7401716}{setColor}}(\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0}{Severity}}\ \mbox{\hyperlink{classplog_1_1_console_appender}{severity}})}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>m\_isatty)}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{classplog_1_1_console_appender}{severity}})}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00050}00050\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a87c879d34029ab027d8940169dcad463}{fatal}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{SetConsoleTextAttribute}}(this-\/>\mbox{\hyperlink{classplog_1_1_console_appender}{m\_outputHandle}},\ foreground::kRed\ |\ foreground::kGreen\ |\ foreground::kBlue\ |\ foreground::kIntensity\ |\ background::kRed);\ \textcolor{comment}{//\ white\ on\ red\ background}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1679ce0724a66a99dc188e41876ade78}{error}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{SetConsoleTextAttribute}}(this-\/>\mbox{\hyperlink{classplog_1_1_console_appender}{m\_outputHandle}},\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classplog_1_1_console_appender}{WORD}}\textcolor{keyword}{>}(foreground::kRed\ |\ foreground::kIntensity\ |\ (\mbox{\hyperlink{classplog_1_1_console_appender}{m\_originalAttr}}\ \&\ 0xf0)));\ \textcolor{comment}{//\ red}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1bf20988ef5019ca3d136d315c2e8c4e}{warning}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{SetConsoleTextAttribute}}(this-\/>\mbox{\hyperlink{classplog_1_1_console_appender}{m\_outputHandle}},\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classplog_1_1_console_appender}{WORD}}\textcolor{keyword}{>}(foreground::kRed\ |\ foreground::kGreen\ |\ foreground::kIntensity\ |\ (\mbox{\hyperlink{classplog_1_1_console_appender}{m\_originalAttr}}\ \&\ 0xf0)));\ \textcolor{comment}{//\ yellow}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a241dcd076455366730559fad843d2ee3}{debug}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a3b6e929f6b4fcc90142944d9438aca7c}{verbose}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{SetConsoleTextAttribute}}(this-\/>\mbox{\hyperlink{classplog_1_1_console_appender}{m\_outputHandle}},\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classplog_1_1_console_appender}{WORD}}\textcolor{keyword}{>}(foreground::kGreen\ |\ foreground::kBlue\ |\ foreground::kIntensity\ |\ (\mbox{\hyperlink{classplog_1_1_console_appender}{m\_originalAttr}}\ \&\ 0xf0)));\ \textcolor{comment}{//\ cyan}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00067}00067\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a87c879d34029ab027d8940169dcad463}{fatal}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)x1B[97m\(\backslash\)x1B[41m"{}};\ \textcolor{comment}{//\ white\ on\ red\ background}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1679ce0724a66a99dc188e41876ade78}{error}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)x1B[91m"{}};\ \textcolor{comment}{//\ red}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a1bf20988ef5019ca3d136d315c2e8c4e}{warning}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)x1B[93m"{}};\ \textcolor{comment}{//\ yellow}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a241dcd076455366730559fad843d2ee3}{debug}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a3b6e929f6b4fcc90142944d9438aca7c}{verbose}}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)x1B[96m"{}};\ \textcolor{comment}{//\ cyan}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00084}00084\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00091}\mbox{\hyperlink{classplog_1_1_color_console_appender_afab391eb6d85aeedf9967bd2d30a6043}{00091}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplog_1_1_color_console_appender_afab391eb6d85aeedf9967bd2d30a6043}{resetColor}}()}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>m\_isatty)}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00095}00095\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{SetConsoleTextAttribute}}(this-\/>\mbox{\hyperlink{classplog_1_1_console_appender}{m\_outputHandle}},\ \mbox{\hyperlink{classplog_1_1_console_appender}{m\_originalAttr}});}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00097}00097\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)x1B[0m\(\backslash\)x1B[0K"{}};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00099}00099\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00103}00103\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00104}00104\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{WORD}}\ \ \ \mbox{\hyperlink{classplog_1_1_console_appender}{m\_originalAttr}};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00106}00106\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00107}00107\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_color_console_appender_8h_source_l00108}00108\ \}}
+
+\end{DoxyCode}

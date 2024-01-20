@@ -1,0 +1,114 @@
+\doxysection{main.\+cpp}
+\hypertarget{client_2main_8cpp_source}{}\label{client_2main_8cpp_source}\index{src/client/main.cpp@{src/client/main.cpp}}
+\mbox{\hyperlink{client_2main_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <netdb.h>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_color_console_appender_8h}{plog/Appenders/ColorConsoleAppender.h}}>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_txt_formatter_8h}{plog/Formatters/TxtFormatter.h}}>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_init_8h}{plog/Init.h}}>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{_log_8h}{plog/Log.h}}>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <sys/socket.h>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}../common/socket\_io/socket.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}../server/session/session.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}session/session.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00021}\mbox{\hyperlink{client_2main_8cpp_a614217d263be1fb1a5f76e2ff7be19a2}{00021}}\ \textcolor{preprocessor}{\#define\ PORT\ 6999}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00022}\mbox{\hyperlink{client_2main_8cpp_a280feb883e9d4a7edcc69c8bcb9f38f2}{00022}}\ \textcolor{preprocessor}{\#define\ ADDRESS\ "{}dtb-\/server"{}}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00024}00024\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00026}\mbox{\hyperlink{client_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{00026}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{client_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{keywordtype}{char}\ *username\_ptr\ =\ argv[1];}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{char}\ *address\_ptr\ \ =\ argv[2];}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{char}\ *port\_ptr\ \ \ \ \ =\ argv[3];}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classplog_1_1_color_console_appender}{plog::ColorConsoleAppender<plog::TxtFormatter>}}\ consoleAppender;}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{namespaceplog_a2a5d0e6e4aef59555ac731272e6cde97}{plog::init}}(\mbox{\hyperlink{namespaceplog_aedf8d68ce41dbf94f1f150faa06b50f0a3b6e929f6b4fcc90142944d9438aca7c}{plog::verbose}},\ \&consoleAppender);}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{if}\ (username\_ptr\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Error!\ No\ username\ provided.\ Exiting..."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00038}00038\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{if}\ (address\_ptr\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Error!\ No\ server\ address\ provided.\ Exiting..."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00042}00042\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (port\_ptr\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_log_8h_a29c5f9539dee1ffd374ba77904e11797}{PLOGE}}\ <<\ \textcolor{stringliteral}{"{}Error!\ No\ server\ port\ provided.\ Exiting..."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ server\_port\ =\ (int)atoi(argv[3]);}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ server\_addr(address\_ptr);}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ username(username\_ptr);}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00050}00050\ \ \ \ \ unique\_ptr<ClientSessionManager>\ manager(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_client_session_manager}{ClientSessionManager}}(server\_addr,\ server\_port,\ username));}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{comment}{//\ shared\_ptr<Socket>\ socket(new\ Socket(server\_addr\_name,\ (int)server\_port,\ Client,\ 1024));}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{comment}{//\ SessionRequest\ *session\ =\ new\ SessionRequest(CommandPublisher,\ username);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//\ uint8\_t\ *bytes;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00055}00055\ \ \ \ \ \textcolor{comment}{//\ uint8\_t\ **bytes\_ptr\ =\ \&bytes;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{comment}{//\ size\_t\ sreq\_size\ =\ session-\/>to\_bytes(bytes\_ptr);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{comment}{//\ Packet\ *packet\ =\ new\ Packet(ClientSession,\ 1,\ sreq\_size,\ sreq\_size,\ bytes);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{comment}{//\ size\_t\ packet\_size\ =\ packet-\/>to\_bytes(bytes\_ptr);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{comment}{//\ n\ =\ socket-\/>send(bytes,\ packet\_size,\ socket-\/>socket\_fd);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{comment}{//\ if\ (n\ <\ 0)}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ printf("{}ERROR\ writing\ to\ socket\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00063}00063\ \ \ \ \ \textcolor{comment}{//\ free(packet);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//\ bzero(buffer,1024);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ while\ (0)\ \{}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ printf("{}Enter\ the\ message:\ "{});}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00068}00068\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ bzero(buffer,\ 1024);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ fgets(buffer,\ 1024,\ stdin);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ uint16\_t\ msg\_size\ =\ strlen(buffer);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00071}00071\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ uint16\_t\ seq\ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ packet\ =\ new\ Packet(Command,\ seq,\ msg\_size,\ msg\_size,\ (uint8\_t\ *)buffer);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ packet\_size\ =\ packet-\/>to\_bytes(bytes\_ptr);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00076}00076\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ std::cout\ <<\ "{}Generated\ "{}\ <<\ (char\ *)bytes\ <<\ std::endl;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00077}00077\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ n\ =\ write(sockfd,\ bytes,\ packet\_size);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (n\ <\ 0)}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ printf("{}ERROR\ writing\ to\ socket\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ free(packet);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ bzero(buffer,1024);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{comment}{//\ int\ collected\_bytes\ =\ 0;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{comment}{//\ int\ total\_bytes\ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{comment}{//\ int\ iteration\ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00086}00086\ \ \ \ \ \textcolor{comment}{//\ FILE\ *file\_output\ =\ fopen("{}output\_file.txt"{},\ "{}wb"{});}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00087}00087\ \ \ \ \ \textcolor{comment}{//\ while(collected\_bytes\ <\ total\_bytes)\ \{}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00088}00088\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ n\ =\ socket-\/>get\_message\_sync((uint8\_t\ *)buffer,\ socket-\/>socket\_fd);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00089}00089\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (n\ <\ 0)}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00090}00090\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ printf("{}ERROR\ reading\ from\ socket\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00091}00091\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ cout\ <<\ "{}Iteration:\ "{}\ <<\ iteration\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00092}00092\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ iteration\ +=\ 1;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ packet\ =\ new\ Packet((uint8\_t\ *)buffer);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00094}00094\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ fwrite(packet-\/>payload,\ 1,\ packet-\/>payload\_size\ *\ sizeof(uint8\_t),\ file\_output);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ printf("{}Received\ packet\ type\ \%d\(\backslash\)n"{},\ packet-\/>type);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00096}00096\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ printf("{}File\ size:\ \%d\(\backslash\)n"{},\ packet-\/>total\_size);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ printf("{}Chunk\ size:\ \%d\(\backslash\)n"{},\ packet-\/>payload\_size);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00098}00098\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ printf("{}Chunk\ index:\ \%d\(\backslash\)n"{},\ packet-\/>seq\_index);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ collected\_bytes\ +=\ packet-\/>payload\_size;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00100}00100\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ cout\ <<\ "{}Collected\ bytes:\ "{}\ <<\ collected\_bytes\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00101}00101\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ total\_bytes\ =\ packet-\/>total\_size;}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00102}00102\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ free(packet);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00103}00103\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ bzero(buffer,\ 1024);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{comment}{//\ fclose(file\_output);}}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00107}00107\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{client_2main_8cpp_source_l00108}00108\ \}}
+
+\end{DoxyCode}

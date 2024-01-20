@@ -88,8 +88,10 @@ bool ClientSession::setup() {
         return false;
     }
 
-    shared_ptr<uint8_t> msg((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
+    shared_ptr<uint8_t> msg((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t))); 
     socket->get_message_sync(msg.get(), socket->socket_fd);
+    PLOGI << "get_message_sync returned: " << msg.get() << endl;
+    sleep(4);
     unique_ptr<Packet> resp_packet(new Packet(msg.get()));
     if (resp_packet->type == EventMsg) {
         unique_ptr<Event> evt(new Event(resp_packet->payload));
@@ -123,6 +125,7 @@ void ClientSession::run() {
     }
     case FileExchange: {
         unique_ptr<ClientFileSync> file_sync(new ClientFileSync(context, socket));
+        PLOGW << "File sync loop starting..." << endl;
         file_sync->loop();
         PLOGW << "File sync loop finished..." << endl;
         break;
