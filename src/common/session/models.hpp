@@ -12,7 +12,8 @@ enum SessionType {
     Unknown,
     FileExchange,
     CommandPublisher,
-    CommandSubscriber
+    CommandSubscriber,
+    ServerSync,
 };
 
 static const map<SessionType, string> session_type_map = {

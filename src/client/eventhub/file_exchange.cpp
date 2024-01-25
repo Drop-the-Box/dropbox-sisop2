@@ -1,5 +1,3 @@
-#include <iostream>
-#include <sstream>
 #include <memory>
 #include <plog/Log.h>
 
@@ -7,20 +5,18 @@
 
 using namespace std;
 
-ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, shared_ptr<Socket> socket) {
+ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, bool *interrupt) {
     this->context = context;
-    this->socket  = socket;
+    this->interrupt = interrupt;
     ///this->file_handler = make_shared<FileHandler>();
-    ostringstream oss;
-    oss << this->context->sync_dir;
-    this->file_handler = make_shared<FileHandler>(this->context->sync_dir);
+    string sync_dir = this->context->sync_dir;
+    this->file_handler = make_shared<FileHandler>(sync_dir);
 }
 
 void ClientFileSync::loop() {
     shared_ptr<FileMetadata> metadata;
-    ostringstream oss;
-    oss << this->context->sync_dir;
-    file_handler->receive_file(oss.str(), metadata, socket, socket->socket_fd);
+    string sync_dir = this->context->sync_dir;
+    file_handler->receive_file(sync_dir, metadata, context->conn_manager, context->session_type);
     // char buffer[BUFFER_SIZE];
     // int  total_bytes = 0;
     // int  collected_bytes;

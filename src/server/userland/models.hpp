@@ -6,6 +6,7 @@
 
 #include "../../common/socket_io/socket.hpp"
 #include "../session/models.hpp"
+#include "../serverland/replication.hpp"
 
 using namespace std;
 
@@ -26,8 +27,14 @@ public:
     shared_ptr<Connection> connection;
     shared_ptr<UserStore>  storage;
     shared_ptr<Socket>     socket;
+    shared_ptr<ServerElectionService> election_service;
 
-    ServerContext(shared_ptr<Socket> socket, shared_ptr<Connection> connection, shared_ptr<UserStore>);
+    ServerContext(
+        shared_ptr<Socket> socket,
+        shared_ptr<Connection> connection,
+        shared_ptr<UserStore> storage,
+        shared_ptr<ServerElectionService> election_service
+    );
     void set_device(Device *device);
 };
 

@@ -64,34 +64,54 @@ char *get_ip() {
 
     close(sock);
     // converte ip local para char*
-    char* ip_local = new char[80];
-    strcpy(ip_local, buffer);
+    char* ip_local = (char *)malloc(sizeof(char) * 80);
+    memmove(ip_local, buffer, sizeof(char) * 80);
     return ip_local;
 
 }
 
 int main(int argc, char *argv[]) {
     static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
-    plog::init(plog::debug, &consoleAppender);
+    plog::init(plog::info, &consoleAppender);
+
+    char *port_ptr = argv[1];
+    char *pid_ptr = argv[2];
+
+    if (port_ptr == NULL) {
+        PLOGE << "Error! No server port provided. Exiting..." << endl;
+        exit(1);
+    }
+
+    if (pid_ptr == NULL) {
+        PLOGE << "Error! No server PID provided. Exiting..." << endl;
+        exit(1);
+    }
 
     ::signal(SIGINT, stop_execution);
-    int port         = SERVER_PORT;
+    int port         = (int)atoi(port_ptr);
+    int pid          = (int)atoi(pid_ptr);
     int max_requests = MAX_REQUESTS;
     int buffer_size  = BUFFER_SIZE;
 
     // char* socket_address = (char *)"0.0.0.0";
     // conseguir ip da maquina automaticamente
     char* ip_local = get_ip();
-    PLOGI << "IP local: " << ip_local << endl;
+    PLOGI << "Local IP: " << ip_local << endl;
     // convertendo char* para string
     //string socket_address = string(ip_local);
     string socket_address = "0.0.0.0";
     PLOGI << "Starting server on " << socket_address << ":" << port << endl;
     shared_ptr<Socket> socket = make_shared<Socket>(socket_address, port, &interrupt, Server, buffer_size, max_requests);
 
-    unique_ptr<SessionManager> session_manager(new SessionManager(socket));
+    shared_ptr<ReplicaManager> current_server(new ReplicaManager(pid));
+    shared_ptr<ServerStore> server_storage(new ServerStore());
+    shared_ptr<ServerElectionService> election_service(
+        new ServerElectionService(current_server, server_storage, &interrupt)
+    );
+    unique_ptr<SessionManager> session_manager(new SessionManager(socket, election_service));
     session_manager->interrupt = &interrupt;
-    session_manager->start();
+    session_manager->start(pid);
+    free(ip_local);
 
     return 0;
 }

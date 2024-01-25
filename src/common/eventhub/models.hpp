@@ -21,7 +21,10 @@ enum EventType {
     SessionAccepted,
     SessionRejected,
     FileCreated,
-    FileDeleted
+    FileDeleted,
+    ServerAlive,
+    ServerStatus,
+    LeaderAccepted,
 };
 
 static const map<string, CommandType> command_map = {

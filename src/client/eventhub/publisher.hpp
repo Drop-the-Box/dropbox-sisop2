@@ -1,8 +1,6 @@
 #ifndef CLIENT_PUB_H
 #define CLIENT_PUB_H
 
-#include "../../common/file_io/inotify.hpp"
-#include "../../common/socket_io/socket.hpp"
 #include "../session/session.hpp"
 #include <memory>
 
@@ -10,10 +8,10 @@ using namespace std;
 
 class ClientPublisher {
     shared_ptr<ClientContext> context;
-    shared_ptr<Socket>        socket;
+    bool *interrupt;
 
 public:
-    ClientPublisher(shared_ptr<ClientContext> context, shared_ptr<Socket> socket);
+    ClientPublisher(shared_ptr<ClientContext> context, bool *interrupt);
     void loop();
     void send_event();
 };

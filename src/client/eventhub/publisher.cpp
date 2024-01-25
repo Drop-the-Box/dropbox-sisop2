@@ -1,16 +1,15 @@
 #include "publisher.hpp"
 #include <cpp-inquirer/inquirer.h>
 #include <iostream>
-#include <map>
 #include <plog/Log.h>
-#include <thread>
 #include <vector>
 #include <pthread.h>
 #include <sstream>
 #include <regex>
-#include <fstream>
 #include <sys/sendfile.h>
 #include <fcntl.h>
+
+#include "../file_io/inotify.hpp"
 
 
 
@@ -60,16 +59,6 @@ void handle_list_client(shared_ptr<alx::Inquirer> inquirer){
 void handle_exit(shared_ptr<alx::Inquirer> inquirer) {
 }
 
-// using func=function<void(shared_ptr<alx::Inquirer>)>;
-//
-// static const map<std::string, std::function<void>(*)(shared_ptr<alx::Inquirer>) > command_map = {
-//     {"upload", &handle_upload },
-//     {"download", &handle_download },
-//     {"delete", &handle_delete },
-//     {"list_server", &handle_list_server },
-//     {"list_client", &handle_list_client },
-//     {"exit", &handle_exit }
-// };
 vector<std::string> commands = {
     "upload",
     "download",
@@ -81,19 +70,19 @@ vector<std::string> commands = {
 
 void *run_file_monitor(void *monitor) {
     Inotify* file_monitor = (Inotify *)monitor;
-    while(true) {
+    while(!*file_monitor->context->interrupt) {
         file_monitor->read_event();
         usleep(1000);
     }
     return NULL;
 }
 
-ClientPublisher::ClientPublisher(shared_ptr<ClientContext> context, shared_ptr<Socket> socket) {
+ClientPublisher::ClientPublisher(shared_ptr<ClientContext> context, bool *interrupt) {
     this->context = context;
-    this->socket  = socket;
+    this->interrupt = interrupt;
 
     const char *folder_path = this->context->sync_dir.c_str();
-    Inotify* inotify = new Inotify(this->socket, folder_path);
+    Inotify* inotify = new Inotify(this->context, folder_path);
 
     pthread_t monitor_thread;
     pthread_create(&monitor_thread, NULL, run_file_monitor, inotify);
@@ -102,7 +91,7 @@ ClientPublisher::ClientPublisher(shared_ptr<ClientContext> context, shared_ptr<S
 
 void ClientPublisher::loop() {
 
-    while (!*socket->interrupt) {
+    while (!*this->interrupt) {
         shared_ptr<alx::Inquirer> inquirer(new alx::Inquirer(alx::Inquirer("Drop the Box")));
         inquirer->add_question({"cmd", "Select a command:", commands});
         inquirer->ask();
@@ -127,7 +116,6 @@ void ClientPublisher::loop() {
             PLOGE << "Command not found: " << command << endl;
         }
     }
-    socket->close(socket->socket_fd);
     pthread_exit(NULL);
     return;
 };

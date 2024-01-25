@@ -91,6 +91,31 @@ private:
 	std::string m_regex;
 };
 
+bool getline_async(std::istream& is, std::string& str, char delim = '\n') {
+
+    static std::string linesofar;
+    char inchar;
+    int charsread = 0;
+    bool lineread = false;
+    str = "";
+
+    do {
+        charsread = is.readsome(&inchar, 1);
+        if (charsread == 1) {
+            // if the delimiter is read then return the string so far
+            if (inchar == delim) {
+                str = linesofar;
+                linesofar = "";
+                lineread = true;
+            } else {  // otherwise add it to the string so far
+                linesofar.append(1, inchar);
+            }
+        }
+    } while (charsread != 0 && !lineread);
+
+    return lineread;
+}
+
 class Inquirer
 {
 	std::vector<std::pair<std::string, Question>> m_questions;
@@ -101,6 +126,7 @@ public:
 		: m_title(std::move(title)) {}
 
 	void add_question(const Question& question) { m_questions.emplace_back(question.m_key, question); }
+
 
 	void ask()
 	{
@@ -115,7 +141,8 @@ public:
 
 			auto takeInput = [](std::string& destination) {
 				std::cout << "\033[34m";
-				std::getline(std::cin, destination);
+                getline_async(std::cin, destination);
+				// std::getline(std::cin, destination);
 				std::cout << "\033[0m";
 			};
 

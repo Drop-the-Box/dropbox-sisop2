@@ -1,9 +1,12 @@
+#include "../../common/file_io/file_io.hpp"
 #include "inotify.hpp"
 
-Inotify::Inotify(shared_ptr<Socket> socket, const char *folder_path) {
+Inotify::Inotify(shared_ptr<ClientContext> context, const char *folder_path) {
     this->folder_path     = folder_path;
     this->file_descriptor = inotify_init();
-    this->socket          = socket;
+    this->context = context;
+
+    fcntl (this->file_descriptor, F_SETFL, fcntl (this->file_descriptor, F_GETFL) | O_NONBLOCK);
     if (this->file_descriptor == -1) {
         PLOGE << "Failed to initialize inotify" << endl;
         return;
@@ -25,24 +28,25 @@ int Inotify::get_watch_descriptor() {
 }
 
 void Inotify::read_event() {
-    PLOGI << "Inotify read event" << endl;
+    PLOGD << "Inotify read event" << endl;
 
     char   buffer[BUFFER_LEN];
     string full_file_path;
     int    length = read(this->file_descriptor, buffer, BUFFER_LEN);
+    if (length <= 0) return;
 
     unique_ptr<FileHandler> file_handler(new FileHandler(this->folder_path));
     if (length < 0) {
         PLOGE << "Failed to read" << endl;
     }
-    PLOGI << "Read " << length << " bytes from inotify" << endl;
+    PLOGD << "Read " << length << " bytes from inotify" << endl;
     struct inotify_event *event = (struct inotify_event *)&(buffer)[0];
     if (event->len) {
         if (event->mask & IN_CREATE) {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was created." << endl;
             file_handler->open(full_file_path);
-            if (file_handler->send(this->socket, this->socket->socket_fd)) {
+            if (file_handler->send(this->context->conn_manager, CommandPublisher)) {
                 PLOGI << "File " << full_file_path << " sent successfully." << endl;
             } else {
                 PLOGE << "Error sending file " << full_file_path << "." << endl;
@@ -51,7 +55,7 @@ void Inotify::read_event() {
             full_file_path = string(this->folder_path) + "/" + string(event->name);
             PLOGI << "The file " << full_file_path << " was modified." << endl;
             file_handler->open(full_file_path);
-            if (file_handler->send(this->socket, this->socket->socket_fd)) {
+            if (file_handler->send(this->context->conn_manager, CommandPublisher)) {
                 PLOGI << "File " << full_file_path << " sent successfully." << endl;
             } else {
                 PLOGE << "Error sending file " << full_file_path << "." << endl;

@@ -146,6 +146,10 @@ Device *UserStore::get_device(const string username, const string address) {
     return NULL;
 }
 
+// vector<int> UserStore::get_connected_channels(int current_server) {
+// 
+// }
+
 vector<string> UserStore::get_connected_users() {
     vector<string>                           users;
     map<string, vector<shared_ptr<Session>>> sessions = this->users_sessions;
@@ -159,11 +163,17 @@ vector<string> UserStore::get_connected_users() {
 void UserStore::get_user_devices() {
 }
 
-ServerContext::ServerContext(shared_ptr<Socket> socket, shared_ptr<Connection> connection, shared_ptr<UserStore> storage) {
+ServerContext::ServerContext(
+    shared_ptr<Socket> socket,
+    shared_ptr<Connection> connection,
+    shared_ptr<UserStore> storage,
+    shared_ptr<ServerElectionService> election_service
+) {
     this->socket     = socket;
     this->connection = connection;
     this->storage    = storage;
     this->device     = NULL;
+    this->election_service = election_service;
 }
 
 void ServerContext::set_device(Device *device) {
