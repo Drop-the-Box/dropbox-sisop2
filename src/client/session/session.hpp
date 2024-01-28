@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "../../common/session/models.hpp"
-#include "../../common/socket_io/socket.hpp"
 #include "models.hpp"
 
 using namespace std;
@@ -15,7 +14,6 @@ public:
 };
 
 class ClientSession {
-    shared_ptr<Socket>         socket;
     shared_ptr<SessionRequest> request;
     shared_ptr<ClientContext>  context;
 

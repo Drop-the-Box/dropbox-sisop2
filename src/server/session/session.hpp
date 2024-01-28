@@ -11,7 +11,6 @@
 #include "../../common/socket_io/socket.hpp"
 #include "../userland/models.hpp"
 #include "../serverland/replication.hpp"
-#include "models.hpp"
 
 using namespace std;
 
@@ -32,9 +31,9 @@ class SessionManager {
 
 public:
     bool *interrupt;
-    shared_ptr<ServerElectionService> election_svc;
+    ServerElectionService *election_svc;
 
-    SessionManager(shared_ptr<Socket> socket, shared_ptr<ServerElectionService> election_svc);
+    SessionManager(shared_ptr<Socket> socket, ServerElectionService *election_svc);
     void start(int pid);
     void stop(int signal);
 };

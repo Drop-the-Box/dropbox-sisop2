@@ -27,6 +27,11 @@ class SocketConnectError: public SocketError {
         SocketConnectError(string msg): SocketError(msg) {};
 };
 
+class SocketDisconnectedError: public SocketError {
+    public:
+        SocketDisconnectedError(string msg): SocketError(msg) {};
+};
+
 class UserInterruptError: public std::runtime_error {
     public:
         UserInterruptError(string msg): runtime_error(msg.c_str()){};
@@ -46,6 +51,7 @@ class Socket {
 
         Socket(string address, int port, bool *interrupt, SocketMode mode, int buffer_size);
         Socket(string address, int port, bool *interrupt, SocketMode mode, int buffer_size, int max_requests);
+        ~Socket();
         int listen(int max_requests);
         void connect(string address, int port);
         void bind();

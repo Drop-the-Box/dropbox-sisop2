@@ -37,12 +37,17 @@ void FileSync::sync_all() {
 
 void FileSync::loop() {
     this->sync_all();
-    shared_ptr<Socket>  socket  = this->context->socket;
-    int                 channel = this->context->connection->channel;
-    shared_ptr<uint8_t> buffer((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
-    close(context->connection->pipe_fd[1]);
-    read(context->connection->pipe_fd[0], buffer.get(), BUFFER_SIZE - 1);
-    PLOGI << "Received filename " << buffer << endl;
+    int channel = context->connection->channel;
+    shared_ptr<Socket> socket = context->socket;
+    while (!socket->has_error(channel) && !*socket->interrupt) {
+        sleep(1);
+    }
+    // shared_ptr<Socket>  socket  = this->context->socket;
+    // int                 channel = this->context->connection->channel;
+    // shared_ptr<uint8_t> buffer((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
+    // // close(context->connection->pipe_fd[1]);
+    // // read(context->connection->pipe_fd[0], buffer.get(), BUFFER_SIZE - 1);
+    // PLOGI << "Received filename " << buffer << endl;
     // while (context->socket->get_message_sync(buffer.get(), context->connection->channel) != 0) {
     //     PLOGI << "Filesync waiting on channel " << channel << "..." << endl;
     //     sleep(1);

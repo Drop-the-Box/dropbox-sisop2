@@ -41,34 +41,46 @@ void Inotify::read_event() {
     }
     PLOGD << "Read " << length << " bytes from inotify" << endl;
     struct inotify_event *event = (struct inotify_event *)&(buffer)[0];
-    if (event->len) {
-        if (event->mask & IN_CREATE) {
-            full_file_path = string(this->folder_path) + "/" + string(event->name);
-            PLOGI << "The file " << full_file_path << " was created." << endl;
-            file_handler->open(full_file_path);
-            if (file_handler->send(this->context->conn_manager, CommandPublisher)) {
-                PLOGI << "File " << full_file_path << " sent successfully." << endl;
-            } else {
-                PLOGE << "Error sending file " << full_file_path << "." << endl;
-            }
-        } else if (event->mask & IN_MODIFY) {
-            full_file_path = string(this->folder_path) + "/" + string(event->name);
-            PLOGI << "The file " << full_file_path << " was modified." << endl;
-            file_handler->open(full_file_path);
-            if (file_handler->send(this->context->conn_manager, CommandPublisher)) {
-                PLOGI << "File " << full_file_path << " sent successfully." << endl;
-            } else {
-                PLOGE << "Error sending file " << full_file_path << "." << endl;
-            }
-        } else if (event->mask & IN_DELETE) {
-            full_file_path = string(this->folder_path) + "/" + string(event->name);
-            PLOGI << "The file " << full_file_path << " was deleted." << endl;
-            // file_handler->open(full_file_path);
-            // if (fileHandler->send(this->socket, this->socket->socket_fd)) {
-            // ver função de deletar arquivo no servidor
+    ConnectionManager* conn_manager = context->conn_manager;
+    if (event->len && (event->mask & IN_CREATE || event->mask & IN_MODIFY)) {
+        full_file_path = string(this->folder_path) + "/" + string(event->name);
+        PLOGI << "The file " << full_file_path << " was created." << endl;
+        file_handler->open(full_file_path);
+        shared_ptr<Command> command(new Command(UploadFile, string(event->name)));
+        while(true) {
+            try {
+                if(conn_manager->send_command(command, CommandPublisher)) {
+                    if (file_handler->send(this->context->conn_manager, CommandPublisher)) {
+                        PLOGI << "File " << full_file_path << " sent successfully." << endl;
+                        break;
+                    }
+                }
+            } catch (ConnectionResetError &exc){}
+            catch(SocketTimeoutError &exc) {};
+
+            PLOGE << "Error sending file " << full_file_path << "." << endl;
         }
+
+        // } else if (event->mask & IN_MODIFY) {
+        //     full_file_path = string(this->folder_path) + "/" + string(event->name);
+        //     PLOGI << "The file " << full_file_path << " was modified." << endl;
+        //     file_handler->open(full_file_path);
+        //     if (file_handler->send(this->context->conn_manager, CommandPublisher)) {
+        //         PLOGI << "File " << full_file_path << " sent successfully." << endl;
+        //     } else {
+        //         PLOGE << "Error sending file " << full_file_path << "." << endl;
+        //     }
+    } else if (event->mask & IN_DELETE) {
+        full_file_path = string(this->folder_path) + "/" + string(event->name);
+        shared_ptr<Command> command(new Command(DeleteFile, string(event->name)));
+        if (context->conn_manager->send_command(command, CommandPublisher)) {
+            PLOGI << "The file " << full_file_path << " was deleted." << endl;
+        }
+        // file_handler->open(full_file_path);
+        // if (fileHandler->send(this->socket, this->socket->socket_fd)) {
+        // ver função de deletar arquivo no servidor
     }
-    PLOG_INFO << "Inotify read event end" << endl;
+    PLOGI << "Inotify read event end" << endl;
 }
 
 void Inotify::closeInotify() {

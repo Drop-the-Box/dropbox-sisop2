@@ -54,14 +54,12 @@ public:
     static string         get_sync_dir(string username, SYNC_DIR_TYPE mode = DIR_CLIENT);
     static bool           get_path_metadata(const string path, struct stat *metadata);
     static bool           path_exists(const string path);
-    void receive_file(
-        string work_dir, shared_ptr<FileMetadata> metadata,
-        shared_ptr<Socket> socket, int channel
-    );
-    void receive_file(
-        string work_dir, shared_ptr<FileMetadata> metadata,
-        ConnectionManager *conn_manager, SessionType kind
-    );
+    shared_ptr<FileMetadata> receive_file(string work_dir, shared_ptr<Socket> socket, int channel);
+    shared_ptr<FileMetadata> receive_file(string work_dir, ConnectionManager *conn_manager, SessionType session_type);
+    shared_ptr<FileMetadata> receive_metadata(shared_ptr<Socket> socket, int channel);
+    shared_ptr<FileMetadata> receive_metadata(ConnectionManager *conn_manager, SessionType session_type);
+    shared_ptr<Packet> receive_chunk(shared_ptr<Socket> socket, int channel);
+    shared_ptr<Packet> receive_chunk(ConnectionManager *conn_manager, SessionType session_type);
 
 private:
     string   filename;

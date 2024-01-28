@@ -8,15 +8,29 @@ using namespace std;
 ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, bool *interrupt) {
     this->context = context;
     this->interrupt = interrupt;
-    ///this->file_handler = make_shared<FileHandler>();
     string sync_dir = this->context->sync_dir;
     this->file_handler = make_shared<FileHandler>(sync_dir);
 }
 
 void ClientFileSync::loop() {
-    shared_ptr<FileMetadata> metadata;
     string sync_dir = this->context->sync_dir;
-    file_handler->receive_file(sync_dir, metadata, context->conn_manager, context->session_type);
+    ConnectionManager *conn_manager = context->conn_manager;
+    shared_ptr<FileMetadata> metadata;
+    while (!*this->interrupt && !conn_manager->has_error(CommandPublisher)) {
+        try {
+            metadata = file_handler->receive_file(
+                sync_dir, conn_manager, context->session_type
+            );
+        } catch (ConnectionResetError &exc) {
+            continue;
+        } catch (SocketTimeoutError &exc) {
+            continue;
+        }
+        if (metadata == NULL) {
+            continue;
+        }
+        PLOGI << "Received file in FileSync: " << metadata->name << endl;
+    }
     // char buffer[BUFFER_SIZE];
     // int  total_bytes = 0;
     // int  collected_bytes;

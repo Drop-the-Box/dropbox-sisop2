@@ -65,28 +65,28 @@ ClientSession::ClientSession(shared_ptr<ClientContext> context) {
 
 
 void ClientSession::run() {
-    PLOGI << "Running session..." << endl;
-    PLOGI << "Session type: " << session_type_map.at(context->session_type) << endl;
+    PLOGD << "Running session..." << endl;
+    PLOGD << "Session type: " << session_type_map.at(context->session_type) << endl;
     switch (context->session_type) {
     case CommandPublisher: {
         unique_ptr<ClientPublisher> publisher(new ClientPublisher(context, &interrupt));
-        PLOGW << "Publisher loop starting..." << endl;
+        PLOGI << "Publisher loop starting..." << endl;
         publisher->loop();
-        PLOGW << "Publisher loop finished..." << endl;
+        PLOGI << "Publisher loop finished..." << endl;
         break;
     }
     case CommandSubscriber: {
         unique_ptr<ClientSubscriber> subscriber(new ClientSubscriber(context, &interrupt));
-        PLOGW << "Subscriber loop starting..." << endl;
+        PLOGI << "Subscriber loop starting..." << endl;
         subscriber->loop();
-        PLOGW << "Subscriber loop finished..." << endl;
+        PLOGI << "Subscriber loop finished..." << endl;
         break;
     }
     case FileExchange: {
         unique_ptr<ClientFileSync> file_sync(new ClientFileSync(context, &interrupt));
-        PLOGW << "File sync loop starting..." << endl;
+        PLOGI << "File sync loop starting..." << endl;
         file_sync->loop();
-        PLOGW << "File sync loop finished..." << endl;
+        PLOGI << "File sync loop finished..." << endl;
         break;
     }
     default: {

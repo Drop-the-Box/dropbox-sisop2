@@ -36,19 +36,19 @@ services:
     <<: *server
     container_name: dtb-server-3
     environment:
-      #DEBUG: true
+      # DEBUG: true
       PID: 3
   server-4: 
     <<: *server
     container_name: dtb-server-4
     environment:
-      #DEBUG: true
+      # DEBUG: true
       PID: 4
   server-5: 
     <<: *server
     container_name: dtb-server-5
     environment:
-      # DEBUG: true
+      DEBUG: true
       PID: 5
 
   client:
@@ -65,8 +65,8 @@ services:
       - /code/.git
       - /code/bin
       - /code/srv_sync_dir
-    #environment:
-    #DEBUG: true
+    environment:
+      DEBUG: true
     #  DEBUG_MEM: true
     stdin_open: true
     tty: true

@@ -64,3 +64,89 @@ bool Event::send(shared_ptr<Socket> socket, int channel) {
     packet->send(socket, channel);
     return true;
 };
+
+Command::Command(uint8_t *bytes) {
+    uint8_t *cursor   = bytes;
+    size_t   uint16_s = sizeof(uint16_t);
+
+    uint16_t prop;
+    memmove(&prop, cursor, uint16_s);
+    this->type = (CommandType)ntohs(prop);
+    cursor += uint16_s;
+
+    memmove(&prop, cursor, uint16_s);
+    uint16_t payload_size = ntohs(prop);
+    PLOGD << "Loaded event with size: " << payload_size << endl;
+    cursor += uint16_s;
+
+    int max_payload_size = Packet::get_max_payload_size() - 2 * uint16_s;
+    if (payload_size > max_payload_size) {
+        PLOGE << "Buffer overflow: " << payload_size - max_payload_size << " bigger than the buffer" << endl;
+        payload_size = max_payload_size;
+    }
+    unique_ptr<uint8_t> payload((uint8_t *)calloc(payload_size, sizeof(uint8_t)));
+    memmove(payload.get(), cursor, payload_size * sizeof(uint8_t));
+    this->arguments = string((char *)payload.get());
+}
+
+Command::Command(CommandType type, string arguments) {
+    this->type = type;
+    this->arguments = arguments;
+}
+
+size_t Command::to_bytes(uint8_t **bytes) {
+    uint16_t message_size = this->arguments.size() + 1;
+    uint8_t *message_buf = (uint8_t *)calloc(message_size, sizeof(uint8_t));
+    memmove(message_buf, this->arguments.c_str(), message_size);
+    /// PLOGD << "Encoding msg:  " << message_buf.get() << endl;
+    size_t packet_size = sizeof(this->type);
+    packet_size += sizeof(uint16_t);
+    packet_size += message_size * sizeof(uint8_t);
+
+    *bytes = (uint8_t *)calloc(packet_size, sizeof(uint8_t));
+
+    uint8_t *cursor   = *bytes;
+    size_t   uint16_s = sizeof(uint16_t);
+
+    uint16_t prop = htons(this->type);
+    memmove(cursor, &prop, uint16_s);
+    cursor += uint16_s;
+
+    prop = htons(message_size);
+    memmove(cursor, &prop, uint16_s);
+    cursor += uint16_s;
+    memmove(cursor, message_buf, message_size * sizeof(uint8_t));
+    free(message_buf);
+    return packet_size;
+}
+
+bool Command::send(shared_ptr<Socket> socket, int channel) {
+    // uint16_t            message_size = this->arguments.size() + 1;
+    // unique_ptr<uint8_t> message_buf((uint8_t *)calloc(message_size, sizeof(uint8_t)));
+    // memmove(message_buf.get(), this->arguments.c_str(), message_size);
+    // /// PLOGD << "Encoding msg:  " << message_buf.get() << endl;
+    // size_t packet_size = sizeof(this->type);
+    // packet_size += sizeof(uint16_t);
+    // packet_size += message_size * sizeof(uint8_t);
+
+    // unique_ptr<uint8_t> buffer((uint8_t *)calloc(packet_size, sizeof(uint8_t)));
+
+    // uint8_t *cursor   = buffer.get();
+    // size_t   uint16_s = sizeof(uint16_t);
+
+    // uint16_t prop = htons(this->type);
+    // memmove(cursor, &prop, uint16_s);
+    // cursor += uint16_s;
+
+    // prop = htons(message_size);
+    // memmove(cursor, &prop, uint16_s);
+    // cursor += uint16_s;
+
+    // memmove(cursor, message_buf.get(), message_size * sizeof(uint8_t));
+    uint8_t *bytes;
+    size_t packet_size = this->to_bytes(&bytes);
+    PLOGI << "Sending packet with size " << packet_size << endl;
+    unique_ptr<Packet> packet(new Packet(CommandMsg, 1, packet_size, packet_size, bytes));
+    packet->send(socket, channel);
+    return true;
+};

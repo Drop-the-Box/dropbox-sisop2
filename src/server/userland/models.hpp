@@ -27,13 +27,14 @@ public:
     shared_ptr<Connection> connection;
     shared_ptr<UserStore>  storage;
     shared_ptr<Socket>     socket;
-    shared_ptr<ServerElectionService> election_service;
+    ServerElectionService *election_service;
+    shared_ptr<ReplicationService> repl_service;
 
     ServerContext(
         shared_ptr<Socket> socket,
         shared_ptr<Connection> connection,
         shared_ptr<UserStore> storage,
-        shared_ptr<ServerElectionService> election_service
+        ServerElectionService *election_service
     );
     void set_device(Device *device);
 };
@@ -55,6 +56,7 @@ public:
     bool                  register_connection(const string username, shared_ptr<ServerContext> context);
     bool                  unregister_connection(shared_ptr<ServerContext> context);
     Device               *get_device(const string username, const string address);
+    vector<int>           get_all_channels();
 };
 
 #endif

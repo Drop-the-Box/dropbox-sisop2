@@ -101,17 +101,19 @@ int main(int argc, char *argv[]) {
     //string socket_address = string(ip_local);
     string socket_address = "0.0.0.0";
     PLOGI << "Starting server on " << socket_address << ":" << port << endl;
-    shared_ptr<Socket> socket = make_shared<Socket>(socket_address, port, &interrupt, Server, buffer_size, max_requests);
-
-    shared_ptr<ReplicaManager> current_server(new ReplicaManager(pid));
-    shared_ptr<ServerStore> server_storage(new ServerStore());
-    shared_ptr<ServerElectionService> election_service(
-        new ServerElectionService(current_server, server_storage, &interrupt)
+    shared_ptr<Socket> socket = make_shared<Socket>(
+        socket_address, port, &interrupt, Server, buffer_size, max_requests
     );
-    unique_ptr<SessionManager> session_manager(new SessionManager(socket, election_service));
+
+    shared_ptr<ReplicaManager> current_server(new ReplicaManager(pid, false));
+    shared_ptr<ServerStore> server_store(new ServerStore(current_server));
+    shared_ptr<ReplicationService> repl_service(new ReplicationService(server_store, &interrupt));
+    ServerElectionService *election_svc = new ServerElectionService(repl_service, &interrupt);
+    unique_ptr<SessionManager> session_manager(new SessionManager(socket, election_svc));
     session_manager->interrupt = &interrupt;
     session_manager->start(pid);
     free(ip_local);
-
+    pthread_exit(NULL);
+    free(election_svc);
     return 0;
 }

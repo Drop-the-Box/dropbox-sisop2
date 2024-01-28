@@ -1,8 +1,9 @@
 #ifndef CONN_MANAGER_HPP
 #define CONN_MANAGER_HPP
-#include "../../common/socket_io/socket.hpp"
-#include "../../common/serverland/models.hpp"
-#include "../../common/session/models.hpp"
+#include "../socket_io/socket.hpp"
+#include "../serverland/models.hpp"
+#include "../session/models.hpp"
+#include "../eventhub/models.hpp"
 #include <map>
 
 
@@ -18,12 +19,13 @@ class ConnectionManager {
     string username;
     pthread_mutex_t reconnect_mutex;
     bool reconnecting = false;
+    bool disconnecting = false;
 
     bool setup_connection(shared_ptr<Socket> socket, SessionType kind);
     void init_connections();
     shared_ptr<ReplicaManager> get_server_leader();
-    void check_socket(SessionType kind);
-    bool probe_server(shared_ptr<Socket> socket);
+    // void check_socket(SessionType kind);
+    bool probe_server(shared_ptr<Socket> socket, int pid);
     void reconnect();
     ~ConnectionManager();
     
@@ -31,7 +33,9 @@ class ConnectionManager {
         ConnectionManager(string username, bool *interrupt);
         shared_ptr<Socket> get_socket(SessionType kind);
         int send(shared_ptr<Packet> packet, SessionType kind);
+        bool send_command(shared_ptr<Command> command, SessionType kind);
         int get_message(uint8_t *buffer, SessionType kind);
         void stop_connections();
+        bool has_error(SessionType kind);
 };
 #endif

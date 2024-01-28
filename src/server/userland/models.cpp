@@ -105,14 +105,14 @@ bool UserStore::unregister_connection(shared_ptr<ServerContext> context) {
     if (context->device != NULL) {
         sem_wait(&this->devices_lock); // acquiring lock
                                        //
-        shared_ptr<Connection>                     connection = context->connection;
-        map<int, shared_ptr<Connection>>::iterator iter       = context->device->connections.find(context->connection->port);
+        shared_ptr<Connection> connection = context->connection;
+        auto iter = context->device->connections.find(connection->port);
         if (iter != context->device->connections.end()) {
             context->device->connections.erase(iter);
         }
         if (context->device->connections.size() == 0) {
-            string                          username   = context->device->username;
-            map<string, Device *>::iterator device_key = this->users_devices[username].find(context->device->address);
+            string username   = context->device->username;
+            auto device_key = this->users_devices[username].find(context->device->address);
             if (device_key != this->users_devices[username].end()) {
                 PLOGI << "Unregistering device " << context->device->address << " from user " << username << endl;
                 this->users_devices[username].erase(device_key);
@@ -163,17 +163,32 @@ vector<string> UserStore::get_connected_users() {
 void UserStore::get_user_devices() {
 }
 
+vector<int> UserStore::get_all_channels() {
+    auto users = this->users_devices;
+    vector<int> all_connections;
+    for (auto it = users.begin(); it != users.end(); it++) {
+        for (auto dit=it->second.begin(); dit != it->second.end(); dit++) {
+            auto connections = dit->second->connections;
+            for (auto cit=connections.begin(); cit != connections.end(); cit++) {
+                all_connections.push_back(cit->second->channel);
+            }
+        }
+    }
+    return all_connections;
+}
+
 ServerContext::ServerContext(
     shared_ptr<Socket> socket,
     shared_ptr<Connection> connection,
     shared_ptr<UserStore> storage,
-    shared_ptr<ServerElectionService> election_service
+    ServerElectionService *election_service
 ) {
     this->socket     = socket;
     this->connection = connection;
     this->storage    = storage;
     this->device     = NULL;
     this->election_service = election_service;
+    this->repl_service = election_service->repl_service;
 }
 
 void ServerContext::set_device(Device *device) {
