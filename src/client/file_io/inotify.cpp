@@ -60,6 +60,15 @@ void Inotify::read_event() {
 
             PLOGE << "Error sending file " << full_file_path << "." << endl;
         }
+        shared_ptr<Event> event = context->conn_manager->get_event(CommandPublisher);
+        if (event == NULL) {
+            PLOGE << "Cannot get reply from upload file command." << endl;
+        }
+        if (event->type == CommandSuccess) {
+            PLOGI << "File " << full_file_path << "propagated to all backups." << endl; 
+        } else {
+            PLOGI << "Error uploading file. Repl: " << event->message << endl;
+        }
 
         // } else if (event->mask & IN_MODIFY) {
         //     full_file_path = string(this->folder_path) + "/" + string(event->name);

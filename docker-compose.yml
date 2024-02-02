@@ -36,7 +36,7 @@ services:
     <<: *server
     container_name: dtb-server-3
     environment:
-      # DEBUG: true
+      DEBUG: true
       PID: 3
   server-4: 
     <<: *server

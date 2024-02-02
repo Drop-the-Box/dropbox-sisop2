@@ -1,5 +1,9 @@
 #include "server_sync.hpp"
 #include "../../common/vars.hpp"
+#include "../../common/file_io/file_io.hpp"
+#include <string.h>
+#include <iostream>
+#include <iterator>
 
 BackupSubscriber::BackupSubscriber(shared_ptr<ServerContext> context) {
     this->context = context;
@@ -29,11 +33,31 @@ void BackupSubscriber::loop() {
     while (!socket->has_error(channel) && !*interrupt) {
         PLOGI << "Awaiting for command..." << endl;
         shared_ptr<Command> command = this->receive_command();
-        if (command != NULL) {
-            PLOGI << "Received command " << command->type << " from leader with args " << command->arguments << endl;
-        } else {
+        if (command == NULL) {
+            usleep(10000);
+            continue;
         }
-        usleep(10000);
+        PLOGI << "Received command " << command->type << " from leader with args " << command->arguments << endl;
+        if (command->type == UploadFile) {
+            string username = string(strrchr(command->arguments.c_str(), ' '));
+            username.erase(0);
+            stringstream oss;
+            oss << "./srv_sync_dir/" << username; 
+            unique_ptr<FileHandler> file_handler(new FileHandler(oss.str()));
+            shared_ptr<FileMetadata> metadata = NULL;
+            metadata = file_handler->receive_file(oss.str(), socket, channel);
+            if (metadata == NULL) {
+                PLOGE << "Error receiving file from leader.";
+                shared_ptr<Event> reply_evt(new Event(CommandFailed, "Failed receive file."));
+                reply_evt->send(socket, channel);
+                continue;
+            }
+            PLOGI << "Received file " << metadata->name << " for user " << username << " from leader." << endl;
+            shared_ptr<Event> reply_evt(new Event(CommandSuccess, " Command propagated."));
+            reply_evt->send(socket, channel);
+
+        } else if (command->type == DeleteFile) {
+        }
     }
     PLOGI << "Disconnected from backup subscriber" << endl;
 }

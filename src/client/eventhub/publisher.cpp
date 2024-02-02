@@ -14,6 +14,7 @@
 
 
 #include "../file_io/inotify.hpp"
+#include "../../common/vars.hpp"
 
 
 
@@ -53,6 +54,15 @@ void ClientPublisher::handle_delete() {
     const string filename = this->get_input_async();
     shared_ptr<Command> del_command(new Command(DeleteFile, filename));
     context->conn_manager->send_command(del_command, CommandPublisher);
+    shared_ptr<Event> event = context->conn_manager->get_event(CommandPublisher);
+    if (event == NULL) {
+        PLOGE << "Cannot get reply from delete file command." << endl;
+    }
+    if (event->type == CommandSuccess) {
+        PLOGI << "Command has succeeded for delete. Repl: " << event->message << endl; 
+    } else {
+        PLOGI << "Command has failed for delete. Repl: " << event->message << endl;
+    }
 };
 
 void ClientPublisher::handle_list_server(){

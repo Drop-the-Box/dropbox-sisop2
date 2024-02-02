@@ -210,7 +210,7 @@ bool FileHandler::send(shared_ptr<Socket> socket, int channel) {
     if (this->file_ptr != NULL) {
         PLOGI << "Sending file " << this->metadata->name << endl;
         while ((file_bytes_read = fread(file_buf, sizeof(uint8_t), file_buf_size, this->file_ptr)) > 0) {
-            PLOGD << "Chunk index: " << seq_index << endl;
+            PLOGI << "Chunk index: " << seq_index << endl;
 
             unique_ptr<Packet> packet(new Packet(FileChunk, seq_index, file_size, file_bytes_read, file_buf));
 
@@ -220,7 +220,7 @@ bool FileHandler::send(shared_ptr<Socket> socket, int channel) {
             total_bytes_sent += file_bytes_read;
             percentage = (float)(total_bytes_sent / (float)file_size);
 
-            PLOGD << "Transfering  " << this->metadata->name << ": " << percentage * 100 << " %" << endl;
+            PLOGI << "Transfering  " << this->metadata->name << ": " << percentage * 100 << " %" << endl;
 
             memset(file_buf, 0, file_bytes_read);
             seq_index += 1;
@@ -399,11 +399,11 @@ shared_ptr<Packet> FileHandler::receive_chunk(shared_ptr<Socket> socket, int cha
     shared_ptr<Packet> packet(new Packet((uint8_t *)buffer));
     if (packet->type != FileChunk) {
         PLOGE << "Invalid file chunk: " << endl;
-        PLOGD << "Packet type: " << packet->type << endl;
-        PLOGD << "Packet seq idx: " << packet->seq_index << endl;
-        PLOGD << "Packet total size: " << packet->total_size << endl;
-        PLOGD << "Packet payload size: " << packet->payload_size << endl;
-        PLOGD << "Packet payload: " << packet->payload << endl;
+        PLOGI << "Packet type: " << packet->type << ". Expected " << FileChunk << endl;
+        PLOGI << "Packet seq idx: " << packet->seq_index << endl;
+        PLOGI << "Packet total size: " << packet->total_size << endl;
+        PLOGI << "Packet payload size: " << packet->payload_size << endl;
+        PLOGI << "Packet payload: " << packet->payload << endl;
         return NULL;
     }
     PLOGD << "File size: " << (long)packet->total_size << endl;
@@ -430,12 +430,17 @@ shared_ptr<FileMetadata> FileHandler::receive_file(string work_dir, shared_ptr<S
 
     fpath_str << work_dir << "/" << metadata->name;
     file_path = fpath_str.str();
-    PLOGI << "Storing file in " << file_path << endl;
     FILE *file_output = fopen(file_path.c_str(), "wb");
 
     while (collected_bytes < long(metadata->size)) {
         PLOGD << "Iteration: " << iteration << endl;
-        shared_ptr<Packet> chunk = this->receive_chunk(socket, channel);
+        shared_ptr<Packet> chunk = NULL;
+        while(!socket->has_error(channel)) {
+            try {
+                chunk = this->receive_chunk(socket, channel);
+                break;
+            } catch (SocketTimeoutError &exc) {};
+        }
         if (chunk == NULL) return NULL;
         fwrite(chunk->payload, 1, chunk->payload_size * sizeof(uint8_t), file_output);
         collected_bytes += chunk->payload_size;
@@ -446,5 +451,6 @@ shared_ptr<FileMetadata> FileHandler::receive_file(string work_dir, shared_ptr<S
     if (file_output != NULL) {
         fclose(file_output);
     }
+    PLOGI << "Stored file in " << file_path << endl;
     return metadata;
 }

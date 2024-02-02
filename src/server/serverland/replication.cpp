@@ -131,6 +131,48 @@ void ReplicationService::send_file(string username, string file) {
     pthread_mutex_lock(&backup_mutex);
     string sync_dir = FileHandler::get_sync_dir(username, DIR_SERVER);
     unique_ptr<FileHandler> file_handler(new FileHandler(sync_dir));
+    string full_file_path = sync_dir + "/" + file;
+    PLOGI << "The file " << full_file_path << " was created." << endl;
+    ostringstream oss;
+    oss << file.c_str() << ' ' << username.c_str();
+    string arguments = oss.str();
+    unique_ptr<Command> command(new Command(UploadFile, arguments));    
+    auto replicas = this->server_socket_map;
+    vector<int> to_remove;
+    uint8_t buffer[BUFFER_SIZE];
+    for (auto it=replicas.begin(); it != replicas.end(); it++) {
+        PLOGI << "Sending file to server " << it->first << " with args " << arguments << endl;
+        shared_ptr<Socket> socket = it->second;
+        file_handler->open(full_file_path);
+        try {
+            command->send(socket, socket->socket_fd);
+            file_handler->send(socket, socket->socket_fd);
+            while(true) {
+                try {
+                    socket->get_message_sync(buffer, socket->socket_fd);
+                    break;
+                } catch (SocketTimeoutError &exc) {};
+            }
+            unique_ptr<Packet> packet(new Packet((uint8_t *)buffer));
+            shared_ptr<Event> event(new Event(packet->payload));
+            if (packet->type != EventMsg) {
+                return;
+            }
+            if (event->type == CommandSuccess) {
+                PLOGI << "Command has succeeded for delete from server " << it->first << endl;
+            } else {
+                PLOGI << "Command has failed for delete on server " << it->first
+                    << ". Repl: " << event->message << endl; 
+            }
+        } catch (std::exception &exc) {
+            PLOGW << "Error while propagating file to server " << it->first << ": " << exc.what() << endl;
+            to_remove.push_back(it->first);
+        }
+    }
+    for (auto it=to_remove.begin(); it != to_remove.end(); it++) {
+        replicas.erase(*it);
+        this->server_store->remove_server(*it);
+    }
     pthread_mutex_unlock(&backup_mutex);
 }
 

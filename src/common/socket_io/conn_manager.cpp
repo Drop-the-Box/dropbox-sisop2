@@ -256,3 +256,20 @@ bool ConnectionManager::send_command(shared_ptr<Command> command, SessionType ki
     }
     return false;
 }
+
+
+shared_ptr<Event> ConnectionManager::get_event(SessionType session_type) {
+    uint8_t buffer[BUFFER_SIZE];
+    while(!this->has_error(session_type)) {
+        try {
+            this->get_message(buffer, session_type);
+            break;
+        } catch (SocketTimeoutError &exc) {};
+    }
+    unique_ptr<Packet> packet(new Packet((uint8_t *)buffer));
+    if (packet->type != EventMsg) {
+        return NULL;
+    }
+    shared_ptr<Event> event(new Event(packet->payload));
+    return event;
+}

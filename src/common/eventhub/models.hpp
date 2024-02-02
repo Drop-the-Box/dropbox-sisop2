@@ -26,6 +26,8 @@ enum EventType {
     ServerStatus,
     LeaderAccepted,
     LeaderRejected,
+    CommandSuccess,
+    CommandFailed,
 };
 
 static const map<string, CommandType> command_map = {

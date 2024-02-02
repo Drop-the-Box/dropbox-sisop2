@@ -47,14 +47,18 @@ void ServerEventPublisher::loop() {
             if(command->type == UploadFile) {
                 shared_ptr<FileMetadata> metadata = file_handler->receive_file(oss.str(), socket, channel);
                 if (metadata == NULL) {
+                    shared_ptr<Event> reply_evt(new Event(CommandFailed, "Failed receive file."));
+                    reply_evt->send(socket, channel);
                     continue;
                 }
-                context->repl_service->send_file(username, metadata->name);
                 PLOGI << "Received file on publisher. Notifying other devices" << endl;
+                context->repl_service->send_file(username, metadata->name);
             } else if (command->type == DeleteFile) {
                 context->repl_service->send_command(username, command);
                 // impl delete
             }
+            shared_ptr<Event> reply_evt(new Event(CommandSuccess, " Command propagated to all backups"));
+            reply_evt->send(socket, channel);
             usleep(10000);
             // map<string, Device *> user_devices = context->storage->get_user_devices(username);
             // map<string, Device *>::iterator dev_iter;
