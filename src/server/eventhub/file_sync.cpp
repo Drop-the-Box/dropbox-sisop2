@@ -1,12 +1,12 @@
 #include <plog/Log.h>
 #include <sstream>
-#include <stdlib.h>
 #include <string>
 #include <unistd.h>
 #include <vector>
 
-#include "../../common/vars.hpp"
+#include "../../common/file_io/file_io.hpp"
 #include "file_sync.hpp"
+#include "./misc.hpp"
 
 using namespace std;
 
@@ -17,25 +17,35 @@ FileSync::FileSync(shared_ptr<ServerContext> context) {
 void FileSync::sync_all() {
     PLOGI << "-------------------- Connected to filesync" << endl;
     const string username = context->device->username;
-
-    string         sync_dir = FileHandler::get_sync_dir(username, DIR_SERVER);
+    shared_ptr<ReplicaManager> current_server = context->election_service->current_server;
+    string         sync_dir = FileHandler::get_sync_dir(username, DIR_SERVER, current_server);
     vector<string> files    = FileHandler::list_files(sync_dir);
 
     vector<string>::iterator filename;
     unique_ptr<FileHandler> file_handler(new FileHandler(sync_dir));
+    int channel = context->connection->channel;
+    shared_ptr<Socket> socket = context->socket;
+
+    shared_ptr<Command> command = receive_command(socket, channel); 
+    if (command->type == SyncDir) {
+        PLOGI << "Starting filesync cycle" << endl;
+        for (filename = files.begin(); filename != files.end(); filename++) {
+            ostringstream oss;
+            oss << sync_dir << "/" << *filename;
+            string filepath = oss.str();
+            PLOGD << "File: " << filepath << endl;
+            file_handler->open(filepath);
+            file_handler->send(socket, channel);
+        }
+        unique_ptr<Event> end_sync_evt(new Event(SyncDirFinished, "Sync complete!"));
+        end_sync_evt->send(socket, channel);
     
-    for (filename = files.begin(); filename != files.end(); filename++) {
-        ostringstream oss;
-        oss << sync_dir << "/" << *filename;
-        string filepath = oss.str();
-        PLOGD << "File: " << filepath << endl;
-        file_handler->open(filepath);
-        file_handler->send(context->socket, context->connection->channel);
+        PLOGI << "End of filesync cycle" << endl;
     }
-    PLOGI << "End of filesync cycle" << endl;
 }
 
 void FileSync::loop() {
+    sleep(5);
     this->sync_all();
     int channel = context->connection->channel;
     shared_ptr<Socket> socket = context->socket;

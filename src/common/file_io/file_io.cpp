@@ -59,6 +59,7 @@ FileMetadata::FileMetadata(string filename, string file_path) {
     if (stat(full_path.c_str(), &stat_data) == 0) {
         this->name            = filename;
         this->size            = stat_data.st_size;
+        PLOGI << "Loaded file size: " << this->size << endl;
         this->accessed_at     = stat_data.st_atim.tv_sec;
         this->modified_at     = stat_data.st_mtim.tv_sec;
         this->stat_changed_at = stat_data.st_ctim.tv_sec;
@@ -172,7 +173,8 @@ bool FileHandler::send(ConnectionManager *conn_manager, SessionType session_type
 
     uint8_t *file_buf = (uint8_t *)calloc(file_buf_size, sizeof(uint8_t));
     this->metadata->send(conn_manager, session_type);
-    PLOGW << "teste: " << this->file_ptr << endl;
+    PLOGD << "teste: " << this->file_ptr << endl;
+    PLOGI << "Total file size: " << this->metadata->size << endl;
     if (this->file_ptr != NULL) {
         PLOGI << "Sending file " << this->metadata->name << endl;
         while ((file_bytes_read = fread(file_buf, sizeof(uint8_t), file_buf_size, this->file_ptr)) > 0) {
@@ -206,21 +208,27 @@ bool FileHandler::send(shared_ptr<Socket> socket, int channel) {
     float percentage       = 0;
 
     uint8_t *file_buf = (uint8_t *)calloc(file_buf_size, sizeof(uint8_t));
-    PLOGW << "teste: " << this->file_ptr << endl;
+    PLOGD << "teste: " << this->file_ptr << endl;
+    PLOGI << "Total file size: " << this->metadata->size << endl;
     if (this->file_ptr != NULL) {
         PLOGI << "Sending file " << this->metadata->name << endl;
         while ((file_bytes_read = fread(file_buf, sizeof(uint8_t), file_buf_size, this->file_ptr)) > 0) {
             PLOGD << "Chunk index: " << seq_index << endl;
 
             unique_ptr<Packet> packet(new Packet(FileChunk, seq_index, file_size, file_bytes_read, file_buf));
-
             PLOGD << "Total file size: " << packet->total_size << endl;
+
 
             packet->send(socket, channel);
             total_bytes_sent += file_bytes_read;
             percentage = (float)(total_bytes_sent / (float)file_size);
 
+<<<<<<< Updated upstream
             PLOGD << "Transfering  " << this->metadata->name << ": " << percentage * 100 << " %" << endl;
+=======
+            if (int(percentage) * 100 % 5 == 0)
+            PLOGI << "Transfering  " << this->metadata->name << ": " << percentage * 100 << " %" << endl;
+>>>>>>> Stashed changes
 
             memset(file_buf, 0, file_bytes_read);
             seq_index += 1;
@@ -258,6 +266,16 @@ bool FileHandler::delete_self() {
     return true;
 }
 
+bool FileHandler::delete_file(string filename) {
+    ostringstream full_path;
+    full_path << this->work_dir << "/" << filename;
+    if (remove(full_path.str().c_str()) != 0) {
+        PLOGE << "Error: Unable to delete the file " << full_path.str() << endl;
+        return false;
+    }
+    return true;
+}
+
 long FileHandler::get_size() {
     struct stat file_status;
     if (stat(this->file_path.c_str(), &file_status) < 0) {
@@ -284,10 +302,10 @@ void FileHandler::listen_file() {
     PLOGE << "Error: File listening not implemented.\n";
 }
 
-string FileHandler::get_sync_dir(string username, SYNC_DIR_TYPE mode) {
+string FileHandler::get_sync_dir(string username, SYNC_DIR_TYPE mode, shared_ptr<ReplicaManager> server) {
     ostringstream sync_dir;
     if (mode == DIR_SERVER) {
-        sync_dir << "./srv_sync_dir/";
+        sync_dir << server->base_dir;
     } else {
         sync_dir << "./sync_dir/";
     }
@@ -308,7 +326,7 @@ string FileHandler::get_sync_dir(string username, SYNC_DIR_TYPE mode) {
 };
 
 shared_ptr<FileMetadata> FileHandler::receive_file(
-    string work_dir, ConnectionManager *conn_manager, SessionType session_type
+    shared_ptr<FileMetadata> metadata, string work_dir, ConnectionManager *conn_manager, SessionType session_type
 ) {
     ostringstream fpath_str;
     string file_path;
@@ -317,7 +335,6 @@ shared_ptr<FileMetadata> FileHandler::receive_file(
     int  iteration = 0;
     collected_bytes = 0;
 
-    shared_ptr<FileMetadata> metadata = this->receive_metadata(conn_manager, session_type);
     if (metadata == NULL) return NULL;
 
     iteration = 1;
@@ -331,7 +348,7 @@ shared_ptr<FileMetadata> FileHandler::receive_file(
     FILE *file_output = fopen(file_path.c_str(), "wb");
 
     while (collected_bytes < long(metadata->size)) {
-        PLOGD << "Iteration: " << iteration << endl;
+        PLOGI << "Iteration: " << iteration << endl;
         shared_ptr<Packet> chunk = this->receive_chunk(conn_manager, session_type);
         if (chunk == NULL) return NULL;
         fwrite(chunk->payload, 1, chunk->payload_size * sizeof(uint8_t), file_output);
@@ -344,6 +361,13 @@ shared_ptr<FileMetadata> FileHandler::receive_file(
         fclose(file_output);
     }
     return metadata;
+}
+
+shared_ptr<FileMetadata> FileHandler::receive_file(
+    string work_dir, ConnectionManager *conn_manager, SessionType session_type
+) {
+    shared_ptr<FileMetadata> metadata = this->receive_metadata(conn_manager, session_type);
+    return this->receive_file(metadata, work_dir, conn_manager, session_type);
 }
 
 shared_ptr<FileMetadata> FileHandler::receive_metadata(shared_ptr<Socket> socket, int channel) {
@@ -384,7 +408,9 @@ shared_ptr<Packet> FileHandler::receive_chunk(ConnectionManager *conn_manager, S
         PLOGD << "Packet total size: " << packet->total_size << endl;
         PLOGD << "Packet payload size: " << packet->payload_size << endl;
         PLOGD << "Packet payload: " << packet->payload << endl;
-        return NULL;
+        ostringstream oss;
+        oss << "Invalid packet. Expected chunk (" << FileChunk << "), received: " << packet->type << endl;
+        throw(std::runtime_error(oss.str().c_str()));
     }
     PLOGD << "File size: " << (long)packet->total_size << endl;
     PLOGD << "Chunk size: " << packet->payload_size << endl;
@@ -394,17 +420,28 @@ shared_ptr<Packet> FileHandler::receive_chunk(ConnectionManager *conn_manager, S
 
 shared_ptr<Packet> FileHandler::receive_chunk(shared_ptr<Socket> socket, int channel) {
     char buffer[BUFFER_SIZE];
-    PLOGI << "Waiting for file chunk" << endl;
+    PLOGD << "Waiting for file chunk" << endl;
     socket->get_message_sync((uint8_t *)buffer, channel);
     shared_ptr<Packet> packet(new Packet((uint8_t *)buffer));
     if (packet->type != FileChunk) {
         PLOGE << "Invalid file chunk: " << endl;
+<<<<<<< Updated upstream
         PLOGD << "Packet type: " << packet->type << endl;
         PLOGD << "Packet seq idx: " << packet->seq_index << endl;
         PLOGD << "Packet total size: " << packet->total_size << endl;
         PLOGD << "Packet payload size: " << packet->payload_size << endl;
         PLOGD << "Packet payload: " << packet->payload << endl;
         return NULL;
+=======
+        PLOGI << "Packet type: " << packet->type << ". Expected " << FileChunk << endl;
+        PLOGI << "Packet seq idx: " << packet->seq_index << endl;
+        PLOGI << "Packet total size: " << packet->total_size << endl;
+        PLOGI << "Packet payload size: " << packet->payload_size << endl;
+        PLOGI << "Packet payload: " << packet->payload << endl;
+        ostringstream oss;
+        oss << "Invalid packet. Expected chunk (" << FileChunk << "), received: " << packet->type << endl;
+        throw(std::runtime_error(oss.str().c_str()));
+>>>>>>> Stashed changes
     }
     PLOGD << "File size: " << (long)packet->total_size << endl;
     PLOGD << "Chunk size: " << packet->payload_size << endl;
@@ -412,7 +449,9 @@ shared_ptr<Packet> FileHandler::receive_chunk(shared_ptr<Socket> socket, int cha
     return packet; 
 }
 
-shared_ptr<FileMetadata> FileHandler::receive_file(string work_dir, shared_ptr<Socket> socket, int channel) {
+shared_ptr<FileMetadata> FileHandler::receive_file(
+    shared_ptr<FileMetadata> metadata, string work_dir, shared_ptr<Socket> socket, int channel
+) {
     ostringstream fpath_str;
     string file_path;
     char buffer[BUFFER_SIZE];
@@ -420,7 +459,6 @@ shared_ptr<FileMetadata> FileHandler::receive_file(string work_dir, shared_ptr<S
     int  iteration = 0;
     collected_bytes = 0;
 
-    shared_ptr<FileMetadata> metadata = this->receive_metadata(socket, channel);
     if (metadata == NULL) return NULL;
 
     iteration = 1;
@@ -435,7 +473,12 @@ shared_ptr<FileMetadata> FileHandler::receive_file(string work_dir, shared_ptr<S
 
     while (collected_bytes < long(metadata->size)) {
         PLOGD << "Iteration: " << iteration << endl;
+<<<<<<< Updated upstream
         shared_ptr<Packet> chunk = this->receive_chunk(socket, channel);
+=======
+        shared_ptr<Packet> chunk = NULL;
+        chunk = this->receive_chunk(socket, channel);
+>>>>>>> Stashed changes
         if (chunk == NULL) return NULL;
         fwrite(chunk->payload, 1, chunk->payload_size * sizeof(uint8_t), file_output);
         collected_bytes += chunk->payload_size;
@@ -448,3 +491,10 @@ shared_ptr<FileMetadata> FileHandler::receive_file(string work_dir, shared_ptr<S
     }
     return metadata;
 }
+
+shared_ptr<FileMetadata> FileHandler::receive_file(string work_dir, shared_ptr<Socket> socket, int channel) {
+    shared_ptr<FileMetadata> metadata = this->receive_metadata(socket, channel);
+         
+    return this->receive_file(metadata, work_dir, socket, channel);
+}
+
