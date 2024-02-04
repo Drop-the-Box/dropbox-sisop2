@@ -13,11 +13,12 @@ class ServerEventPublisher {
     shared_ptr<ServerContext> context;
     shared_ptr<Socket> socket;
     int channel;
+    string sync_dir;
 
 public:
     ServerEventPublisher(shared_ptr<ServerContext> context);
     void loop();
     void send_event();
-    shared_ptr<Command> receive_command();
+    void propagate_to_clients(shared_ptr<Command> command);
 };
 #endif

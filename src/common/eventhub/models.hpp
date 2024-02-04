@@ -9,6 +9,8 @@
 using namespace std;
 
 enum CommandType {
+    SyncDir,
+    Reconnect,
     UploadFile,
     DownloadFile,
     DeleteFile,
@@ -28,6 +30,7 @@ enum EventType {
     LeaderRejected,
     CommandSuccess,
     CommandFailed,
+    SyncDirFinished,
 };
 
 static const map<string, CommandType> command_map = {

@@ -2,6 +2,7 @@
 #define CLIENT_PUB_H
 
 #include "../session/session.hpp"
+#include "../file_io/inotify.hpp"
 #include <memory>
 #include <vector>
 
@@ -10,6 +11,7 @@ using namespace std;
 class ClientPublisher {
     shared_ptr<ClientContext> context;
     bool *interrupt;
+    Inotify *file_monitor;
     vector<std::string> commands = {
         "upload",
         "download",

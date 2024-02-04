@@ -50,9 +50,12 @@ void Socket::init(
     }
     while(!(res & O_RDWR));
 
-    struct timeval timeout;
-    timeout.tv_sec  = SOCKET_TIMEOUT;
-    timeout.tv_usec = 0;
+    struct timeval recv_timeout;
+    recv_timeout.tv_sec  = SOCKET_TIMEOUT;
+    recv_timeout.tv_usec = 0;
+    struct timeval snd_timeout;
+    snd_timeout.tv_sec  = 3 * SOCKET_TIMEOUT;
+    snd_timeout.tv_usec = 0;
     int keepalive = 1;
 
     if (setsockopt(this->socket_fd, SOL_SOCKET, SO_KEEPALIVE, &keepalive, sizeof (int))) {
@@ -67,11 +70,11 @@ void Socket::init(
         PLOGE << "Cannot set socket send buffer size. Reason: " << strerror(errno) << endl;
     }
 
-    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof timeout) < 0) {
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &recv_timeout, sizeof recv_timeout) < 0) {
         PLOGE << "Cannot set socket recv timeout. Reason: " << strerror(errno) << endl;
     }
 
-    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof timeout) < 0) {
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, &snd_timeout, sizeof snd_timeout) < 0) {
         PLOGE << "Cannot set socket send timeout. Reason: " << strerror(errno) << endl;
     }
 
@@ -195,12 +198,12 @@ bool Socket::has_error(int channel) {
     socklen_t err_len = sizeof(error);
     int status  = ::getsockopt(channel, SOL_SOCKET, SO_ERROR, &error, &err_len);
     if (status != 0) {
-        string readable_error = errno == 0 ? strerror(status) : strerror(errno);
+        string readable_error = strerror(errno);
         PLOGE << "Error getting socket status for channel " << channel << " : " << readable_error << endl;
         throw SocketError(readable_error);
     }
     if (error != 0) {
-        string readable_error = strerror(errno);
+        string readable_error = strerror(error);
         PLOGE << "Error getting socket status for channel " << channel << " : " << readable_error <<  "\n\n";
         throw SocketError(readable_error);
     }
@@ -259,8 +262,6 @@ int Socket::close(int channel) {
 }
 
 int Socket::get_message_sync(uint8_t *buffer, int channel, bool raise_on_timeout) {
-    if (this->has_error(channel))
-        return 0;
     ::memset(buffer, 0, BUFFER_SIZE);
     int payload_size = 0;
     int time_elapsed = 0;
@@ -275,6 +276,8 @@ int Socket::get_message_sync(uint8_t *buffer, int channel, bool raise_on_timeout
     //     time_elapsed += 0.001;
     // }
     payload_size = this->receive(buffer, channel);
+    if (this->has_error(channel))
+        return 0;
     if (payload_size < 0) {
         ostringstream error;
         error << "Error while reading socket: " << strerror(errno) << endl;
@@ -311,8 +314,9 @@ Packet::Packet(uint8_t *bytes) {
     cursor += uint16_s;
 
     if (this->payload_size > this->get_max_payload_size()) {
-        PLOGE << "Buffer overflow: " << this->payload_size - BUFFER_SIZE << " bigger than the buffer" << endl;
-        this->payload_size = this->get_max_payload_size();
+        ostringstream oss;
+        oss << "Buffer overflow: " << this->payload_size - BUFFER_SIZE << " bigger than the buffer" << endl;
+        throw SocketError(oss.str());
     }
     this->payload = (uint8_t *)calloc(this->payload_size, sizeof(uint8_t));
     memmove(this->payload, cursor, this->payload_size);

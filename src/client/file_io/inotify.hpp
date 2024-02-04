@@ -5,7 +5,7 @@
 #include <sys/inotify.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include "../session/models.hpp"
+#include "../../common/file_io/file_io.hpp"
 
 using namespace std;
 
@@ -13,16 +13,22 @@ using namespace std;
 #define BUFFER_LEN (1024 * (EVENT_SIZE + 16))
 
 class Inotify {
-    const char        *folder_path;
+    string             folder_path;
     int                file_descriptor;
     int                watch_descriptor;
+    map<string, shared_ptr<FileMetadata>> files;
+    shared_ptr<FileHandler> file_handler;
 
 public:
-    shared_ptr<ClientContext> context;
+    ConnectionManager *conn_manager;
 
-    Inotify(shared_ptr<ClientContext> context, const char *folder_path);
+    Inotify(ConnectionManager *conn_manager, const string folder_path);
     int  get_file_descriptor();
     int  get_watch_descriptor();
+    vector<string> get_files();
+    bool add_file(string filename);
+    bool add_file(shared_ptr<FileMetadata> new_file);
+    void delete_file(string filename);
     void read_event();
     void closeInotify();
 };

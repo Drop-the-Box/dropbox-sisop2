@@ -1,7 +1,7 @@
 version: "3"
 services:
   server-1: &server
-      #platform: linux/amd64
+    platform: linux/amd64
     build:
       context: ./
       dockerfile: dropthebox.dockerfile
@@ -10,24 +10,24 @@ services:
     networks:
       - dtb
     ports:
-      - 6999
+      - 6900:14176
     volumes:
-      - ./:/code
-      - /code/.git
-      - /code/bin
-      - ./srv_sync_dir:/code/srv_sync_dir
+      - ./src:/code/src
+      - ./scripts:/code/scripts
+      - ./server_configs.toml:/code/server_configs.toml
     cap_add:
       - SYS_PTRACE
     security_opt:
       - "seccomp=unconfined"
     environment:
-      #DEBUG: true
+      # DEBUG: true
       PID: 1
         # DEBUG_MEM: true
     stdin_open: true
     tty: true
   server-2: 
     <<: *server
+    ports: []
     container_name: dtb-server-2
     environment:
       #DEBUG: true
@@ -35,36 +35,40 @@ services:
   server-3: 
     <<: *server
     container_name: dtb-server-3
+    ports: []
     environment:
-      DEBUG: true
+      # DEBUG: true
       PID: 3
   server-4: 
     <<: *server
     container_name: dtb-server-4
+    ports:
+      - 6903:10376
     environment:
       # DEBUG: true
       PID: 4
   server-5: 
     <<: *server
     container_name: dtb-server-5
+    ports:
+      - 6904:18833
     environment:
-      DEBUG: true
+      # DEBUG: true
       PID: 5
 
-  client:
+  client-1: &client
     # platform: linux/amd64
     build:
       context: ./
       dockerfile: dropthebox.dockerfile
-    command: bash -c "./scripts/run_client.sh claudinoac dtb-server-1 6999"
+    command: bash -c "./scripts/run_client.sh claudinoac"
     networks:
       - dtb
     container_name: dtb-client-1
     volumes:
-      - ./:/code
-      - /code/.git
-      - /code/bin
-      - /code/srv_sync_dir
+      - ./src:/code/src
+      - ./scripts:/code/scripts
+      - ./server_configs.toml:/code/server_configs.toml
     environment:
       DEBUG: true
     #  DEBUG_MEM: true
@@ -72,6 +76,9 @@ services:
     tty: true
     deploy:
       replicas: 1
+  client-2:
+    <<: *client
+    container_name: dtb-client-2
 networks:
   dtb:
     external: true
