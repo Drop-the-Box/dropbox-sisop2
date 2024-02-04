@@ -2,7 +2,6 @@
 #include <plog/Log.h>
 
 #include "file_exchange.hpp"
-#include "../../common/vars.hpp"
 
 using namespace std;
 
@@ -11,43 +10,17 @@ ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, bool *interrup
     this->interrupt = interrupt;
     string sync_dir = this->context->sync_dir;
     this->file_handler = make_shared<FileHandler>(sync_dir);
-    ConnectionManager *conn_manager = context->conn_manager;
-
-    shared_ptr<Command> sync_command = make_shared<Command>(SyncDir, "sync all files");
-    conn_manager->send_command(sync_command, FileExchange);
 }
 
 void ClientFileSync::loop() {
     string sync_dir = this->context->sync_dir;
     ConnectionManager *conn_manager = context->conn_manager;
     shared_ptr<FileMetadata> metadata;
-    char buffer[BUFFER_SIZE];
-    while (!*this->interrupt && !conn_manager->has_error(FileExchange)) {
+    while (!*this->interrupt && !conn_manager->has_error(CommandPublisher)) {
         try {
-            conn_manager->get_message((uint8_t *)buffer, FileExchange);
-            unique_ptr<Packet> packet(new Packet((uint8_t *)buffer));
-            if (packet->type == EventMsg) {
-                unique_ptr<Event> event(new Event(packet->payload));
-                if (event->type == SyncDirFinished) {
-                    *context->is_listening_dir = true;
-                    PLOGI << "End of get_sync_dir" << endl;
-                }
-            }
-            else if (packet->type == FileMetadataMsg) {
-                shared_ptr<FileMetadata> metadata = make_shared<FileMetadata>(packet->payload);
-                if (!context->file_monitor->add_file(metadata)) {
-                    PLOGI << "File " << metadata->name << " already exists. Ignoring data..." << endl;
-                    int bytes_count = 0;
-                    while(bytes_count < metadata->size) {
-                        conn_manager->get_message((uint8_t *)buffer, FileExchange);
-                        unique_ptr<Packet> packet(new Packet((uint8_t *)buffer));
-                        bytes_count += packet->payload_size;
-                    }
-                } else {
-                    PLOGI << "Downloading file " << metadata->name  << " from the server..." << endl;
-                    file_handler->receive_file(metadata, sync_dir, conn_manager, context->session_type);
-                }
-            }
+            metadata = file_handler->receive_file(
+                sync_dir, conn_manager, context->session_type
+            );
         } catch (ConnectionResetError &exc) {
             continue;
         } catch (SocketTimeoutError &exc) {
