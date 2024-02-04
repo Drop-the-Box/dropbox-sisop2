@@ -48,22 +48,13 @@ public:
     bool                  send(shared_ptr<Socket> socket, int channel);
     bool                  send(ConnectionManager *conn_manager, SessionType session_type);
     bool                  delete_self();
-    bool delete_file(string filename);
     string                get_digest();
     void                  listen_file();
     long                  get_size();
-    static string get_sync_dir(
-        string username, SYNC_DIR_TYPE mode = DIR_CLIENT, shared_ptr<ReplicaManager> server = NULL
-    );
+    static string         get_sync_dir(string username, SYNC_DIR_TYPE mode = DIR_CLIENT);
     static bool           get_path_metadata(const string path, struct stat *metadata);
     static bool           path_exists(const string path);
     shared_ptr<FileMetadata> receive_file(string work_dir, shared_ptr<Socket> socket, int channel);
-    shared_ptr<FileMetadata> receive_file(
-        shared_ptr<FileMetadata> metadata, string work_dir, shared_ptr<Socket> socket, int channel
-    );
-    shared_ptr<FileMetadata> receive_file(
-        shared_ptr<FileMetadata> metadata, string work_dir, ConnectionManager *conn_manager, SessionType session_type
-    );
     shared_ptr<FileMetadata> receive_file(string work_dir, ConnectionManager *conn_manager, SessionType session_type);
     shared_ptr<FileMetadata> receive_metadata(shared_ptr<Socket> socket, int channel);
     shared_ptr<FileMetadata> receive_metadata(ConnectionManager *conn_manager, SessionType session_type);

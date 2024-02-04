@@ -11,9 +11,10 @@
 #include "../../common/socket_io/socket.hpp"
 #include "../userland/models.hpp"
 #include "../serverland/replication.hpp"
-#include "../../common/vars.hpp"
 
 using namespace std;
+
+#define MAX_REQUESTS 10
 
 class SessionManager {
     int num_threads;

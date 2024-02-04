@@ -13,11 +13,7 @@
 
 
 
-<<<<<<< Updated upstream
 #include "../file_io/inotify.hpp"
-=======
-#include "../../common/vars.hpp"
->>>>>>> Stashed changes
 
 
 
@@ -64,13 +60,7 @@ void ClientPublisher::handle_list_server(){
 };
 
 void ClientPublisher::handle_list_client(){
-    vector<string> files = this->file_monitor->get_files();
-    cout << "Files stored in this client: \n" << endl;
-    cout << "----------------------------------------------" << endl;
-    for(auto it = files.begin(); it != files.end(); it++) {
-        cout << "\t" << *it << endl;
-    }
-    cout << "----------------------------------------------" << endl;
+
 };
 
 void ClientPublisher::handle_help() {
@@ -85,13 +75,10 @@ void ClientPublisher::handle_help() {
 }
 
 
-void *run_file_monitor(void *ctx) {
-    ClientContext *context = (ClientContext *)(ctx);
-    PLOGI << "Waiting for get_sync_dir to finish to start inotify" << endl;
-    while(!*context->is_listening_dir);
-    PLOGI << "Starting inotify..." << endl;
-    while(!*context->interrupt) {
-        context->file_monitor->read_event();
+void *run_file_monitor(void *monitor) {
+    Inotify* file_monitor = (Inotify *)monitor;
+    while(!*file_monitor->context->interrupt) {
+        file_monitor->read_event();
         usleep(1000);
     }
     return NULL;
@@ -101,17 +88,18 @@ ClientPublisher::ClientPublisher(shared_ptr<ClientContext> context, bool *interr
     this->context = context;
     this->interrupt = interrupt;
 
-    const string folder_path = this->context->sync_dir;
+    const char *folder_path = this->context->sync_dir.c_str();
+    Inotify* inotify = new Inotify(this->context, folder_path);
 
     pthread_t monitor_thread;
-    pthread_create(&monitor_thread, NULL, run_file_monitor, context.get());
+    pthread_create(&monitor_thread, NULL, run_file_monitor, inotify);
 }
 
 string ClientPublisher::get_input_async() {
     char in_char;
     string input = "";
 
-    while(cin.get(in_char) && !*interrupt && !context->conn_manager->has_error(CommandPublisher)) {
+    while(cin.get(in_char) && !*interrupt) {
         if (in_char == '\n' && input.length() != 0) {
             PLOGI << "Got command: `" << input << "`" << endl;
             return input;
