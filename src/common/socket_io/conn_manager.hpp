@@ -37,5 +37,6 @@ class ConnectionManager {
         int get_message(uint8_t *buffer, SessionType kind);
         void stop_connections();
         bool has_error(SessionType kind);
+        shared_ptr<Event> get_event(SessionType session_type);
 };
 #endif

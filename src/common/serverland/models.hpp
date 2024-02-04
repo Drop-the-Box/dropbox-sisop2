@@ -12,9 +12,10 @@ public:
     int port;
     int server_pid;
     bool is_leader;
+    string base_dir;
 
     ReplicaManager(int pid, bool is_leader = false);
-    ReplicaManager(int pid, string address, int port);
+    ReplicaManager(int pid, string address, int port, string base_dir = "", bool is_leader = false);
 };
 
 shared_ptr<Socket> get_peer_socket(shared_ptr<ReplicaManager> server, bool *interrupt);

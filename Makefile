@@ -55,6 +55,24 @@ init:  ### Install dependencies and start application
 build-image:  ### builds the base image 
 	@ docker-compose build
 
+.PHONY: build-server-bin
+build-server-bin: ### builds the server binary
+	@ mkdir -p ./bin
+	@ g++ -I ./src/include src/server/**/*.cpp src/common/**/*.cpp src/server/main.cpp -o ./bin/server;
+
+.PHONY: build-client-bin
+build-client-bin: ### Builds the client binary
+	@ mkdir -p ./bin
+	@ g++ -I src/include src/client/**/*.cpp src/common/**/*.cpp src/client/main.cpp -o ./bin/client;
+
+.PHONY: run-client-bin
+run-client-bin:  ### Runs the client binary
+	@ ./bin/client $(ARGS)
+
+.PHONY: run-server-bin
+run-server-bin:  ### Runs the server binary
+	@ ./bin/server $(ARGS)
+
 ############ SERVER COMMANDS #############
 
 .PHONY: run-server

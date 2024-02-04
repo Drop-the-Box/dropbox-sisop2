@@ -23,16 +23,18 @@ void stop_execution(int signal) {
 
 ClientSessionManager::ClientSessionManager(string username) {
     ::signal(SIGINT, stop_execution);
-    string         sync_dir              = FileHandler::get_sync_dir(username);
+    const string sync_dir = FileHandler::get_sync_dir(username);
     ConnectionManager *conn_manager = new ConnectionManager(username, &interrupt);
+    Inotify *file_monitor = new Inotify(conn_manager, sync_dir);
+    bool is_listening_dir = false;
     ClientContext *publisher_context     = new ClientContext(
-        conn_manager, sync_dir, CommandPublisher, &interrupt
+        conn_manager, file_monitor, sync_dir, CommandPublisher, &is_listening_dir, &interrupt
     );
     ClientContext *subscriber_context    = new ClientContext(
-        conn_manager, sync_dir, CommandSubscriber, &interrupt
+        conn_manager, file_monitor, sync_dir, CommandSubscriber, &is_listening_dir, &interrupt
     );
     ClientContext *file_exchange_context = new ClientContext(
-        conn_manager, sync_dir, FileExchange, &interrupt
+        conn_manager, file_monitor, sync_dir, FileExchange, &is_listening_dir, &interrupt
     );
 
     pthread_t thread_pool[3];

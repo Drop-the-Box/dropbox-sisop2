@@ -5,6 +5,7 @@
 #include "../../common/vars.hpp"
 #include "../../common/session/models.hpp"
 #include "conn_manager.hpp"
+#include <toml/toml.hpp>
 
 
 ConnectionManager::ConnectionManager(string username, bool *interrupt) {
@@ -37,7 +38,7 @@ void ConnectionManager::init_connections() {
     shared_ptr<Socket> file_sync_socket;
     while (!connected) {
         shared_ptr<ReplicaManager> leader = this->get_server_leader();
-        if (leader == NULL) {
+        if (leader == NULL && !*interrupt) {
             PLOGE << "No leaders were found.. Will continue after 5 seconds...";
             sleep(5);
             continue;
@@ -52,6 +53,7 @@ void ConnectionManager::init_connections() {
     this->socket_map[CommandPublisher] = publisher_socket;
     this->socket_map[CommandSubscriber] = subscriber_socket;
     this->socket_map[FileExchange] = file_sync_socket;
+
     PLOGI << "Created new publisher socket in channel " << publisher_socket->socket_fd << endl;
     PLOGI << "Created new subscriber socket in channel " << subscriber_socket->socket_fd << endl;
     PLOGI << "Created new filesync socket in channel " << file_sync_socket->socket_fd << endl;
@@ -97,8 +99,10 @@ bool ConnectionManager::setup_connection(shared_ptr<Socket> socket, SessionType 
 
 shared_ptr<Socket> ConnectionManager::get_socket(SessionType kind) {
     shared_ptr<Socket> socket = NULL;
+    PLOGD << "Waiting for socket to be unlocked...";
     while(socket == NULL || this->reconnecting) {
         socket = this->socket_map.at(kind);
+        usleep(100000);
     }
     return socket;
 }
@@ -109,9 +113,7 @@ bool ConnectionManager::has_error(SessionType kind) {
     try { 
         return socket->has_error(socket->socket_fd);
     } catch (SocketError &exc) {
-        try {
-            this->reconnect();   
-        } catch (ConnectionResetError) {};
+        this->reconnect();   
     }
     return result;
 }
@@ -129,13 +131,17 @@ void ConnectionManager::reconnect() {
             socket_map[iter->first] = NULL;
         }
         this->init_connections();
+        shared_ptr<Command> reconnect_cmd = make_shared<Command>(Reconnect, "reconnected");
+        shared_ptr<Socket> file_exc_socket = this->socket_map.at(FileExchange);
+        reconnect_cmd->send(file_exc_socket, file_exc_socket->socket_fd);
         reconnecting = false;
         pthread_mutex_unlock(&reconnect_mutex);
     } else {
         while(this->reconnecting) {
-            PLOGD << "Awaiting reconnection by another thread" << endl;
+            PLOGI << "Awaiting reconnection by another thread" << endl;
         }
     }
+    PLOGI << "Reconnected all sockets!" << endl;
     throw ConnectionResetError("Operation Failed. Please try again.");
 }
 
@@ -184,6 +190,7 @@ bool ConnectionManager::probe_server(shared_ptr<Socket> socket, int pid) {
 int ConnectionManager::send(shared_ptr<Packet> packet, SessionType kind) {
     shared_ptr<Socket> socket = this->get_socket(kind);
     try {
+        PLOGD << "Sending packet over channel " << socket->socket_fd << endl;
         return packet->send(socket, socket->socket_fd);
     } catch (SocketError &err) {
         if (disconnecting) {
@@ -197,40 +204,39 @@ int ConnectionManager::send(shared_ptr<Packet> packet, SessionType kind) {
 
 int ConnectionManager::get_message(uint8_t *buffer, SessionType kind) {
     shared_ptr<Socket> socket = this->get_socket(kind);
-    try {
-        return socket->get_message_sync(buffer, socket->socket_fd, true); 
-    } catch (SocketTimeoutError &exc) {
-        throw exc;
-    } catch(SocketError &exc) {
-        if (disconnecting) {
-            throw UserInterruptError("Disconnecting...");
+    while(!this->has_error(kind)) {
+        try {
+            int result = socket->get_message_sync(buffer, socket->socket_fd, true); 
+            PLOGI << "Received packet over channel " << socket->socket_fd << " with size " << result << endl;
+            return result;
+            break;
+        } catch (SocketTimeoutError &exc) {
+        } catch(SocketError &exc) {
+            if (disconnecting) {
+                throw UserInterruptError("Disconnecting...");
+            }
+            PLOGW << "Server disconnected while receiving package. Reconnecting..." << endl;
+            this->reconnect();
         }
-        PLOGW << "Server disconnected while receiving package. Reconnecting..." << endl;
-        this->reconnect();
     }
     return 0;
 }
 
 shared_ptr<ReplicaManager> ConnectionManager::get_server_leader() {
-    server_params server_list[5] = {
-        {1, 6999, "dtb-server-1"},
-        {2, 6999, "dtb-server-2"},
-        {3, 6999, "dtb-server-3"},
-        {4, 6999, "dtb-server-4"},
-        {5, 6999, "dtb-server-5"},
-    };
-
-    for (int idx = 0; idx < sizeof(server_list)/sizeof(server_params); idx++) {
-        server_params server = server_list[idx];
-        shared_ptr<ReplicaManager> replica(
-            new ReplicaManager(server.pid, server.address, server.port)
-        );
+    toml::table server_tbl = toml::parse_file("server_configs.toml");
+    for (auto it = server_tbl.begin(); it != server_tbl.end(); it++) {
+        auto server = it->second.as_table();
+        int pid = *server->at_path("pid").value<int>();
+        string address = string(*server->at_path("address").value<string>());
+        int port = int(*server->at_path("port").value<int>());
+        shared_ptr<ReplicaManager> replica(new ReplicaManager(pid, address, port));
         bool is_leader = false;
+        shared_ptr<Socket> socket;
         try {
-            shared_ptr<Socket> socket = get_peer_socket(replica, this->interrupt);
-            is_leader = this->probe_server(socket, server.pid);
-        } catch(const std::exception& exc) {
-            PLOGW << "Server " << server.pid << " is down." << endl;
+            socket = get_peer_socket(replica, this->interrupt);
+            is_leader = this->probe_server(socket, pid);
+        } catch(SocketError &exc) {
+            PLOGW << "Server " << pid << " is down." << endl;
             continue;
         }
         if (is_leader) {
@@ -243,8 +249,9 @@ shared_ptr<ReplicaManager> ConnectionManager::get_server_leader() {
 
 
 bool ConnectionManager::send_command(shared_ptr<Command> command, SessionType kind) {
+    shared_ptr<Socket> socket = this->get_socket(kind);
     try {
-        shared_ptr<Socket> socket = this->get_socket(kind);
+        PLOGI << "Sending command over channel " << socket->socket_fd << endl;
         return command->send(socket, socket->socket_fd);
     } catch (SocketError &err) {
         if (disconnecting) {
@@ -255,4 +262,21 @@ bool ConnectionManager::send_command(shared_ptr<Command> command, SessionType ki
         this->reconnect();
     }
     return false;
+}
+
+
+shared_ptr<Event> ConnectionManager::get_event(SessionType session_type) {
+    uint8_t buffer[BUFFER_SIZE];
+    while(!this->has_error(session_type)) {
+        try {
+            this->get_message(buffer, session_type);
+            break;
+        } catch (SocketTimeoutError &exc) {};
+    }
+    unique_ptr<Packet> packet(new Packet((uint8_t *)buffer));
+    if (packet->type != EventMsg) {
+        return NULL;
+    }
+    shared_ptr<Event> event(new Event(packet->payload));
+    return event;
 }
