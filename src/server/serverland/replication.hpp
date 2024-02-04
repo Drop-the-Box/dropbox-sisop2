@@ -47,6 +47,7 @@ public:
     shared_ptr<ReplicaManager> current_server;
     bool *interrupt;
     pthread_mutex_t election_mutex;
+    pthread_t leader_pooling_tid;
 
     void sync_servers();
     void start_election();
@@ -59,6 +60,8 @@ public:
     );
     ~ServerElectionService();
     bool probe_server(shared_ptr<ReplicaManager> server_rm);
+    static void *check_leader(void *svc);
+    bool notify_elected_to_backup(shared_ptr<ReplicaManager> server_rm);
 };
 
 #endif

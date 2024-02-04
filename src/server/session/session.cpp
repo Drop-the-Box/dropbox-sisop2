@@ -47,6 +47,7 @@ void SessionManager::start(int pid) {
     set<int> channels;
     pthread_t srv_sync_id;
     pthread_create(&srv_sync_id, NULL, run_server_sync, this->election_svc);
+    // election_svc->sync_servers();
     PLOGI << "Waiting for connections...\n\n";
     int channel;
     while (!*socket->interrupt) {
@@ -68,6 +69,9 @@ void SessionManager::start(int pid) {
             PLOGD << "Creating new Connection ..." << endl;
             int pipe_fd[2];
             pipe(pipe_fd);
+            if (fcntl(pipe_fd[0], F_SETFL, O_NONBLOCK) < 0) {
+                throw std::runtime_error("Cannot set pipe for connection");
+            }
             shared_ptr<Connection> connection(new Connection(client_addr, *client_port, channel, pipe_fd));
 
             connection->get_conection_info();
@@ -128,6 +132,8 @@ void *SessionManager::handle_session(void *session_ptr) {
             PLOGI << "Socket closed: "<< exc.what() << " Finishing session of type " << stype_str << endl;
         } catch (UserInterruptError &exc) {
             PLOGI << "Received interrupt command. Finishing session of type " << stype_str << endl;
+        } catch (std::runtime_error &exc) {
+            PLOGE << "Runtime error: " << exc.what() << endl;
         }
         if (session->type == ServerSync) {
             PLOGI << "Leader disconnected. Checking processes..." << endl;
@@ -195,18 +201,19 @@ void Session::handle_server_probe(shared_ptr<Packet> received_packet){
     uint16_t pid_bytes;
     memmove(&pid_bytes, received_packet->payload, sizeof(uint16_t));
     int received_pid = (int)ntohs(pid_bytes);
+    ServerElectionService* election_svc = context->election_service; 
+    shared_ptr<ServerStore> server_store = election_svc->server_store;
 
     if (received_pid == 0) {
         PLOGD << "Received probe from client...";
     } else {
         PLOGD << "Received probe from server with PID " << received_pid << endl; 
-        ServerElectionService* election_svc = context->election_service; 
-        shared_ptr<ServerStore> server_store = election_svc->server_store;
         if (!server_store->has_server(received_pid)) {
-            shared_ptr<ReplicaManager> server_info = server_store->all_servers.at(received_pid);
-            server_store->add_server(received_pid, server_info);
+            shared_ptr<ReplicaManager> server_rm = server_store->all_servers.at(received_pid);
+            server_store->add_server(received_pid, server_rm);
             if (election_svc->current_server->is_leader) {
-                election_svc->repl_service->connect_backup(server_info);
+                election_svc->notify_elected_to_backup(server_rm);
+                election_svc->repl_service->connect_backup(server_rm);
             }
         }
     }
@@ -223,8 +230,21 @@ bool Session::setup() {
     PLOGD << "Setting up session..." << endl;
     unique_ptr<uint8_t> buffer((uint8_t *)calloc(BUFFER_SIZE, sizeof(uint8_t)));
     int channel = context->connection->channel;
+    int retry = 3;
     try {
-        context->socket->get_message_sync(buffer.get(), channel);
+        while(retry) {
+            try {
+                context->socket->get_message_sync(buffer.get(), channel);
+                break;
+            } catch (SocketTimeoutError &exc) {
+                if (retry == 0) { 
+                    PLOGW << "3 retries exceeded with timeout in session setup. Giving up..." << endl;
+                    return false;
+                }
+                retry -= 1;
+            }
+
+        }
     } catch (SocketDisconnectedError &exc) {
         PLOGW << "Peer " << context->connection->get_full_address() << " has disconnected before setup.." << endl;
         return false;
