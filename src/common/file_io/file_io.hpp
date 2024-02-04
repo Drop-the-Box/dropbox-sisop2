@@ -7,6 +7,8 @@
 #include <vector>
 
 #include "../socket_io/socket.hpp"
+#include "../socket_io/conn_manager.hpp"
+#include "../session/models.hpp"
 
 using namespace std;
 
@@ -28,6 +30,7 @@ public:
     FileMetadata(string full_path);
     size_t to_bytes(uint8_t **bytes);
     bool   send(shared_ptr<Socket> socket, int channel);
+    bool   send(ConnectionManager *conn_manager, SessionType session_type);
 };
 
 class FileHandler {
@@ -43,6 +46,7 @@ public:
     void                  close();
     static vector<string> list_files(const string directory);
     bool                  send(shared_ptr<Socket> socket, int channel);
+    bool                  send(ConnectionManager *conn_manager, SessionType session_type);
     bool                  delete_self();
     string                get_digest();
     void                  listen_file();
@@ -50,7 +54,12 @@ public:
     static string         get_sync_dir(string username, SYNC_DIR_TYPE mode = DIR_CLIENT);
     static bool           get_path_metadata(const string path, struct stat *metadata);
     static bool           path_exists(const string path);
-    void receive_file(string work_dir, shared_ptr<FileMetadata> metadata, shared_ptr<Socket> socket, int channel);
+    shared_ptr<FileMetadata> receive_file(string work_dir, shared_ptr<Socket> socket, int channel);
+    shared_ptr<FileMetadata> receive_file(string work_dir, ConnectionManager *conn_manager, SessionType session_type);
+    shared_ptr<FileMetadata> receive_metadata(shared_ptr<Socket> socket, int channel);
+    shared_ptr<FileMetadata> receive_metadata(ConnectionManager *conn_manager, SessionType session_type);
+    shared_ptr<Packet> receive_chunk(shared_ptr<Socket> socket, int channel);
+    shared_ptr<Packet> receive_chunk(ConnectionManager *conn_manager, SessionType session_type);
 
 private:
     string   filename;

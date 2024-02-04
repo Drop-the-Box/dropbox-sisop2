@@ -1,15 +1,13 @@
 #include "subscriber.hpp"
-#include <thread>
 
-ClientSubscriber::ClientSubscriber(shared_ptr<ClientContext> context, shared_ptr<Socket> socket) {
+ClientSubscriber::ClientSubscriber(shared_ptr<ClientContext> context, bool *interrupt) {
     this->context = context;
-    this->socket  = socket;
+    this->interrupt = interrupt;
 }
 
 void ClientSubscriber::loop() {
-    int count   = 0;
-    int channel = this->socket->socket_fd;
-    while (!*socket->interrupt) {
+    ConnectionManager *conn_manager = context->conn_manager;
+    while (!*this->interrupt && !conn_manager->has_error(CommandPublisher)) {
         //count++;
         // PLOG_INFO << "Subscriber loop count: " << count << endl;
         // PLOGI << "Subscriber channel: " << channel << endl;

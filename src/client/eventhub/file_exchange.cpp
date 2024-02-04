@@ -1,5 +1,3 @@
-#include <iostream>
-#include <sstream>
 #include <memory>
 #include <plog/Log.h>
 
@@ -7,20 +5,32 @@
 
 using namespace std;
 
-ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, shared_ptr<Socket> socket) {
+ClientFileSync::ClientFileSync(shared_ptr<ClientContext> context, bool *interrupt) {
     this->context = context;
-    this->socket  = socket;
-    ///this->file_handler = make_shared<FileHandler>();
-    ostringstream oss;
-    oss << this->context->sync_dir;
-    this->file_handler = make_shared<FileHandler>(this->context->sync_dir);
+    this->interrupt = interrupt;
+    string sync_dir = this->context->sync_dir;
+    this->file_handler = make_shared<FileHandler>(sync_dir);
 }
 
 void ClientFileSync::loop() {
+    string sync_dir = this->context->sync_dir;
+    ConnectionManager *conn_manager = context->conn_manager;
     shared_ptr<FileMetadata> metadata;
-    ostringstream oss;
-    oss << this->context->sync_dir;
-    file_handler->receive_file(oss.str(), metadata, socket, socket->socket_fd);
+    while (!*this->interrupt && !conn_manager->has_error(CommandPublisher)) {
+        try {
+            metadata = file_handler->receive_file(
+                sync_dir, conn_manager, context->session_type
+            );
+        } catch (ConnectionResetError &exc) {
+            continue;
+        } catch (SocketTimeoutError &exc) {
+            continue;
+        }
+        if (metadata == NULL) {
+            continue;
+        }
+        PLOGI << "Received file in FileSync: " << metadata->name << endl;
+    }
     // char buffer[BUFFER_SIZE];
     // int  total_bytes = 0;
     // int  collected_bytes;

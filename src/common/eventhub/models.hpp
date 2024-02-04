@@ -21,7 +21,11 @@ enum EventType {
     SessionAccepted,
     SessionRejected,
     FileCreated,
-    FileDeleted
+    FileDeleted,
+    ServerAlive,
+    ServerStatus,
+    LeaderAccepted,
+    LeaderRejected,
 };
 
 static const map<string, CommandType> command_map = {
@@ -32,11 +36,6 @@ static const map<string, CommandType> command_map = {
     {"list_client", ListLocalFiles},
     {"exit", Exit}};
 
-class Command {
-public:
-    CommandType type;
-};
-
 class Event {
 public:
     EventType type;
@@ -46,4 +45,16 @@ public:
     Event(EventType type, string message);
     bool send(shared_ptr<Socket>, int channel);
 };
+
+class Command {
+public:
+    CommandType type;
+    string arguments;
+
+    Command(uint8_t *bytes);
+    Command(CommandType type, string arguments);
+    size_t to_bytes(uint8_t **bytes);
+    bool send(shared_ptr<Socket>, int channel);
+};
+
 #endif

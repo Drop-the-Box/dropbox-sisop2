@@ -10,26 +10,31 @@
 #include "../../common/session/models.hpp"
 #include "../../common/socket_io/socket.hpp"
 #include "../userland/models.hpp"
-#include "models.hpp"
+#include "../serverland/replication.hpp"
 
 using namespace std;
 
 #define MAX_REQUESTS 10
 
 class SessionManager {
-    int                 num_threads;
-    int                 channels[MAX_REQUESTS];
+    int num_threads;
+    int channels[MAX_REQUESTS];
     shared_ptr<Socket>  socket;
+    shared_ptr<ReplicaManager> current_server;
+    shared_ptr<ServerStore> server_storage;
+
     map<int, pthread_t> thread_pool;
 
     static void *handle_session(void *args);
-    void         create_session(int channel, shared_ptr<ServerContext> context);
+    void create_session(int channel, shared_ptr<ServerContext> context);
+    void sync_servers();
 
 public:
     bool *interrupt;
+    ServerElectionService *election_svc;
 
-    SessionManager(shared_ptr<Socket> socket);
-    void start();
+    SessionManager(shared_ptr<Socket> socket, ServerElectionService *election_svc);
+    void start(int pid);
     void stop(int signal);
 };
 
@@ -41,6 +46,11 @@ public:
 
     Session(shared_ptr<ServerContext>);
     bool setup();
+    bool setup_client(shared_ptr<Packet> packet);
+    bool setup_server(shared_ptr<Packet> packet);
+    void handle_server_probe(shared_ptr<Packet> packet);
+    void handle_server_election(shared_ptr<Packet> packet);
+    void handle_server_elected(shared_ptr<Packet> packet);
     void run();
     void teardown();
 };

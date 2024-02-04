@@ -36,7 +36,7 @@ string Connection::get_full_address() {
 }
 
 void Connection::get_conection_info(){
-    PLOGI << "Connection info: " << endl 
+    PLOGD << "Connection info: " << endl 
           << "Address: " << this->address << endl 
           << "Port: " << this->port << endl 
           << "Channel: " << this->channel << endl 

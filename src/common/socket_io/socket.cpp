@@ -28,27 +28,30 @@ Socket::Socket(string address, int port, bool *interrupt, SocketMode mode, int b
     this->init(address, port, interrupt, mode, buffer_size, max_requests);
 };
 
+Socket::~Socket() {
+    this->close(this->socket_fd);
+}
+
 void Socket::init(
     string address, int port, bool *interrupt, SocketMode mode = Server, int buffer_size = BUFFER_SIZE, int max_requests = MAX_REQUESTS) {
     this->interrupt = interrupt;
-    if (mode == Server) {
-        this->socket_fd = socket(PF_INET, SOCK_STREAM, 0);
-    } else {
-        this->socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    int res;
+    do {
+        if (mode == Server) {
+            this->socket_fd = socket(PF_INET, SOCK_STREAM, 0);
+        } else {
+            this->socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+        }
+        if (this->socket_fd == -1) {
+            PLOGE << "Error: cannot open socket on " << address << ":" << port << endl;
+            throw SocketError(strerror(errno));
+        }
+        res = fcntl(this->socket_fd, F_GETFL);
     }
-    if (this->socket_fd == -1) {
-        PLOGE << "Error: cannot open socket on " << address << ":" << port << endl;
-    }
-
-    // Options for non-blocking socket that didn't work
-    // Set flags for non-blocking
-    // int flags = fcntl(this->socket_fd, F_GETFL);
-    // flags = flags == -1 ? O_NONBLOCK : flags | O_NONBLOCK;
-    // ::fcntl(this->socket_fd, F_SETFL, flags);
-    // this->socket_flags = flags;
+    while(!(res & O_RDWR));
 
     struct timeval timeout;
-    timeout.tv_sec  = 10;
+    timeout.tv_sec  = SOCKET_TIMEOUT;
     timeout.tv_usec = 0;
     int keepalive = 1;
 
@@ -64,13 +67,13 @@ void Socket::init(
         PLOGE << "Cannot set socket send buffer size. Reason: " << strerror(errno) << endl;
     }
 
-    // if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof timeout) < 0) {
-    //     PLOGE << "Cannot set socket recv timeout. Reason: " << strerror(errno) << endl;
-    // }
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof timeout) < 0) {
+        PLOGE << "Cannot set socket recv timeout. Reason: " << strerror(errno) << endl;
+    }
 
-    // if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof timeout) < 0) {
-    //     PLOGE << "Cannot set socket send timeout. Reason: " << strerror(errno) << endl;
-    // }
+    if (setsockopt(this->socket_fd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof timeout) < 0) {
+        PLOGE << "Cannot set socket send timeout. Reason: " << strerror(errno) << endl;
+    }
 
     if (setsockopt(this->socket_fd, SOL_SOCKET, SO_REUSEADDR, &keepalive, sizeof(int))) {
         PLOGE << "ERR reuseaddr" << endl;
@@ -91,6 +94,7 @@ void Socket::init(
         struct hostent *server_addr = gethostbyname(address.c_str());
         if (server_addr == NULL) {
             PLOGE << "Error: cannot find address " << address << endl;
+            throw SocketError("Cannot find address");
         }
         struct in_addr server_host           = *(in_addr *)server_addr->h_addr;
         this->server_address.sin_addr.s_addr = inet_addr(inet_ntoa(server_host));
@@ -99,8 +103,10 @@ void Socket::init(
 };
 
 void Socket::connect(string address, int port) {
-    if (::connect(this->socket_fd, (sockaddr *)&server_address, sizeof(server_address)) < 0 && errno != EINPROGRESS) {
+    int succeeded = ::connect(this->socket_fd, (sockaddr *)&server_address, sizeof(server_address));
+    if (succeeded < 0 && errno != EINPROGRESS) {
         PLOGE << "Error: cannot connect to socket on " << address.c_str() << ":" << port << " detail: " << strerror(errno) << endl;
+        throw SocketConnectError("Cannot connect to socket");
     }
 };
 
@@ -118,13 +124,17 @@ int Socket::listen(int max_requests) {
 };
 
 int Socket::accept(char *client_addr, int *client_port) {
+    if (*this->interrupt) {
+        throw UserInterruptError("No more connections");
+    }
     socklen_t           client_addr_len = sizeof(struct sockaddr_in);
     struct sockaddr_in *client          = (struct sockaddr_in *)calloc(1, client_addr_len);
     int                 accepted_fd     = ::accept(this->socket_fd, (sockaddr *)client, &client_addr_len);
-    if (accepted_fd != -1) {
+    if (accepted_fd == -1 || errno == EAGAIN || errno == EWOULDBLOCK) {
+        PLOGD << "Socket timeout on accept " << ::strerror(errno) << std::endl;
+    } else {
         inet_ntop(AF_INET, &client->sin_addr.s_addr, client_addr, INET_ADDRSTRLEN);
         *client_port = htons(client->sin_port);
-        // fcntl(accepted_fd, F_SETFL, this->socket_flags);
     }
     free(client);
     return accepted_fd;
@@ -139,10 +149,9 @@ bool Socket::has_event(int channel) {
     FD_SET(channel, &channel_list);
     int event = select(channel + 1, &channel_list, NULL, NULL, &timeout);
     if (event < 0) {
-        PLOGE << "Error getting event from channel " << channel << ": " << event << std::endl;
+        PLOGD << "Error getting event from channel " << channel << ": " << event << std::endl;
         return false;
     } else if (event == 0) {
-        // std::cout << "Timeout occurred! No data after 100 miliseconds.\n";
         return false;
     }
     return FD_ISSET(channel, &channel_list);
@@ -150,82 +159,82 @@ bool Socket::has_event(int channel) {
 
 int Socket::receive(uint8_t *buffer, int channel) {
     // if (!this->has_event(channel)) return -1;
-    PLOGI << "Receiving data on channel " << channel << "..." << endl;
+    PLOGD << "Receiving data on channel " << channel << "..." << endl;
     int bytes_received = 0;
     int total_bytes    = 0;
-    while (total_bytes < BUFFER_SIZE) {
-        // PLOGI << "total_bytes: " << total_bytes << endl;
-        bytes_received = ::read(channel, buffer + total_bytes, BUFFER_SIZE - total_bytes);
+    while (total_bytes < BUFFER_SIZE && !this->has_error(channel)) {
+        PLOGD << "total_bytes: " << total_bytes << endl;
+        bytes_received = ::recv(channel, buffer + total_bytes, BUFFER_SIZE - total_bytes, 0);
         // PLOGE << "bytes_received: " << bytes_received << endl;
         if (bytes_received > 0) {
             PLOGD << "Received data on channel " << channel << ": " << bytes_received << " bytes"
                 << "\n\n";
         } else if (errno == EAGAIN || errno == EWOULDBLOCK) {
-            PLOGE << "Socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
+            PLOGD << "Socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
+            throw SocketTimeoutError(strerror(errno));
         } else if (errno) {
-            PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
-            return -1;
+            PLOGD << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
+            throw SocketError(strerror(errno));
         }
         if (bytes_received == 0) {
-            PLOGW << "Bytes received is 0." << endl;
-            return bytes_received;
+            PLOGD << "Bytes received is 0." << endl;
+            throw SocketDisconnectedError("Server has disconnected.");
         }
         total_bytes += bytes_received;
     }
-    PLOGI << "Received " << total_bytes << " bytes on channel " << channel << std::endl;
+    PLOGD << "Received " << total_bytes << " bytes on channel " << channel << std::endl;
     return total_bytes;
 }
 
 bool Socket::has_error(int channel) {
-    // return false;  // to be debugged
     if (*this->interrupt) {
         PLOGW << "Service interrupted by command line!" << endl;
-        return true;
+        throw UserInterruptError("Service interrupted by user.");
     }
-    int       error;
+    int error = 0;
     socklen_t err_len = sizeof(error);
-    int       status  = ::getsockopt(channel, SOL_SOCKET, SO_ERROR, &error, &err_len);
+    int status  = ::getsockopt(channel, SOL_SOCKET, SO_ERROR, &error, &err_len);
     if (status != 0) {
-        PLOGE << "Error getting socket status: " << strerror(error) << "\n\n";
+        string readable_error = errno == 0 ? strerror(status) : strerror(errno);
+        PLOGE << "Error getting socket status for channel " << channel << " : " << readable_error << endl;
+        throw SocketError(readable_error);
     }
-    return status != 0;
+    if (error != 0) {
+        string readable_error = strerror(errno);
+        PLOGE << "Error getting socket status for channel " << channel << " : " << readable_error <<  "\n\n";
+        throw SocketError(readable_error);
+    }
+    // if(recv(channel,NULL,1, MSG_PEEK | MSG_DONTWAIT) != 0) {
+    //     throw SocketError("Socket has been disconnected");
+    // }
+    return false;
 }
 
 bool Socket::is_connected(int channel) {
     return true;
 }
 
-// bool Socket::get_client_info(int channel, char **client_addr, int *client_port) {
-//     unique_ptr<struct sockaddr_in> client((struct sockaddr_in *)calloc(1, sizeof(struct sockaddr_in)));
-//     socklen_t client_len;
-//     int is_connected = getpeername(channel, (struct sockaddr *)client.get(), &client_len);
-//     char* addr = inet_ntoa(client->sin_addr);
-//     int port = ntohs(client->sin_port);
-//     if (client_addr != NULL) {
-//         *client_port = port;
-//         memmove(*client_addr, addr, client_len);
-//     }
-//     return is_connected == 0;
-// }
-
-int Socket::send(uint8_t *bytes, size_t size, int channel) {
-    PLOGI << "Sending data on channel " << channel << "..." << std::endl;
+int Socket::send(uint8_t *bytes, size_t size, int channel, bool raise_on_timeout) {
+    PLOGD << "Sending data on channel " << channel << "..." << std::endl;
     if (this->has_error(channel)) {
-        PLOGI << "Channel " << channel << " has error." << std::endl;
+        PLOGE << "Channel " << channel << " has error." << std::endl;
         return 0;
     }
 
     int result = -1;
     if (this->is_connected(channel)) {
-        PLOGI << "Channel " << channel << " is connected." << std::endl;
-        result = ::write(channel, bytes, BUFFER_SIZE);
+        PLOGD << "Channel " << channel << " is connected." << std::endl;
+        result = ::send(channel, bytes, BUFFER_SIZE, MSG_NOSIGNAL);
         if (result != -1) {
-            PLOGI << "Channel " << channel << " sent " << result << " bytes." << std::endl;
+            PLOGD << "Channel " << channel << " sent " << result << " bytes." << std::endl;
         } else if (errno == EAGAIN || errno == EWOULDBLOCK) {
-            PLOGE << "Socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
+            PLOGE << "Socket timeout on " << channel << ": " << ::strerror(errno) << std::endl;
+            throw SocketTimeoutError("Timeout!");
         } else if (errno) {
-            PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(errno) << std::endl;
-            throw;
+            PLOGE << "Unrecoverable socket error on channel " << channel << ": " << ::strerror(errno) << endl;
+            stringstream oss;
+            oss << "Unrecoverable error" << ::strerror(errno);
+            throw SocketError(::strerror(errno));
         }
     }
     return result;
@@ -236,7 +245,12 @@ int Socket::close(int channel) {
         PLOGW << "Channel " << channel << " already disconnected." << std::endl;
         return 0;
     }
-    PLOGI << "Closing connection on channel " << channel << std::endl;
+    PLOGD << "Closing connection on channel " << channel << std::endl;
+    if (this->mode == Server) {
+        ::shutdown(channel, SHUT_RDWR);
+        char buf[1];
+        while(::recv(channel, buf, 1, 0) > 0) {};
+    }
     int result = ::close(channel);
     if (result == -1) {
         PLOGE << "Error closing channel " << channel << ": " << strerror(errno) << std::endl;
@@ -244,21 +258,27 @@ int Socket::close(int channel) {
     return result;
 }
 
-int Socket::get_message_sync(uint8_t *buffer, int channel) {
+int Socket::get_message_sync(uint8_t *buffer, int channel, bool raise_on_timeout) {
     if (this->has_error(channel))
         return 0;
     ::memset(buffer, 0, BUFFER_SIZE);
     int payload_size = 0;
-    while (!payload_size && ioctl(channel, FIONREAD, &payload_size) >= 0) {
-        // PLOGI << "Waiting for data to arrive..." << endl;
-        if (*this->interrupt)
-            return 0;
-        usleep(1000);
-    }
+    int time_elapsed = 0;
+    // while (!payload_size && ioctl(channel, FIONREAD, &payload_size) >= 0) {
+    //     PLOGI << "Waiting for data to arrive..." << endl;
+    //     if (this->has_error(channel))
+    //         throw SocketError(strerror(errno));
+    //     if (time_elapsed > SOCKET_TIMEOUT && raise_on_timeout) {
+    //         throw SocketTimeoutError("Timeout waiting for data");
+    //     }
+    //     usleep(1000);
+    //     time_elapsed += 0.001;
+    // }
     payload_size = this->receive(buffer, channel);
-    if (payload_size == -1) {
-
-        throw;
+    if (payload_size < 0) {
+        ostringstream error;
+        error << "Error while reading socket: " << strerror(errno) << endl;
+        throw SocketError(error.str());
     }
 
     return payload_size;
@@ -348,11 +368,10 @@ size_t Packet::to_bytes(uint8_t **bytes_ptr) {
 int Packet::send(shared_ptr<Socket> socket, int channel) {
     uint8_t *bytes;
     size_t   packet_size = this->to_bytes(&bytes);
-    int      bytes_sent  = socket->send(bytes, packet_size, channel);
+    int      bytes_sent  = socket->send(bytes, packet_size, channel, true);
     free(bytes);
     if (bytes_sent < 0) {
         PLOGE << "Cannot write to socket. Reason: " << strerror(errno) << endl;
-        throw;
     }
     PLOGD << "Sent packet with " << packet_size << " bytes" << endl;
     return bytes_sent;

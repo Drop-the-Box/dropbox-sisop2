@@ -1,15 +1,11 @@
 #ifndef INOTIFY_H
 #define INOTIFY_H
 // usar sempre snake case para nomear as variaveis
-#include "../../common/file_io/file_io.hpp"
-#include "../../common/socket_io/socket.hpp"
-#include <cstring>
-#include <iostream>
-#include <memory>
 #include <plog/Log.h>
 #include <sys/inotify.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "../session/models.hpp"
 
 using namespace std;
 
@@ -22,8 +18,9 @@ class Inotify {
     int                watch_descriptor;
 
 public:
-    shared_ptr<Socket> socket;
-    Inotify(shared_ptr<Socket> socket, const char *folder_path);
+    shared_ptr<ClientContext> context;
+
+    Inotify(shared_ptr<ClientContext> context, const char *folder_path);
     int  get_file_descriptor();
     int  get_watch_descriptor();
     void read_event();
