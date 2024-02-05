@@ -156,12 +156,12 @@ void Session::handle_server_elected(shared_ptr<Packet> received_packet) {
     int current_pid = context->election_service->current_server->server_pid;
     ServerElectionService* election_svc = this->context->election_service;
 
-    if (received_pid < current_pid) {
-        PLOGD << "Server with lower priority claimed the leadership. I won't accept that." << endl;
-        shared_ptr<Event> reply_evt(new Event(LeaderRejected, "No"));
-        reply_evt->send(context->socket, context->connection->channel);
-        return;
-    }
+    // if (received_pid < current_pid) {
+    //     PLOGD << "Server with lower priority claimed the leadership. I won't accept that." << endl;
+    //     shared_ptr<Event> reply_evt(new Event(LeaderRejected, "No"));
+    //     reply_evt->send(context->socket, context->connection->channel);
+    //     return;
+    // }
     PLOGI << "Server with PID " << received_pid << " claimed the leadership. Setting it as leader." << endl; 
     election_svc->update_leader(received_pid);
     ostringstream reply;
